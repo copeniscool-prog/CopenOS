@@ -3,327 +3,545 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CopenOS 8.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101018">
+<title>CopenOS 9.0</title>
 <style>
+:root {
+  --bg:#101018;
+  --panel:#191923;
+  --panel2:#222230;
+  --accent:#9b72ff;
+  --text:#f5f3ff;
+  --muted:#aaa5bd;
+  --border:#343244;
+}
 *{box-sizing:border-box}
-:root{--bg:#101016;--panel:#1b1922;--line:#302d3a;--text:#f5f3fa;--muted:#aaa3b5;--accent:#a78bfa}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;background-image:radial-gradient(ellipse at 10% 10%,#50377a33,transparent 45%),radial-gradient(ellipse at 90% 90%,#3d286633,transparent 45%);background-attachment:fixed}
-button,input,textarea{font:inherit}
-button{cursor:pointer;color:inherit}
-header{height:65px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:#111018ed;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.logo{font-size:20px;font-weight:900}.logo span{color:var(--accent)}
-.layout{display:flex;min-height:calc(100vh - 65px)}
-.sidebar{width:200px;padding:18px 12px;border-right:1px solid var(--line);flex-shrink:0}
-.nav-label{font-size:10px;letter-spacing:2px;color:var(--muted);padding:14px 10px 7px}
-.nav-btn{width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:12px;border-radius:8px;margin:2px 0}
-.nav-btn:hover,.nav-btn.active{background:#292431;color:white}
-.nav-btn.active{box-shadow:inset 3px 0 var(--accent)}
-main{width:100%;max-width:1300px;margin:auto;padding:28px}
-.page{display:none}.page.active{display:block}
-.eyebrow{font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
-h1{font-size:32px;margin:0 0 8px}h2{font-size:20px}
-.sub{color:var(--muted);font-size:13px;margin-bottom:24px}
-.hero{padding:35px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(120deg,#39294e,#191820 75%);margin-bottom:25px}
-.hero h1{font-size:38px}.hero p{color:#c5bdcf;line-height:1.6}
-.panel{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:12px;margin-bottom:17px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px}
-.tile{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px;text-align:left;transition:.2s;min-width:0}
-.tile:hover{transform:translateY(-3px);border-color:var(--accent)}
-.tile-art{height:85px;background:#292532;border-radius:8px;display:grid;place-items:center;font-size:38px;margin-bottom:12px}
-.tile h3{font-size:13px;margin:0 0 6px}.tile p{font-size:11px;color:var(--muted);margin:0}
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-input,textarea{background:#111018;border:1px solid var(--line);color:white;padding:12px;border-radius:8px}
-.tools input{flex:1;min-width:160px}
-.chip{background:var(--panel);border:1px solid var(--line);padding:9px 13px;border-radius:20px;font-size:12px}
-.chip.active{background:var(--accent);color:#17121f}
-.primary{background:var(--accent);color:#17121f;border:0;padding:11px 16px;border-radius:8px;font-weight:bold}
-.secondary{background:#292532;border:1px solid var(--line);padding:10px 14px;border-radius:8px}
-a{color:inherit;text-decoration:none}
-.chat-messages{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:12px;background:#111018;border-radius:9px;margin-bottom:12px}
-.chat-message{padding:12px 14px;border-radius:10px;max-width:85%;font-size:13px;line-height:1.6;white-space:pre-wrap}
-.chat-user{background:#392d50;align-self:flex-end}.chat-ai{background:#292532;align-self:flex-start}
-.chat-controls{display:flex;gap:8px}.chat-controls input{flex:1;min-width:0}
-.status{font-size:11px;color:var(--muted)}
-.notes-area{width:100%;min-height:240px;line-height:1.6}
-.game-viewer{display:none;position:fixed;inset:0;background:#101016;z-index:100;flex-direction:column}
-.game-viewer.open{display:flex}
-.viewer-bar{display:flex;align-items:center;gap:10px;padding:12px;background:#191820;border-bottom:1px solid var(--line)}
-.viewer-bar strong{flex:1}
-.viewer-frame{width:100%;flex:1;border:0;background:white}
-.viewer-message{padding:9px;color:var(--muted);font-size:11px}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,Arial,sans-serif;min-height:100vh;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:235px;background:#15151f;border-right:1px solid var(--border);
+  padding:22px 14px;position:fixed;inset:0 auto 0 0;z-index:20;
+  display:flex;flex-direction:column;gap:10px;
+}
+.logo{font-size:23px;font-weight:900;padding:8px 12px 24px}
+.logo span{color:var(--accent)}
+.nav{
+  border:0;background:transparent;color:var(--muted);
+  text-align:left;padding:13px;border-radius:12px;
+  display:flex;gap:12px;align-items:center;
+}
+.nav:hover,.nav.active{background:var(--panel2);color:white}
+.nav.active{outline:1px solid var(--accent)}
+.sidebar-bottom{margin-top:auto;color:var(--muted);font-size:12px;padding:12px}
+main{margin-left:235px;width:calc(100% - 235px);padding:30px;max-width:1600px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:12px}
+h1{font-size:29px;margin:0}
+h2{font-size:20px}
+p{color:var(--muted);line-height:1.6}
+.page{display:none}
+.page.active{display:block}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px
+}
+.card{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:17px;padding:17px;min-width:0;
+}
+.card:hover{border-color:var(--accent)}
+.card h3{margin:9px 0 5px}
+.card p{font-size:13px}
+.art{
+ width:100%;aspect-ratio:1;object-fit:cover;
+ border-radius:12px;background:var(--panel2)
+}
+.btn{
+ border:0;background:var(--accent);color:white;padding:11px 16px;
+ border-radius:11px;font-weight:700
+}
+.btn.secondary{background:var(--panel2);border:1px solid var(--border)}
+.btn:hover{filter:brightness(1.12)}
+.field{
+ width:100%;padding:13px;border-radius:11px;
+ border:1px solid var(--border);background:var(--panel2);
+ color:white;outline:none;margin:7px 0
+}
+.field:focus{border-color:var(--accent)}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0}
+.tag{
+ background:var(--panel2);color:var(--muted);border:1px solid var(--border);
+ padding:8px 12px;border-radius:30px
+}
+.tag.active{background:var(--accent);color:white}
+.hero{
+ padding:30px;border-radius:20px;
+ background:linear-gradient(130deg,#35245e,#171725 65%);
+ border:1px solid #514078;margin-bottom:25px
+}
+.hero h2{font-size:27px}
+.chat{
+ height:55vh;min-height:300px;overflow-y:auto;
+ display:flex;flex-direction:column;gap:12px;padding:15px;
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:16px;margin-bottom:12px
+}
+.message{
+ padding:13px 16px;border-radius:14px;max-width:85%;
+ line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere
+}
+.user{align-self:flex-end;background:var(--accent)}
+.assistant{align-self:flex-start;background:var(--panel2)}
+.chatbar{display:flex;gap:9px}
+.chatbar input{flex:1;min-width:0}
+.music-player{
+ position:fixed;bottom:0;left:235px;right:0;
+ background:#191923;border-top:1px solid var(--border);
+ padding:12px 20px;display:none;align-items:center;gap:15px;z-index:30
+}
+.music-player.visible{display:flex}
+.music-player img{width:48px;height:48px;object-fit:cover;border-radius:8px}
+.music-info{flex:1;min-width:0}
+.music-info strong,.music-info small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.music-info small{color:var(--muted);margin-top:4px}
+audio{max-width:330px;width:35%}
+.settings-row{margin:20px 0}
+iframe{width:100%;height:420px;border:0;border-radius:13px;background:#000}
 .mobile-nav{display:none}
-@media(max-width:700px){
-.sidebar{display:none}main{padding:20px 13px 90px}
-.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#17151fee;border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:8px 2px}
-.mobile-nav button{background:none;border:0;color:var(--muted);font-size:10px;padding:5px}
-.mobile-nav button.active{color:var(--accent)}
-.mobile-nav span{display:block;font-size:18px;margin-bottom:3px}
-h1{font-size:28px}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+small{color:var(--muted)}
+@media(max-width:750px){
+ .sidebar{display:none}
+ main{margin:0;width:100%;padding:18px 15px 110px}
+ .topbar{margin-bottom:20px}
+ .topbar h1{font-size:24px}
+ .mobile-nav{
+  display:flex;position:fixed;bottom:0;left:0;right:0;z-index:40;
+  background:#171722;border-top:1px solid var(--border);
+  justify-content:space-around;padding:9px 3px;
+  padding-bottom:max(9px,env(safe-area-inset-bottom))
+ }
+ .mobile-nav button{
+  background:transparent;border:0;color:var(--muted);
+  font-size:11px;display:flex;flex-direction:column;gap:4px;align-items:center
+ }
+ .mobile-nav button.active{color:var(--accent)}
+ .music-player{left:0;bottom:57px;padding:9px 12px}
+ audio{width:38%;max-width:150px}
+ .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:11px}
+ .hero{padding:20px}
+ .chat{height:50vh}
 }
 </style>
 </head>
 <body>
-<header><div class="logo">COPEN<span>OS</span> 8.0</div><small style="color:var(--muted)">PERSONAL DASHBOARD</small></header>
-<div class="layout">
+<div class="app">
 <aside class="sidebar">
-<div class="nav-label">WORKSPACE</div>
-<button class="nav-btn active" data-page="home">⌂ Home</button>
-<button class="nav-btn" data-page="games">▣ Games</button>
-<button class="nav-btn" data-page="anime">◈ Anime</button>
-<button class="nav-btn" data-page="movies">▰ Movies</button>
-<button class="nav-btn" data-page="music">♫ Music</button>
-<button class="nav-btn" data-page="ai">✳ CopenAI</button>
-<div class="nav-label">PERSONAL</div>
-<button class="nav-btn" data-page="notes">▤ Notes</button>
-<button class="nav-btn" data-page="settings">⚙ Settings</button>
+ <div class="logo">COPEN<span>OS</span></div>
+ <button class="nav active" data-page="home">⌂ Home</button>
+ <button class="nav" data-page="ai">✦ CopenAI</button>
+ <button class="nav" data-page="music">♫ CopenMusic</button>
+ <button class="nav" data-page="games">🎮 Games</button>
+ <button class="nav" data-page="anime">▣ Anime</button>
+ <button class="nav" data-page="movies">▶ Movies</button>
+ <button class="nav" data-page="notes">▤ Notes</button>
+ <button class="nav" data-page="settings">⚙ Settings</button>
+ <div class="sidebar-bottom">CopenOS 9.0<br>Made for everyone.</div>
 </aside>
+
 <main>
+<div class="topbar">
+ <h1 id="pageTitle">Home</h1>
+ <small id="clock"></small>
+</div>
 
 <section class="page active" id="home">
-<div class="eyebrow">COPENOS / HOME</div>
-<div class="hero"><h1>Welcome to CopenOS.</h1><p>Your own place for games, anime, movies, music, and more.</p><button class="primary" onclick="showPage('games')">Explore games ↗</button></div>
-<h2>Quick access</h2>
-<div class="grid">
-<button class="tile" onclick="showPage('games')"><div class="tile-art">🎮</div><h3>Games</h3><p>Browse games</p></button>
-<button class="tile" onclick="showPage('anime')"><div class="tile-art">⛩️</div><h3>Anime</h3><p>Browse anime</p></button>
-<button class="tile" onclick="showPage('movies')"><div class="tile-art">🎬</div><h3>Movies</h3><p>Streaming providers</p></button>
-<button class="tile" onclick="showPage('music')"><div class="tile-art">🎧</div><h3>Music</h3><p>Music providers</p></button>
-<button class="tile" onclick="showPage('ai')"><div class="tile-art">✳️</div><h3>CopenAI</h3><p>AI chat</p></button>
-<button class="tile" onclick="showPage('notes')"><div class="tile-art">📝</div><h3>Notes</h3><p>Your notes</p></button>
-</div>
-</section>
-
-<section class="page" id="games">
-<div class="eyebrow">COPENOS / ARCADE</div><h1>Games</h1><p class="sub">Search and launch games.</p>
-<div class="tools"><input id="gameSearch" placeholder="Search games..." oninput="renderGames()"></div>
-<div class="tools" id="gameChips">
-<button class="chip active" data-filter="all">All</button><button class="chip" data-filter="sports">Sports</button><button class="chip" data-filter="arcade">Arcade</button><button class="chip" data-filter="puzzle">Puzzle</button>
-</div>
-<div class="grid" id="gameGrid"></div>
-</section>
-
-<section class="page" id="anime">
-<div class="eyebrow">COPENOS / ANIMATION</div><h1>Anime</h1><p class="sub">Anime titles and official streaming providers.</p>
-<div class="tools"><input id="animeSearch" placeholder="Search anime..." oninput="renderAnime()"></div>
-<div class="grid" id="animeGrid"></div>
-</section>
-
-<section class="page" id="movies">
-<div class="eyebrow">COPENOS / CINEMA</div><h1>Movies</h1><p class="sub">Find movies through legitimate streaming providers.</p>
-<div class="grid">
-<a class="tile" href="https://www.netflix.com/" target="_blank" rel="noopener"><div class="tile-art">🍿</div><h3>Netflix</h3><p>Movies and series</p></a>
-<a class="tile" href="https://www.disneyplus.com/" target="_blank" rel="noopener"><div class="tile-art">🏰</div><h3>Disney+</h3><p>Movies and originals</p></a>
-<a class="tile" href="https://www.primevideo.com/" target="_blank" rel="noopener"><div class="tile-art">🎞️</div><h3>Prime Video</h3><p>Movies and series</p></a>
-<a class="tile" href="https://www.tubitv.com/" target="_blank" rel="noopener"><div class="tile-art">📺</div><h3>Tubi</h3><p>Free streaming</p></a>
-<a class="tile" href="https://www.youtube.com/movies" target="_blank" rel="noopener"><div class="tile-art">▶️</div><h3>YouTube Movies</h3><p>Movie rentals and purchases</p></a>
-</div>
-</section>
-
-<section class="page" id="music">
-<div class="eyebrow">COPENOS / AUDIO</div><h1>Music</h1><p class="sub">Your music providers.</p>
-<div class="grid">
-<a class="tile" href="https://open.spotify.com/" target="_blank" rel="noopener"><div class="tile-art">🟢</div><h3>Spotify</h3><p>Music streaming</p></a>
-<a class="tile" href="https://music.youtube.com/" target="_blank" rel="noopener"><div class="tile-art">▶️</div><h3>YouTube Music</h3><p>Music and videos</p></a>
-<a class="tile" href="https://soundcloud.com/" target="_blank" rel="noopener"><div class="tile-art">🟠</div><h3>SoundCloud</h3><p>Discover music</p></a>
-<a class="tile" href="https://bandcamp.com/" target="_blank" rel="noopener"><div class="tile-art">🎵</div><h3>Bandcamp</h3><p>Independent music</p></a>
-</div>
+ <div class="hero">
+  <h2>Welcome to CopenOS.</h2>
+  <p>Your music, games, AI, and entertainment in one place.</p>
+  <button class="btn" onclick="showPage('ai')">Open CopenAI →</button>
+ </div>
+ <h2>Your apps</h2>
+ <div class="grid">
+  <div class="card"><h3>✦ CopenAI</h3><p>Ask questions, write, learn, and create.</p><button class="btn" onclick="showPage('ai')">Open</button></div>
+  <div class="card"><h3>♫ CopenMusic</h3><p>Discover real music and artists.</p><button class="btn" onclick="showPage('music')">Open</button></div>
+  <div class="card"><h3>🎮 Games</h3><p>Browse games and gaming sites.</p><button class="btn" onclick="showPage('games')">Open</button></div>
+  <div class="card"><h3>▤ Notes</h3><p>Keep your ideas saved on this device.</p><button class="btn" onclick="showPage('notes')">Open</button></div>
+ </div>
 </section>
 
 <section class="page" id="ai">
-<div class="eyebrow">COPENOS / INTELLIGENCE</div><h1>CopenAI</h1><p class="sub">Your own AI chat interface.</p>
-<div class="panel">
-<div class="chat-messages" id="chatMessages"><div class="chat-message chat-ai">Hey! I'm CopenAI. Connect an AI backend to start chatting.</div></div>
-<div class="chat-controls"><input id="chatInput" placeholder="Message CopenAI..." onkeydown="if(event.key==='Enter')sendChat()"><button class="primary" onclick="sendChat()">Send</button></div>
-<p class="status" id="chatStatus">Backend not connected.</p>
-</div>
+ <div class="hero">
+  <h2>CopenAI</h2>
+  <p>Your personal AI assistant. Connect an AI backend to enable real AI responses.</p>
+ </div>
+ <div class="chat" id="chatMessages">
+  <div class="message assistant">Hey! I'm CopenAI. What would you like help with?</div>
+ </div>
+ <div class="chatbar">
+  <input class="field" id="chatInput" placeholder="Ask CopenAI anything..." onkeydown="if(event.key==='Enter')sendChat()">
+  <button class="btn" onclick="sendChat()">Send</button>
+ </div>
+ <small id="aiStatus">AI backend not connected.</small>
+ <div class="toolbar"><button class="btn secondary" onclick="clearChat()">New chat</button></div>
+</section>
+
+<section class="page" id="music">
+ <div class="hero">
+  <h2>CopenMusic ♫</h2>
+  <p>Discover real artists and music. Search supported music providers for tracks you can play.</p>
+ </div>
+ <input class="field" id="musicSearch" placeholder="Search songs, artists, albums..." onkeydown="if(event.key==='Enter')searchMusic()">
+ <div class="toolbar">
+  <button class="tag" onclick="quickMusic('Alex G')">Alex G</button>
+  <button class="tag" onclick="quickMusic('Blink-182')">Blink-182</button>
+  <button class="tag" onclick="quickMusic('rap')">Rap</button>
+  <button class="tag" onclick="quickMusic('indie rock')">Indie</button>
+  <button class="tag" onclick="quickMusic('pop punk')">Pop punk</button>
+  <button class="tag" onclick="quickMusic('metal')">Metal</button>
+  <button class="tag" onclick="quickMusic('hip hop')">Hip-hop</button>
+ </div>
+ <div class="toolbar">
+  <button class="btn" onclick="searchMusic()">Search music</button>
+  <button class="btn secondary" onclick="showFavorites()">Favorites ♡</button>
+ </div>
+ <div id="musicResults" class="grid">
+  <div class="card"><h3>Find music</h3><p>Search for a real artist or song to discover available tracks.</p></div>
+ </div>
+ <div style="margin-top:25px">
+  <h2>More music</h2>
+  <div class="grid">
+   <div class="card"><h3>SoundCloud</h3><p>Independent artists, remixes, and more.</p><button class="btn" onclick="openProvider('https://soundcloud.com')">Explore</button></div>
+   <div class="card"><h3>Bandcamp</h3><p>Discover independent music.</p><button class="btn" onclick="openProvider('https://bandcamp.com')">Explore</button></div>
+   <div class="card"><h3>Jamendo</h3><p>Explore music available under its licensing options.</p><button class="btn" onclick="openProvider('https://www.jamendo.com')">Explore</button></div>
+   <div class="card"><h3>Internet Archive</h3><p>Browse its audio collection.</p><button class="btn" onclick="openProvider('https://archive.org/details/audio')">Explore</button></div>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="games">
+ <h2>Games</h2>
+ <input class="field" id="gameSearch" placeholder="Search games..." oninput="renderGames()">
+ <div id="gameResults" class="grid"></div>
+</section>
+
+<section class="page" id="anime">
+ <h2>Anime directory</h2>
+ <input class="field" id="animeSearch" placeholder="Search anime..." oninput="renderAnime()">
+ <div id="animeResults" class="grid"></div>
+ <p>Find official streaming availability through each title's search link.</p>
+</section>
+
+<section class="page" id="movies">
+ <h2>Movie platforms</h2>
+ <p>Explore legitimate streaming services and their catalogs.</p>
+ <div class="grid" id="movieResults"></div>
 </section>
 
 <section class="page" id="notes">
-<div class="eyebrow">COPENOS / PERSONAL</div><h1>Notes</h1><p class="sub">Your notes save automatically in this browser.</p>
-<div class="panel"><textarea class="notes-area" id="notesArea" placeholder="Write something..."></textarea><p class="status" id="notesStatus">Saved locally in this browser.</p></div>
+ <h2>Your notes</h2>
+ <textarea class="field" id="noteText" rows="10" placeholder="Write something..."></textarea>
+ <button class="btn" onclick="saveNotes()">Save notes</button>
+ <small id="noteStatus"></small>
 </section>
 
 <section class="page" id="settings">
-<div class="eyebrow">COPENOS / CUSTOMIZATION</div><h1>Settings</h1><p class="sub">Customize your dashboard.</p>
-<div class="panel"><h3>Accent color</h3><input type="color" id="accentPicker" value="#a78bfa"><p class="status">Changes the accent color across CopenOS.</p></div>
-<div class="panel"><h3>Background color</h3><input type="color" id="bgPicker" value="#101016"><p class="status">Changes the main background.</p></div>
-<button class="secondary" onclick="resetTheme()">Reset theme</button>
+ <h2>Settings</h2>
+ <div class="settings-row">
+  <label>Accent color</label>
+  <input class="field" type="color" id="accentPicker" value="#9b72ff" onchange="setAccent(this.value)">
+ </div>
+ <div class="settings-row">
+  <label>Background color</label>
+  <input class="field" type="color" id="backgroundPicker" value="#101018" onchange="setBackground(this.value)">
+ </div>
+ <button class="btn secondary" onclick="resetSettings()">Reset settings</button>
+ <p>Settings are saved in this browser on this device.</p>
 </section>
-
 </main>
 </div>
 
 <nav class="mobile-nav">
-<button class="active" data-page="home"><span>⌂</span>Home</button>
-<button data-page="games"><span>▣</span>Games</button>
-<button data-page="anime"><span>◈</span>Anime</button>
-<button data-page="music"><span>♫</span>Music</button>
-<button data-page="ai"><span>✳</span>AI</button>
-<button data-page="settings"><span>⚙</span>Settings</button>
+ <button data-page="home" class="active">⌂<span>Home</span></button>
+ <button data-page="ai">✦<span>AI</span></button>
+ <button data-page="music">♫<span>Music</span></button>
+ <button data-page="games">🎮<span>Games</span></button>
+ <button data-page="settings">⚙<span>Settings</span></button>
 </nav>
 
-<div class="game-viewer" id="gameViewer">
-<div class="viewer-bar"><strong id="viewerTitle">Game</strong><button class="secondary" onclick="closeGame()">Close ✕</button><button class="secondary" onclick="fullscreenGame()">Fullscreen ⛶</button></div>
-<iframe class="viewer-frame" id="gameFrame" title="Game viewer" allowfullscreen></iframe>
-<div class="viewer-message">Some game websites don't allow embedding. If a game doesn't load, use its normal link.</div>
+<div class="music-player" id="musicPlayer">
+ <img id="playerArt" src="" alt="Album artwork">
+ <div class="music-info">
+  <strong id="playerTitle">Track</strong>
+  <small id="playerArtist">Artist</small>
+ </div>
+ <audio id="audioPlayer" controls></audio>
+ <button class="btn secondary" onclick="closePlayer()">✕</button>
 </div>
 
 <script>
-const games=[
-["Baseball Bros","sports","⚾","https://baseballbros.io/"],
-["Football Bros","sports","🏈","https://footballbros.io/"],
-["Basketball Stars","sports","🏀","https://www.crazygames.com/game/basketball-stars"],
-["Soccer Bros","sports","⚽","https://soccerbros.gg/"],
-["Retro Bowl","sports","🏈","https://www.crazygames.com/game/retro-bowl"],
-["Moto X3M","arcade","🏍️","https://www.coolmathgames.com/0-moto-x3m"],
-["Slope","arcade","🔵","https://www.coolmathgames.com/0-slope"],
-["Run 3","arcade","🏃","https://www.coolmathgames.com/0-run-3"],
-["Agar.io","arcade","🟣","https://agar.io/"],
-["Slither.io","arcade","🐍","https://slither.io/"],
-["Tetris","puzzle","🧩","https://tetris.com/play-tetris"],
-["2048","puzzle","🔢","https://play2048.co/"],
-["Chess","puzzle","♟️","https://www.chess.com/play"],
-["Cookie Clicker","arcade","🍪","https://orteil.dashnet.org/cookieclicker/"],
-["Little Alchemy 2","puzzle","⚗️","https://littlealchemy2.com/"],
-["Drift Hunters","arcade","🚗","https://www.drifthunters.com/"],
-["Shell Shockers","arcade","🥚","https://shellshock.io/"],
-["Bloxd.io","arcade","🧱","https://bloxd.io/"],
-["Diep.io","arcade","🔵","https://diep.io/"],
-["Paper.io","arcade","📄","https://paper-io.com/"],
-["Minesweeper","puzzle","💣","https://minesweeper.online/"],
-["Solitaire","puzzle","🃏","https://www.solitaire.com/"],
-["Sudoku","puzzle","🔢","https://www.websudoku.com/"],
-["Townscaper","puzzle","🏘️","https://oskarstalberg.com/Townscaper/"],
-["Infinite Craft","puzzle","🌎","https://neal.fun/infinite-craft/"],
-["Flappy Bird","arcade","🐦","https://flappybird.io/"],
-["Skribbl.io","arcade","✏️","https://skribbl.io/"],
-["Gartic Phone","arcade","🎨","https://garticphone.com/"],
-["Bonk.io","arcade","🔵","https://bonk.io/"],
-["Wormate.io","arcade","🐛","https://wormate.io/"]
-];
-
-const anime=[
-["Attack on Titan","⚔️"],
-["Vinland Saga","🛡️"],
-["Death Note","📓"],
-["Demon Slayer","🔥"],
-["Jujutsu Kaisen","👊"],
-["Naruto","🍥"],
-["One Piece","🏴‍☠️"],
-["Bleach","⚔️"],
-["Fullmetal Alchemist: Brotherhood","⚙️"],
-["Hunter x Hunter","🃏"],
-["Chainsaw Man","🪚"],
-["Tokyo Ghoul","👹"],
-["Mob Psycho 100","🌪️"],
-["Dragon Ball","🐉"],
-["My Hero Academia","🦸"],
-["Cowboy Bebop","🚀"],
-["Neon Genesis Evangelion","🤖"],
-["Spy x Family","🕵️"],
-["Haikyuu!!","🏐"],
-["One Punch Man","👊"]
-];
-
-let currentFilter="all";
-
-function showPage(id){
+/* NAVIGATION */
+const titles={
+ home:"Home",ai:"CopenAI",music:"CopenMusic",games:"Games",
+ anime:"Anime",movies:"Movies",notes:"Notes",settings:"Settings"
+};
+function showPage(page){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- const page=document.getElementById(id);
- if(!page)return;
- page.classList.add("active");
- document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- window.scrollTo({top:0,behavior:"smooth"});
+ document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ document.getElementById(page).classList.add("active");
+ document.getElementById("pageTitle").textContent=titles[page];
+ if(page==="games")renderGames();
+ if(page==="anime")renderAnime();
 }
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 
-document.querySelectorAll("[data-page]").forEach(b=>{
- b.addEventListener("click",()=>showPage(b.dataset.page));
-});
-
-document.querySelectorAll("[data-filter]").forEach(b=>{
- b.addEventListener("click",()=>{
-  currentFilter=b.dataset.filter;
-  document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));
-  renderGames();
- });
-});
-
-function renderGames(){
- const q=document.getElementById("gameSearch").value.toLowerCase();
- const filtered=games.filter(g=>(currentFilter==="all"||g[1]===currentFilter)&&g[0].toLowerCase().includes(q));
- document.getElementById("gameGrid").innerHTML=filtered.map(g=>`
- <div class="tile" role="button" tabindex="0" onclick="openGame('${g[0]}','${g[3]}')" onkeydown="if(event.key==='Enter')openGame('${g[0]}','${g[3]}')">
- <div class="tile-art">${g[2]}</div><h3>${g[0]}</h3><p>${g[1]} · Open game ↗</p></div>`).join("")||"<p>No games found.</p>";
+/* CLOCK */
+function updateClock(){
+ document.getElementById("clock").textContent=new Date().toLocaleString();
 }
+updateClock();
+setInterval(updateClock,1000);
 
-function openGame(name,url){
- document.getElementById("viewerTitle").textContent=name;
- document.getElementById("gameFrame").src=url;
- document.getElementById("gameViewer").classList.add("open");
-}
-function closeGame(){
- document.getElementById("gameFrame").src="about:blank";
- document.getElementById("gameViewer").classList.remove("open");
-}
-function fullscreenGame(){
- const frame=document.getElementById("gameFrame");
- if(frame.requestFullscreen)frame.requestFullscreen();
-}
+/* AI CONNECTION */
+const AI_ENDPOINT="";
+/*
+Add your secure backend URL above, for example:
+const AI_ENDPOINT="https://your-worker.example.workers.dev/chat";
 
-function renderAnime(){
- const q=document.getElementById("animeSearch").value.toLowerCase();
- document.getElementById("animeGrid").innerHTML=anime.filter(a=>a[0].toLowerCase().includes(q)).map(a=>`
- <div class="tile"><div class="tile-art">${a[1]}</div><h3>${a[0]}</h3><p>Find on official providers</p></div>`).join("")||"<p>No titles found.</p>";
-}
+Your backend should accept POST JSON:
+{ "message": "Hello" }
 
-function sendChat(){
+And return JSON:
+{ "reply": "Hello! How can I help?" }
+
+Do NOT put private AI API keys in this HTML file.
+*/
+async function sendChat(){
  const input=document.getElementById("chatInput");
- const messages=document.getElementById("chatMessages");
- const question=input.value.trim();
- if(!question)return;
- const user=document.createElement("div");
- user.className="chat-message chat-user";
- user.textContent=question;
- messages.appendChild(user);
- const reply=document.createElement("div");
- reply.className="chat-message chat-ai";
- reply.textContent="CopenAI's interface is ready, but it needs a secure AI backend before it can answer questions.";
- messages.appendChild(reply);
+ const box=document.getElementById("chatMessages");
+ const status=document.getElementById("aiStatus");
+ const message=input.value.trim();
+ if(!message)return;
+ addMessage(message,"user");
  input.value="";
- messages.scrollTop=messages.scrollHeight;
- document.getElementById("chatStatus").textContent="Backend not connected.";
+ if(!AI_ENDPOINT){
+  addMessage("CopenAI's interface is ready, but its AI engine isn't connected yet. Add a secure backend URL to activate real AI responses.","assistant");
+  status.textContent="Backend not configured.";
+  return;
+ }
+ const waiting=addMessage("Thinking...","assistant");
+ try{
+  const response=await fetch(AI_ENDPOINT,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message})
+  });
+  if(!response.ok)throw new Error("Request failed: "+response.status);
+  const data=await response.json();
+  waiting.textContent=data.reply||data.message||"The AI returned an empty response.";
+  status.textContent="Connected.";
+ }catch(error){
+  waiting.textContent="Couldn't connect to the AI service. Check the backend URL and try again.";
+  status.textContent="Connection error.";
+ }
+}
+function addMessage(text,role){
+ const box=document.getElementById("chatMessages");
+ const el=document.createElement("div");
+ el.className="message "+role;
+ el.textContent=text;
+ box.appendChild(el);
+ box.scrollTop=box.scrollHeight;
+ return el;
+}
+function clearChat(){
+ document.getElementById("chatMessages").innerHTML="";
+ addMessage("New conversation started. What's on your mind?","assistant");
 }
 
-const notes=document.getElementById("notesArea");
-notes.value=localStorage.getItem("copenos-notes")||"";
-notes.addEventListener("input",()=>{
- localStorage.setItem("copenos-notes",notes.value);
- document.getElementById("notesStatus").textContent="Saved.";
-});
-
-document.getElementById("accentPicker").addEventListener("input",e=>{
- document.documentElement.style.setProperty("--accent",e.target.value);
- localStorage.setItem("copenos-accent",e.target.value);
-});
-document.getElementById("bgPicker").addEventListener("input",e=>{
- document.documentElement.style.setProperty("--bg",e.target.value);
- document.body.style.backgroundColor=e.target.value;
- localStorage.setItem("copenos-bg",e.target.value);
-});
-function resetTheme(){
- document.documentElement.style.setProperty("--accent","#a78bfa");
- document.documentElement.style.setProperty("--bg","#101016");
- document.body.style.backgroundColor="";
- localStorage.removeItem("copenos-accent");
- localStorage.removeItem("copenos-bg");
- document.getElementById("accentPicker").value="#a78bfa";
- document.getElementById("bgPicker").value="#101016";
+/* MUSIC SEARCH - iTunes public search API */
+let currentTracks=[];
+let favorites=JSON.parse(localStorage.getItem("copenFavorites")||"[]");
+async function searchMusic(){
+ const query=document.getElementById("musicSearch").value.trim();
+ if(!query)return;
+ const results=document.getElementById("musicResults");
+ results.innerHTML='<p>Searching real music catalogs...</p>';
+ try{
+  const url="https://itunes.apple.com/search?term="+encodeURIComponent(query)+"&entity=song&limit=30";
+  const response=await fetch(url);
+  if(!response.ok)throw new Error("Search unavailable");
+  const data=await response.json();
+  currentTracks=data.results||[];
+  renderMusic(currentTracks);
+ }catch(error){
+  results.innerHTML='<div class="card"><h3>Search unavailable</h3><p>Try again or explore SoundCloud and Bandcamp.</p></div>';
+ }
 }
-const savedAccent=localStorage.getItem("copenos-accent");
-const savedBg=localStorage.getItem("copenos-bg");
-if(savedAccent){document.documentElement.style.setProperty("--accent",savedAccent);document.getElementById("accentPicker").value=savedAccent;}
-if(savedBg){document.documentElement.style.setProperty("--bg",savedBg);document.body.style.backgroundColor=savedBg;document.getElementById("bgPicker").value=savedBg;}
+function quickMusic(query){
+ document.getElementById("musicSearch").value=query;
+ searchMusic();
+}
+function renderMusic(tracks){
+ const results=document.getElementById("musicResults");
+ if(!tracks.length){
+  results.innerHTML='<div class="empty">No matching tracks found.</div>';
+  return;
+ }
+ results.innerHTML="";
+ tracks.forEach(track=>{
+  const card=document.createElement("div");
+  card.className="card";
+  const art=track.artworkUrl100||"";
+  const favorite=favorites.some(f=>f.trackId===track.trackId);
+  card.innerHTML=`
+   <img class="art" src="${safe(art)}" alt="">
+   <h3>${safe(track.trackName)}</h3>
+   <p>${safe(track.artistName)}</p>
+   <p>${safe(track.collectionName||"Single")}</p>
+   <button class="btn" data-play>Play preview</button>
+   <button class="btn secondary" data-favorite>${favorite?"♥":"♡"}</button>
+   <p><small>Preview availability depends on the provider.</small></p>`;
+  card.querySelector("[data-play]").onclick=()=>playTrack(track);
+  card.querySelector("[data-favorite]").onclick=()=>toggleFavorite(track);
+  results.appendChild(card);
+ });
+}
+function playTrack(track){
+ const player=document.getElementById("audioPlayer");
+ if(!track.previewUrl){
+  alert("No playable preview is available for this track. Open the artist's music provider instead.");
+  if(track.trackViewUrl)window.open(track.trackViewUrl,"_blank","noopener");
+  return;
+ }
+ document.getElementById("playerArt").src=track.artworkUrl100||"";
+ document.getElementById("playerTitle").textContent=track.trackName;
+ document.getElementById("playerArtist").textContent=track.artistName;
+ document.getElementById("musicPlayer").classList.add("visible");
+ player.src=track.previewUrl;
+ player.play().catch(()=>{});
+}
+function closePlayer(){
+ const player=document.getElementById("audioPlayer");
+ player.pause();player.removeAttribute("src");player.load();
+ document.getElementById("musicPlayer").classList.remove("visible");
+}
+function toggleFavorite(track){
+ const exists=favorites.some(f=>f.trackId===track.trackId);
+ favorites=exists?favorites.filter(f=>f.trackId!==track.trackId):[...favorites,track];
+ localStorage.setItem("copenFavorites",JSON.stringify(favorites));
+ renderMusic(currentTracks);
+}
+function showFavorites(){
+ currentTracks=favorites;
+ renderMusic(favorites);
+}
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function openProvider(url){window.open(url,"_blank","noopener");}
+
+/* GAMES */
+const games=[
+ ["2048","https://play2048.co/","Puzzle"],
+ ["Cookie Clicker","https://orteil.dashnet.org/cookieclicker/","Casual"],
+ ["Tetris","https://tetris.com/play-tetris","Puzzle"],
+ ["Chess","https://www.chess.com/play/computer","Strategy"],
+ ["Little Alchemy 2","https://littlealchemy2.com/","Puzzle"],
+ ["Slither.io","https://slither.io/","Arcade"],
+ ["Agar.io","https://agar.io/","Arcade"],
+ ["Krunker","https://krunker.io/","Action"],
+ ["GeoGuessr","https://www.geoguessr.com/","Puzzle"],
+ ["Wordle","https://www.nytimes.com/games/wordle/index.html","Puzzle"],
+ ["Minesweeper","https://minesweeper.online/","Puzzle"],
+ ["Sudoku","https://sudoku.com/","Puzzle"],
+ ["Coolmath Games","https://www.coolmathgames.com/","Arcade"],
+ ["Poki","https://poki.com/","Arcade"],
+ ["CrazyGames","https://www.crazygames.com/","Arcade"],
+ ["itch.io","https://itch.io/games","Indie"],
+ ["Chess.org","https://chess.org/","Strategy"],
+ ["Neal.fun","https://neal.fun/","Casual"]
+];
+function renderGames(){
+ const query=(document.getElementById("gameSearch").value||"").toLowerCase();
+ const box=document.getElementById("gameResults");
+ box.innerHTML="";
+ games.filter(g=>g.join(" ").toLowerCase().includes(query)).forEach(g=>{
+  const card=document.createElement("div");card.className="card";
+  card.innerHTML=`<h3>${safe(g[0])}</h3><p>${safe(g[2])}</p><button class="btn">Open game site</button>`;
+  card.querySelector("button").onclick=()=>window.open(g[1],"_blank","noopener");
+  box.appendChild(card);
+ });
+}
+
+/* ANIME */
+const anime=[
+ "Attack on Titan","Vinland Saga","Death Note","Demon Slayer",
+ "Jujutsu Kaisen","Naruto","One Piece","Bleach",
+ "Fullmetal Alchemist: Brotherhood","Hunter x Hunter",
+ "Chainsaw Man","Tokyo Ghoul","Mob Psycho 100",
+ "Dragon Ball","My Hero Academia","Cowboy Bebop",
+ "Neon Genesis Evangelion","Spy x Family","Haikyuu!!",
+ "One Punch Man"
+];
+function renderAnime(){
+ const query=(document.getElementById("animeSearch").value||"").toLowerCase();
+ const box=document.getElementById("animeResults");
+ box.innerHTML="";
+ anime.filter(a=>a.toLowerCase().includes(query)).forEach(a=>{
+  const card=document.createElement("div");card.className="card";
+  card.innerHTML=`<h3>${safe(a)}</h3><button class="btn">Find official streaming</button>`;
+  card.querySelector("button").onclick=()=>window.open("https://www.google.com/search?q="+encodeURIComponent(a+" official streaming"),"_blank","noopener");
+  box.appendChild(card);
+ });
+}
+
+/* MOVIES */
+const providers=[
+ ["Tubi","https://tubitv.com/","Free ad-supported streaming"],
+ ["Pluto TV","https://pluto.tv/","Free streaming channels"],
+ ["Netflix","https://www.netflix.com/","Subscription"],
+ ["Disney+","https://www.disneyplus.com/","Subscription"],
+ ["Prime Video","https://www.primevideo.com/","Subscription"],
+ ["YouTube Movies","https://www.youtube.com/movies","Rent or buy"]
+];
+document.getElementById("movieResults").innerHTML=providers.map(p=>
+ `<div class="card"><h3>${safe(p[0])}</h3><p>${safe(p[2])}</p><button class="btn" onclick="openProvider('${p[1]}')">Explore</button></div>`
+).join("");
+
+/* NOTES */
+document.getElementById("noteText").value=localStorage.getItem("copenNotes")||"";
+function saveNotes(){
+ localStorage.setItem("copenNotes",document.getElementById("noteText").value);
+ document.getElementById("noteStatus").textContent="Saved on this device.";
+}
+
+/* SETTINGS */
+function setAccent(color){
+ document.documentElement.style.setProperty("--accent",color);
+ localStorage.setItem("copenAccent",color);
+}
+function setBackground(color){
+ document.documentElement.style.setProperty("--bg",color);
+ localStorage.setItem("copenBackground",color);
+}
+function resetSettings(){
+ localStorage.removeItem("copenAccent");
+ localStorage.removeItem("copenBackground");
+ setAccent("#9b72ff");setBackground("#101018");
+ document.getElementById("accentPicker").value="#9b72ff";
+ document.getElementById("backgroundPicker").value="#101018";
+}
+const savedAccent=localStorage.getItem("copenAccent");
+const savedBg=localStorage.getItem("copenBackground");
+if(savedAccent){setAccent(savedAccent);document.getElementById("accentPicker").value=savedAccent;}
+if(savedBg){setBackground(savedBg);document.getElementById("backgroundPicker").value=savedBg;}
 
 renderGames();
 renderAnime();
