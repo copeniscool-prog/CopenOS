@@ -1,4 +1,4 @@
-
+y
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -369,32 +369,22 @@ display:grid;gap:4px;justify-items:center
  <div class="section-head"><h2>Artists</h2></div>
  <div class="list" id="artistList"></div>
 </section>
-
 <section class="page" id="ai">
- <div class="eyebrow">TOOLS / INTELLIGENCE</div>
+ <div class="eyebrow">COPENOS / AI ASSISTANT</div>
  <h1>CopenAI</h1>
- <p class="sub">Find an AI service for your question.</p>
+ <p class="sub">Your own AI assistant, built into CopenOS.</p>
  <div class="panel">
-  <h3>What do you want to ask?</h3>
-  <textarea id="aiPrompt" placeholder="Type your question or idea..."></textarea>
-  <button class="primary" style="margin-top:12px" onclick="routeAI()">Find my AI ↗</button>
-  <p class="status" id="aiStatus">Ready.</p>
- </div>
- <div class="panel" id="aiRecommendation" style="display:none">
-  <div class="eyebrow">RECOMMENDATION</div>
-  <h2 id="aiName"></h2>
-  <p id="aiReason" class="sub"></p>
-  <button class="primary" onclick="openAI()">Open service ↗</button>
-  <button class="secondary" onclick="copyQuestion()">Copy question</button>
-  <p class="status" id="copyStatus"></p>
- </div>
- <div class="panel">
-  <h3>AI services</h3>
-  <p><a class="open-link" href="https://chatgpt.com/" target="_blank">ChatGPT ↗</a></p>
-  <p><a class="open-link" href="https://claude.ai/" target="_blank">Claude ↗</a></p>
-  <p><a class="open-link" href="https://gemini.google.com/" target="_blank">Gemini ↗</a></p>
-  <p><a class="open-link" href="https://www.perplexity.ai/" target="_blank">Perplexity ↗</a></p>
-  <p class="status">CopenAI recommends external services. A built-in AI needs a secure backend and API connection.</p>
+  <div id="chatMessages">
+   <div class="chat-message chat-ai">
+    Hey! I'm CopenAI. What can I help you with?
+   </div>
+  </div>
+  <div class="chat-controls">
+   <input id="chatInput" placeholder="Message CopenAI..."
+    onkeydown="if(event.key==='Enter')sendChat()">
+   <button class="primary" onclick="sendChat()">Send</button>
+  </div>
+  <p class="status" id="chatStatus">Ready.</p>
  </div>
 </section>
 
@@ -656,5 +646,52 @@ if(savedBg){
 renderGames();
 renderAnime();
 </script>
+ const COPENAI_ENDPOINT="YOUR_BACKEND_URL_HERE";
+
+async function sendChat(){
+ const input=document.getElementById("chatInput");
+ const messages=document.getElementById("chatMessages");
+ const status=document.getElementById("chatStatus");
+ const question=input.value.trim();
+
+ if(!question)return;
+
+ const userMessage=document.createElement("div");
+ userMessage.className="chat-message chat-user";
+ userMessage.textContent=question;
+ messages.appendChild(userMessage);
+
+ input.value="";
+ status.textContent="CopenAI is thinking...";
+
+ try{
+  if(COPENAI_ENDPOINT==="YOUR_BACKEND_URL_HERE"){
+   throw new Error("Backend not connected yet.");
+  }
+
+  const response=await fetch(COPENAI_ENDPOINT,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message:question})
+  });
+
+  if(!response.ok)throw new Error("AI service unavailable.");
+
+  const data=await response.json();
+  const reply=document.createElement("div");
+  reply.className="chat-message chat-ai";
+  reply.textContent=data.reply||"I couldn't generate a response.";
+  messages.appendChild(reply);
+  status.textContent="Connected.";
+ }catch(error){
+  const reply=document.createElement("div");
+  reply.className="chat-message chat-ai";
+  reply.textContent="The chat interface is ready, but the AI backend isn't connected yet.";
+  messages.appendChild(reply);
+  status.textContent="Not connected.";
+ }
+
+ messages.scrollTop=messages.scrollHeight;
+}
 </body>
 </html>
