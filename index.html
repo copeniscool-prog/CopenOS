@@ -1,1 +1,287 @@
-https://github.com/copeniscool-prog/CopenOS.git
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CopenOS Pro 6.0</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090a12;color:#eee;font-family:Arial,sans-serif}
+header{padding:20px;background:#151629;border-bottom:1px solid #30304b;display:flex;justify-content:space-between;align-items:center}
+header h1{color:#ad8aff;margin:0}
+nav{display:flex;gap:8px;padding:12px;background:#111322;overflow-x:auto;position:sticky;top:0;z-index:2}
+button{background:#28213f;color:white;border:0;border-radius:10px;padding:12px 16px;font-size:14px;cursor:pointer}
+button.active,button:hover{background:#7548df}
+main{padding:16px;max-width:1000px;margin:auto}
+.page{display:none}.page.active{display:block}
+.hero{padding:35px 22px;background:linear-gradient(135deg,#49267c,#171e3a);border-radius:20px;margin:12px 0}
+.hero h2{font-size:34px}
+.card,.item{background:#171a2b;border:1px solid #30334a;border-radius:14px;padding:16px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
+.item{display:block;text-decoration:none;color:white}
+.item strong{display:block;margin-bottom:8px}
+small{color:#aaa}
+h2{color:#c1a8ff}
+input,textarea,select{width:100%;padding:13px;background:#111322;color:white;border:1px solid #45405f;border-radius:10px;margin:7px 0;font-size:15px}
+textarea{min-height:120px}
+.chatbox{background:#111322;border:1px solid #39334f;border-radius:16px;padding:12px;min-height:220px;margin:12px 0}
+.message{padding:14px;margin:10px 0;border-radius:12px;background:#24213b;white-space:pre-wrap;overflow-wrap:anywhere}
+.message.user{background:#392765}
+.chatrow{display:flex;gap:8px;flex-wrap:wrap}
+.chatrow input{flex:1;min-width:180px}
+.chatrow button{white-space:nowrap}
+.ai-label{color:#ad8aff;font-size:12px;font-weight:bold}
+.status{color:#aaa;font-size:13px}
+.ai-glow{background:linear-gradient(135deg,#21183e,#171e3a);border:1px solid #6545a4;border-radius:18px;padding:20px}
+.provider{background:#171a2b;border:1px solid #39334f;border-radius:12px;padding:14px;margin:8px 0}
+.provider a{color:#c1a8ff}
+footer{text-align:center;padding:30px;color:#777}
+</style>
+</head>
+<body>
+
+<header>
+<h1>✦ CopenOS</h1>
+<span>PRO 6.0</span>
+</header>
+
+<nav>
+<button class="active" onclick="showPage('home',this)">🏠 Home</button>
+<button onclick="showPage('games',this)">🎮 Games</button>
+<button onclick="showPage('anime',this)">🍥 Anime</button>
+<button onclick="showPage('music',this)">🎵 Music</button>
+<button onclick="showPage('ai',this)">✦ CopenAI</button>
+<button onclick="showPage('notes',this)">📝 Notes</button>
+</nav>
+
+<main>
+
+<section id="home" class="page active">
+<div class="hero">
+<small>COPENOS PRO 6.0</small>
+<h2>Welcome back.</h2>
+<p>Your games, anime, music and unified AI hub.</p>
+<button onclick="showPage('ai')">Open CopenAI →</button>
+</div>
+<div class="grid">
+<div class="card"><h2>🎮 Games</h2>Game links</div>
+<div class="card"><h2>🍥 Anime</h2>Anime catalog</div>
+<div class="card"><h2>🎵 Music</h2>Music platforms</div>
+<div class="card"><h2>✦ AI</h2>Unified AI router</div>
+</div>
+</section>
+
+<section id="games" class="page">
+<h2>🎮 Games Library</h2>
+<p>Availability depends on your network.</p>
+<div class="grid" id="gameList"></div>
+</section>
+
+<section id="anime" class="page">
+<h2>🍥 Anime Catalog</h2>
+<input id="animeSearch" placeholder="Search anime..." oninput="filterAnime()">
+<div class="grid" id="animeList"></div>
+</section>
+
+<section id="music" class="page">
+<h2>🎵 Music Center</h2>
+<input id="musicSearch" placeholder="Search a song or artist">
+<button onclick="searchMusic()">Search YouTube Music ↗</button>
+<div class="grid">
+<a class="item" href="https://music.youtube.com/" target="_blank"><strong>YouTube Music</strong><small>Open platform ↗</small></a>
+<a class="item" href="https://open.spotify.com/" target="_blank"><strong>Spotify</strong><small>Open platform ↗</small></a>
+<a class="item" href="https://soundcloud.com/" target="_blank"><strong>SoundCloud</strong><small>Open platform ↗</small></a>
+</div>
+<h2>Quick searches</h2>
+<div class="grid" id="artists"></div>
+</section>
+
+<section id="ai" class="page">
+<div class="ai-glow">
+<small>YOUR UNIFIED AI EXPERIENCE</small>
+<h2>✦ CopenAI</h2>
+<h3>One question. The right AI.</h3>
+<p>Ask anything. CopenAI recommends a service based on what you're asking.</p>
+</div>
+
+<div class="card">
+<div class="ai-label">SMART AI ROUTER</div>
+<h2>What do you need help with?</h2>
+<textarea id="prompt" placeholder="Ask a question, explain an idea, write code, research something..." rows="5"></textarea>
+<button style="width:100%;background:#7548df" onclick="routeAI()">✦ Find my best AI →</button>
+<p class="status" id="aiStatus">Ready for your question.</p>
+</div>
+
+<div id="recommendation" class="card" style="display:none">
+<div class="ai-label">YOUR RECOMMENDATION</div>
+<h2 id="recommendedName">Recommended AI</h2>
+<p id="reason"></p>
+<button style="width:100%;background:#7548df" onclick="openRecommended()">Open recommended AI ↗</button>
+<button style="width:100%;margin-top:8px" onclick="copyQuestion()">Copy my question</button>
+<p class="status" id="copyStatus"></p>
+</div>
+
+<div class="card">
+<h2>All AI services</h2>
+<div class="provider">
+<strong>ChatGPT</strong><p>General questions, coding and explanations.</p>
+<a href="https://chatgpt.com/" target="_blank">Open ChatGPT ↗</a>
+</div>
+<div class="provider">
+<strong>Claude</strong><p>Writing, long documents and detailed analysis.</p>
+<a href="https://claude.ai/" target="_blank">Open Claude ↗</a>
+</div>
+<div class="provider">
+<strong>Gemini</strong><p>Learning, explanations and general assistance.</p>
+<a href="https://gemini.google.com/" target="_blank">Open Gemini ↗</a>
+</div>
+<div class="provider">
+<strong>Perplexity</strong><p>Research and finding information with sources.</p>
+<a href="https://www.perplexity.ai/" target="_blank">Open Perplexity ↗</a>
+</div>
+</div>
+<p class="status">CopenAI recommends and opens real AI services. Their responses are generated by those services, not by this website. School network restrictions may block access.</p>
+</section>
+
+<section id="notes" class="page">
+<h2>📝 Your Notes</h2>
+<textarea id="notesText" placeholder="Write your notes here..."></textarea>
+<button onclick="saveNotes()">Save notes</button>
+<p id="saveStatus"></p>
+</section>
+
+</main>
+
+<footer>CopenOS Pro 6.0 · CopenAI Unified</footer>
+
+<script>
+function showPage(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+window.scrollTo(0,0);
+}
+
+const games=[
+["Baseball Bros","https://baseballbros.io/"],
+["Football Bros","https://footballbros.io/"],
+["Basketball Stars","https://www.crazygames.com/game/basketball-stars"],
+["Soccer Bros","https://soccerbros.gg/"],
+["Retro Bowl","https://www.crazygames.com/game/retro-bowl"],
+["Moto X3M","https://www.coolmathgames.com/0-moto-x3m"],
+["Slope","https://www.coolmathgames.com/0-slope"],
+["Run 3","https://www.coolmathgames.com/0-run-3"],
+["Agar.io","https://agar.io/"],
+["Slither.io","https://slither.io/"],
+["Tetris","https://tetris.com/play-tetris"],
+["2048","https://play2048.co/"],
+["Chess","https://www.chess.com/"]
+];
+
+document.getElementById('gameList').innerHTML=games.map(g=>
+`<a class="item" href="${g[1]}" target="_blank"><strong>🎮 ${g[0]}</strong><small>Open game ↗</small></a>`
+).join('');
+
+const anime=[
+"Attack on Titan","Vinland Saga","Death Note","Blue Lock",
+"Solo Leveling","Hunter x Hunter","Demon Slayer",
+"Jujutsu Kaisen","Naruto","One Piece","Dragon Ball Z",
+"Fullmetal Alchemist: Brotherhood","Tokyo Revengers",
+"Mob Psycho 100","My Hero Academia","Chainsaw Man",
+"Haikyu!!","Spy x Family","Pokémon",
+"JoJo's Bizarre Adventure","One Punch Man"
+];
+
+function renderAnime(list){
+document.getElementById('animeList').innerHTML=list.map(a=>
+`<a class="item" target="_blank" href="https://myanimelist.net/anime.php?q=${encodeURIComponent(a)}"><strong>🍥 ${a}</strong><small>Anime information ↗</small></a>`
+).join('');
+}
+function filterAnime(){
+let q=document.getElementById('animeSearch').value.toLowerCase();
+renderAnime(anime.filter(a=>a.toLowerCase().includes(q)));
+}
+renderAnime(anime);
+
+const artists=["Blink-182","Alex G","Slipknot","Korn","Green Day","The Offspring"];
+document.getElementById('artists').innerHTML=artists.map(a=>
+`<a class="item" target="_blank" href="https://music.youtube.com/search?q=${encodeURIComponent(a)}"><strong>🎧 ${a}</strong><small>Listen ↗</small></a>`
+).join('');
+
+function searchMusic(){
+let q=document.getElementById('musicSearch').value.trim();
+if(q)window.open('https://music.youtube.com/search?q='+encodeURIComponent(q),'_blank');
+}
+
+function saveNotes(){
+localStorage.setItem('copenosNotes',document.getElementById('notesText').value);
+document.getElementById('saveStatus').textContent='Saved!';
+}
+document.getElementById('notesText').value=localStorage.getItem('copenosNotes')||'';
+
+let selectedAI='';
+let currentQuestion='';
+
+function routeAI(){
+const prompt=document.getElementById('prompt').value.trim();
+const status=document.getElementById('aiStatus');
+if(!prompt){
+status.textContent='Type a question first.';
+return;
+}
+currentQuestion=prompt;
+const q=prompt.toLowerCase();
+
+let ai,reason,url;
+
+if(/\b(code|coding|program|javascript|html|css|python|debug|error|website|app)\b/.test(q)){
+ai='ChatGPT';
+reason='Your question looks like a coding or programming task.';
+url='https://chatgpt.com/';
+}
+else if(/\b(essay|write|story|rewrite|draft|poem|document|summarize|long text|analyze)\b/.test(q)){
+ai='Claude';
+reason='Your question looks like a writing or detailed analysis task.';
+url='https://claude.ai/';
+}
+else if(/\b(latest|today|current|news|research|sources|citations|find out|recent|statistics)\b/.test(q)){
+ai='Perplexity';
+reason='Your question looks like research or a request for current information.';
+url='https://www.perplexity.ai/';
+}
+else{
+ai='Gemini';
+reason='Your question looks like a general knowledge or learning question.';
+url='https://gemini.google.com/';
+}
+
+selectedAI=url;
+document.getElementById('recommendedName').textContent='✦ '+ai;
+document.getElementById('reason').textContent=reason;
+document.getElementById('recommendation').style.display='block';
+status.textContent='Recommendation ready!';
+}
+
+function openRecommended(){
+if(!selectedAI)return;
+copyQuestion().then(()=>{
+window.open(selectedAI,'_blank');
+});
+}
+
+async function copyQuestion(){
+const status=document.getElementById('copyStatus');
+try{
+await navigator.clipboard.writeText(currentQuestion);
+status.textContent='Question copied! Paste it into the AI chat.';
+return true;
+}catch(e){
+status.textContent='Clipboard unavailable. Select and copy your question manually.';
+return false;
+}
+}
+
+</script>
+</body>
+</html>
