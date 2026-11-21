@@ -692,6 +692,14 @@ async function sendChat(){
  }
 
  messages.scrollTop=messages.scrollHeight;
-}
+}<div class="game-viewer" id="gameViewer">
+ <div class="viewer-bar">
+  <strong id="viewerTitle">Game</strong>
+  <button onclick="closeGame()">Close ✕</button>
+  <button onclick="fullscreenGame()">Fullscreen ⛶</button>
+ </div>
+ <iframe class="viewer-frame" id="gameFrame"
+ title="Game viewer" allowfullscreen></iframe>
+</div>
 </body>
 </html>
