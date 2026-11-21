@@ -5,23 +5,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101018">
-<title>CopenOS</title>
+<title>CopenOS 12.0</title>
 <style>
-:root{--bg:#101018;--panel:#1b1b27;--panel2:#272737;--accent:#a78bfa;--text:#f5f3fa;--muted:#aaa6ba}
+:root{
+ --bg:#101018;--panel:#1b1b27;--panel2:#28283a;
+ --accent:#a78bfa;--text:#f5f3fa;--muted:#aaa6ba;
+}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
-.sidebar{position:fixed;inset:0 auto 0 0;width:215px;background:#15151f;padding:20px 12px;display:flex;flex-direction:column;gap:7px;border-right:1px solid #ffffff16;z-index:5}
+.sidebar{
+ position:fixed;inset:0 auto 0 0;width:215px;background:#15151f;
+ padding:20px 12px;display:flex;flex-direction:column;gap:7px;
+ border-right:1px solid #ffffff18;z-index:5
+}
 .logo{font-size:24px;font-weight:900;padding:8px 12px 25px}
 .logo span{color:var(--accent)}
 .nav{background:none;border:0;color:var(--muted);padding:13px;border-radius:10px;text-align:left}
 .nav.active,.nav:hover{background:var(--panel2);color:white}
 .sidebar small{margin-top:auto;color:var(--muted);padding:10px}
-main{margin-left:215px;padding:25px;width:calc(100% - 215px);max-width:1450px}
+main{margin-left:215px;padding:25px;width:calc(100% - 215px);max-width:1500px}
 header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
 h1{font-size:26px;margin:0}
-h2{font-size:19px;margin-top:0}
+h2{font-size:20px;margin-top:0}
 p,.muted{color:var(--muted);line-height:1.5}
 .section{display:none}.section.active{display:block}
 .panel{background:var(--panel);border:1px solid #ffffff16;border-radius:16px;padding:19px;margin-bottom:16px}
@@ -34,12 +41,12 @@ p,.muted{color:var(--muted);line-height:1.5}
 .btn{background:var(--accent);color:#171321;border:0;padding:11px 14px;border-radius:9px;font-weight:bold}
 .btn.secondary{background:var(--panel2);color:white}
 .btn:disabled{opacity:.5}
-input,textarea{background:var(--panel2);color:white;border:1px solid #ffffff20;border-radius:10px;padding:12px;width:100%;outline:none}
+input,textarea,select{background:var(--panel2);color:white;border:1px solid #ffffff20;border-radius:10px;padding:12px;width:100%;outline:none}
 textarea{min-height:100px}
 .search,.chatrow{display:flex;gap:9px;margin:12px 0}
 .search input,.chatrow input{flex:1;min-width:0}
 .status{font-size:12px;color:var(--muted);margin:10px 0;white-space:pre-wrap}
-.chatbox{height:360px;overflow:auto;background:#111119;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:10px}
+.chatbox{height:350px;overflow:auto;background:#111119;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:10px}
 .msg{padding:12px;border-radius:12px;max-width:90%;white-space:pre-wrap;line-height:1.5}
 .msg.user{align-self:flex-end;background:#493875}
 .msg.ai{align-self:flex-start;background:var(--panel2)}
@@ -48,208 +55,196 @@ textarea{min-height:100px}
 .trackinfo{flex:1;min-width:0}
 .trackinfo strong,.trackinfo span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .trackinfo span{font-size:12px;color:var(--muted);margin-top:5px}
-a{color:var(--accent);text-decoration:none}
 audio{width:100%;margin-top:12px}
+a{color:var(--accent);text-decoration:none}
+#gameFrame{width:100%;height:65vh;border:0;border-radius:12px;background:#08080c}
 .mobile{display:none}
 @media(max-width:740px){
-.sidebar{display:none}main{margin:0;width:100%;padding:18px 13px 90px}
-.mobile{display:flex;position:fixed;bottom:0;left:0;right:0;background:#15151f;overflow-x:auto;padding:6px;z-index:5;border-top:1px solid #ffffff16}
-.mobile .nav{white-space:nowrap;text-align:center}
-.chatbox{height:48vh}
+ .sidebar{display:none}
+ main{margin:0;width:100%;padding:18px 13px 90px}
+ .mobile{display:flex;position:fixed;bottom:0;left:0;right:0;background:#15151f;overflow-x:auto;padding:6px;z-index:5;border-top:1px solid #ffffff16}
+ .mobile .nav{white-space:nowrap;text-align:center}
+ .chatbox{height:48vh}
 }
 </style>
 </head>
 <body>
+
 <aside class="sidebar">
-<div class="logo">COPEN<span>OS</span></div>
-<button class="nav active" data-page="home">⌂ Home</button>
-<button class="nav" data-page="ai">✦ CopenAI</button>
-<button class="nav" data-page="music">♫ CopenMusic</button>
-<button class="nav" data-page="games">▣ Games</button>
-<button class="nav" data-page="anime">◈ Anime</button>
-<button class="nav" data-page="movies">▸ Movies</button>
-<button class="nav" data-page="notes">▤ Notes</button>
-<button class="nav" data-page="settings">⚙ Settings</button>
-<small>CopenOS 11.0</small>
+ <div class="logo">COPEN<span>OS</span></div>
+ <button class="nav active" data-page="home">⌂ Home</button>
+ <button class="nav" data-page="ai">✦ CopenAI</button>
+ <button class="nav" data-page="music">♫ CopenMusic</button>
+ <button class="nav" data-page="games">▣ Games</button>
+ <button class="nav" data-page="anime">◈ Anime</button>
+ <button class="nav" data-page="movies">▸ Movies</button>
+ <button class="nav" data-page="notes">▤ Notes</button>
+ <button class="nav" data-page="settings">⚙ Settings</button>
+ <small>CopenOS 12.0</small>
 </aside>
 
 <main>
-<header><h1 id="pageTitle">Home</h1><span id="clock" class="muted"></span></header>
+<header>
+ <h1 id="pageTitle">Home</h1>
+ <span id="clock" class="muted"></span>
+</header>
 
 <section class="section active" id="home">
-<div class="hero">
-<h2>Welcome to CopenOS.</h2>
-<p>Your personal browser desktop.</p>
-<button class="btn" data-go="ai">Open CopenAI</button>
-</div>
-<div class="grid">
-<div class="card"><h3>✦ CopenAI</h3><p>Chat with an AI model.</p><button class="btn secondary" data-go="ai">Open</button></div>
-<div class="card"><h3>♫ CopenMusic</h3><p>Search and play available tracks.</p><button class="btn secondary" data-go="music">Open</button></div>
-<div class="card"><h3>▣ Games</h3><p>Browse games.</p><button class="btn secondary" data-go="games">Open</button></div>
-<div class="card"><h3>▤ Notes</h3><p>Save your notes.</p><button class="btn secondary" data-go="notes">Open</button></div>
-</div>
+ <div class="hero">
+  <h2>Welcome to CopenOS.</h2>
+  <p>Your music, games, entertainment, and tools.</p>
+  <button class="btn" data-go="games">Explore games</button>
+ </div>
+ <div class="grid">
+  <div class="card"><h3>✦ CopenAI</h3><p>Your AI chat interface.</p><button class="btn secondary" data-go="ai">Open</button></div>
+  <div class="card"><h3>♫ CopenMusic</h3><p>Explore different music genres.</p><button class="btn secondary" data-go="music">Open</button></div>
+  <div class="card"><h3>▣ Games</h3><p>Play built-in mini-games or visit game sites.</p><button class="btn secondary" data-go="games">Open</button></div>
+  <div class="card"><h3>▤ Notes</h3><p>Save notes on this device.</p><button class="btn secondary" data-go="notes">Open</button></div>
+ </div>
 </section>
 
 <section class="section" id="ai">
-<div class="panel">
-<h2>CopenAI</h2>
-<p>This browser model is experimental. Its first download may take time and it may not run on every device.</p>
-<button class="btn" id="loadAI">Load AI</button>
-<button class="btn secondary" id="cancelAI">Cancel</button>
-<div class="status" id="aiStatus">AI is not loaded.</div>
-<div class="chatbox" id="messages"><div class="msg ai">Welcome to CopenAI. Load the model to begin.</div></div>
-<div class="chatrow">
-<input id="question" placeholder="Ask something..." autocomplete="off">
-<button class="btn" id="send">Send</button>
-</div>
-</div>
+ <div class="panel">
+  <h2>CopenAI</h2>
+  <p>A real AI response requires a connected AI service. This interface will not pretend that a response was generated when no service is connected.</p>
+  <div class="status" id="aiStatus">No AI service connected.</div>
+  <div class="chatbox" id="messages">
+   <div class="msg ai">Welcome to CopenAI. The chat interface is ready, but it needs a secure AI backend before it can answer questions.</div>
+  </div>
+  <div class="chatrow">
+   <input id="question" placeholder="Ask something...">
+   <button class="btn" id="send">Send</button>
+  </div>
+ </div>
 </section>
 
 <section class="section" id="music">
-<div class="panel">
-<h2>CopenMusic</h2>
-<p>Search tracks from Audius. Available tracks can play inside this page.</p>
-<div class="search"><input id="musicQuery" placeholder="Search songs or artists"><button class="btn" id="musicSearch">Search</button></div>
-<div class="status" id="musicStatus">Ready.</div>
-<div id="musicResults"></div>
-<h3 id="playingTitle"></h3>
-<audio id="player" controls></audio>
-</div>
-<div class="panel"><h2>Favorites</h2><div id="favorites"></div></div>
+ <div class="panel">
+  <h2>CopenMusic</h2>
+  <p>Search tracks available through Audius. Playback stays inside this player.</p>
+  <div class="search">
+   <input id="musicQuery" placeholder="Search songs or artists...">
+   <button class="btn" id="musicSearch">Search</button>
+  </div>
+  <select id="genre">
+   <option value="">All genres</option>
+   <option>Pop</option><option>Rock</option><option>Hip-Hop</option>
+   <option>Electronic</option><option>House</option><option>Techno</option>
+   <option>Jazz</option><option>Classical</option><option>Country</option>
+   <option>Metal</option><option>Indie</option><option>R&B</option>
+   <option>Ambient</option><option>Dance</option><option>Dubstep</option>
+   <option>Drum and Bass</option><option>Phonk</option><option>Emo</option>
+   <option>Pop Punk</option><option>Lo-fi</option><option>Reggae</option>
+  </select>
+  <div class="status" id="musicStatus">Search for a song or genre.</div>
+  <div id="musicResults"></div>
+  <h3 id="playingTitle"></h3>
+  <audio id="player" controls></audio>
+ </div>
+ <div class="panel"><h2>Favorites</h2><div id="favorites"></div></div>
 </section>
 
 <section class="section" id="games">
-<div class="panel"><h2>Games</h2><input id="gameFilter" placeholder="Search games">
-<div class="grid" id="gameGrid" style="margin-top:14px"></div></div>
+ <div class="panel">
+  <h2>Built-in Blob Games</h2>
+  <p>These mini-games are created locally by CopenOS and opened using Blob URLs.</p>
+  <div class="grid" id="builtGames"></div>
+ </div>
+ <div class="panel">
+  <h2>External Games</h2>
+  <p>These open their official websites. Some sites block embedding.</p>
+  <input id="gameFilter" placeholder="Search games...">
+  <div class="grid" id="gameGrid" style="margin-top:14px"></div>
+ </div>
+ <div class="panel" id="viewer" style="display:none">
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+   <h2 id="gameTitle">Game viewer</h2>
+   <button class="btn secondary" id="closeGame">Close</button>
+  </div>
+  <iframe id="gameFrame" title="Game viewer" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups"></iframe>
+  <p class="muted">If a game refuses to load here, use its official website link.</p>
+ </div>
 </section>
 
 <section class="section" id="anime">
-<div class="panel"><h2>Anime</h2><input id="animeFilter" placeholder="Search anime">
-<div class="grid" id="animeGrid" style="margin-top:14px"></div></div>
+ <div class="panel">
+  <h2>Anime</h2>
+  <input id="animeFilter" placeholder="Search anime...">
+  <div class="grid" id="animeGrid" style="margin-top:14px"></div>
+ </div>
 </section>
 
 <section class="section" id="movies">
-<div class="panel"><h2>Movies & Streaming</h2><div class="grid" id="movieGrid"></div></div>
+ <div class="panel"><h2>Movies & Streaming</h2><div class="grid" id="movieGrid"></div></div>
 </section>
 
 <section class="section" id="notes">
-<div class="panel"><h2>Notes</h2><textarea id="noteText" placeholder="Write a note..."></textarea>
-<button class="btn" id="saveNote" style="margin-top:10px">Save</button><div id="noteList"></div></div>
+ <div class="panel">
+  <h2>Notes</h2>
+  <textarea id="noteText" placeholder="Write a note..."></textarea>
+  <button class="btn" id="saveNote" style="margin-top:10px">Save note</button>
+  <div id="noteList"></div>
+ </div>
 </section>
 
 <section class="section" id="settings">
-<div class="panel"><h2>Appearance</h2>
-<p>Accent color</p><input type="color" id="accent" value="#a78bfa">
-<p>Background color</p><input type="color" id="background" value="#101018">
-<button class="btn secondary" id="reset" style="margin-top:12px">Reset</button></div>
+ <div class="panel">
+  <h2>Appearance</h2>
+  <p>Accent color</p><input type="color" id="accent" value="#a78bfa">
+  <p>Background color</p><input type="color" id="background" value="#101018">
+  <button class="btn secondary" id="reset" style="margin-top:12px">Reset colors</button>
+ </div>
 </section>
 </main>
 
 <nav class="mobile">
-<button class="nav active" data-page="home">Home</button>
-<button class="nav" data-page="ai">AI</button>
-<button class="nav" data-page="music">Music</button>
-<button class="nav" data-page="games">Games</button>
-<button class="nav" data-page="anime">Anime</button>
-<button class="nav" data-page="movies">Movies</button>
-<button class="nav" data-page="notes">Notes</button>
-<button class="nav" data-page="settings">Settings</button>
+ <button class="nav active" data-page="home">Home</button>
+ <button class="nav" data-page="ai">AI</button>
+ <button class="nav" data-page="music">Music</button>
+ <button class="nav" data-page="games">Games</button>
+ <button class="nav" data-page="anime">Anime</button>
+ <button class="nav" data-page="movies">Movies</button>
+ <button class="nav" data-page="notes">Notes</button>
+ <button class="nav" data-page="settings">Settings</button>
 </nav>
 
-<script type="module">
+<script>
 const $=id=>document.getElementById(id);
 const pages=["home","ai","music","games","anime","movies","notes","settings"];
+
 function go(page){
  if(!pages.includes(page))return;
  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
  $(page).classList.add("active");
  document.querySelectorAll("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
  $("pageTitle").textContent=page==="ai"?"CopenAI":page==="music"?"CopenMusic":page[0].toUpperCase()+page.slice(1);
+ window.scrollTo(0,0);
 }
 document.querySelectorAll("[data-page]").forEach(x=>x.onclick=()=>go(x.dataset.page));
 document.querySelectorAll("[data-go]").forEach(x=>x.onclick=()=>go(x.dataset.go));
-function clock(){ $("clock").textContent=new Date().toLocaleString(); }
+function clock(){$("clock").textContent=new Date().toLocaleString();}
 clock();setInterval(clock,1000);
 
-/* AI */
-let model=null,loading=false,cancelled=false;
-let history=[{role:"system",content:"You are CopenAI, a helpful and friendly assistant. Give clear answers."}];
-
-function message(text,who){
- const el=document.createElement("div");el.className="msg "+who;el.textContent=text;
- $("messages").appendChild(el);$("messages").scrollTop=$("messages").scrollHeight;return el;
+/* AI INTERFACE */
+function addMessage(text,type){
+ const d=document.createElement("div");d.className="msg "+type;d.textContent=text;
+ $("messages").append(d);$("messages").scrollTop=$("messages").scrollHeight;
 }
-async function loadModel(){
- if(model)return model;
- if(loading)throw Error("The model is already loading.");
- loading=true;cancelled=false;$("loadAI").disabled=true;
- $("aiStatus").textContent="Connecting to the model library...";
- try{
-  const lib=await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1");
-  if(cancelled)throw Error("Loading cancelled.");
-  $("aiStatus").textContent="Downloading model files. This can take a while...";
-  model=await lib.pipeline("text-generation","onnx-community/Qwen2.5-0.5B-Instruct",{dtype:"q4"});
-  if(cancelled){model=null;throw Error("Loading cancelled.");}
-  $("aiStatus").textContent="AI loaded successfully.";
-  $("loadAI").textContent="AI loaded ✓";
-  return model;
- }catch(e){
-  model=null;
-  $("aiStatus").textContent="Could not load AI: "+e.message+"\nTry a newer browser or a device with more available memory.";
-  $("loadAI").textContent="Try again";
-  throw e;
- }finally{
-  loading=false;$("loadAI").disabled=false;
- }
-}
-$("cancelAI").onclick=()=>{
- cancelled=true;
- $("aiStatus").textContent="Cancellation requested. A download already in progress may finish before stopping.";
-};
-$("loadAI").onclick=()=>loadModel().catch(()=>{});
-
-async function ask(){
+$("send").onclick=()=>{
  const q=$("question").value.trim();if(!q)return;
- $("question").value="";message(q,"user");history.push({role:"user",content:q});
- $("send").disabled=true;
- const reply=message("Working...","ai");
- try{
-  const m=await loadModel();
-  $("aiStatus").textContent="Generating answer...";
-  const result=await m(history,{max_new_tokens:160,temperature:.7});
-  const generated=result?.[0]?.generated_text;
-  let answer="";
-  if(Array.isArray(generated)){
-   const last=generated[generated.length-1];
-   answer=typeof last==="string"?last:last?.content||"";
-  }else if(typeof generated==="string"){
-   answer=generated;
-   const marker=answer.lastIndexOf("assistant");
-   if(marker>=0)answer=answer.slice(marker+"assistant".length).replace(/^[:\s]+/,"");
-  }
-  if(!answer.trim())throw Error("The model returned no text.");
-  reply.textContent=answer.trim();
-  history.push({role:"assistant",content:answer.trim()});
-  while(history.length>9)history.splice(1,1);
-  $("aiStatus").textContent="Ready.";
- }catch(e){
-  reply.textContent="Sorry, the AI failed: "+e.message;
-  $("aiStatus").textContent="Request failed. Check your connection and available memory.";
-  history.pop();
- }finally{$("send").disabled=false;}
-}
-$("send").onclick=ask;
-$("question").onkeydown=e=>{if(e.key==="Enter")ask();};
+ addMessage(q,"user");$("question").value="";
+ addMessage("CopenAI is not connected to an AI service yet. A secure backend is required to generate real answers.","ai");
+ $("aiStatus").textContent="No AI backend configured.";
+};
+$("question").onkeydown=e=>{if(e.key==="Enter")$("send").click();};
 
 /* MUSIC */
-let tracks=[];
 function getFav(){try{return JSON.parse(localStorage.getItem("copenFav")||"[]")}catch{return []}}
 function saveFav(x){localStorage.setItem("copenFav",JSON.stringify(x))}
-function play(track){
- $("playingTitle").textContent=track.title+" — "+track.artist;
- $("player").src=track.stream;
- $("player").load();
- $("player").play().catch(()=>{$("musicStatus").textContent="Playback failed. Try another track.";});
+function playTrack(t){
+ $("playingTitle").textContent=t.title+" — "+t.artist;
+ $("player").src=t.stream;$("player").load();
+ $("player").play().catch(()=>$("musicStatus").textContent="Playback failed. Try another track.");
 }
 function renderTracks(items,target){
  $(target).innerHTML="";
@@ -261,57 +256,101 @@ function renderTracks(items,target){
   const title=document.createElement("strong");title.textContent=t.title;
   const artist=document.createElement("span");artist.textContent=t.artist;
   info.append(title,artist);
-  const playBtn=document.createElement("button");playBtn.className="btn";playBtn.textContent="Play";playBtn.onclick=()=>play(t);
+  const play=document.createElement("button");play.className="btn";play.textContent="Play";play.onclick=()=>playTrack(t);
   const fav=document.createElement("button");fav.className="btn secondary";fav.textContent="♡";
-  fav.onclick=()=>{let f=getFav();if(f.some(x=>x.id===t.id))f=f.filter(x=>x.id!==t.id);else f.unshift(t);saveFav(f);renderFavorites();};
-  row.append(img,info,playBtn,fav);$(target).appendChild(row);
+  fav.onclick=()=>{
+   let f=getFav();
+   if(f.some(x=>x.id===t.id))f=f.filter(x=>x.id!==t.id);else f.unshift(t);
+   saveFav(f);renderFavorites();
+  };
+  row.append(img,info,play,fav);$(target).append(row);
  });
 }
 async function searchMusic(){
- const q=$("musicQuery").value.trim();if(!q)return;
- $("musicStatus").textContent="Searching...";
+ const q=$("musicQuery").value.trim()||$("genre").value;
+ if(!q){$("musicStatus").textContent="Enter a search or choose a genre.";return;}
+ $("musicStatus").textContent="Searching Audius...";
  try{
-  const res=await fetch("https://discoveryprovider.audius.co/v1/tracks/search?query="+encodeURIComponent(q)+"&limit=25&app_name=CopenOS");
-  if(!res.ok)throw Error("Music provider returned "+res.status);
-  const data=await res.json();
-  tracks=(data.data||[]).map(t=>({
+  const url="https://discoveryprovider.audius.co/v1/tracks/search?query="+encodeURIComponent(q)+"&limit=30&app_name=CopenOS";
+  const response=await fetch(url);
+  if(!response.ok)throw Error("Provider returned "+response.status);
+  const data=await response.json();
+  const tracks=(data.data||[]).map(t=>({
    id:t.id,title:t.title||"Untitled",artist:t.user?.name||"Unknown artist",
-   art:t.artwork?.["150x150"]||"",stream:"https://discoveryprovider.audius.co/v1/tracks/"+encodeURIComponent(t.id)+"/stream?app_name=CopenOS"
+   art:t.artwork?.["150x150"]||"",
+   stream:"https://discoveryprovider.audius.co/v1/tracks/"+encodeURIComponent(t.id)+"/stream?app_name=CopenOS"
   }));
   renderTracks(tracks,"musicResults");
-  $("musicStatus").textContent=tracks.length+" tracks found. Full playback depends on track availability.";
+  $("musicStatus").textContent=tracks.length+" results. Catalog availability varies by genre and artist.";
  }catch(e){$("musicStatus").textContent="Music search failed: "+e.message;}
 }
 $("musicSearch").onclick=searchMusic;
 $("musicQuery").onkeydown=e=>{if(e.key==="Enter")searchMusic();};
+$("genre").onchange=()=>{$("musicQuery").value=$("genre").value;searchMusic();};
 function renderFavorites(){renderTracks(getFav(),"favorites");}
 renderFavorites();
 
-/* GAMES */
-const games=[
-["Baseball Bros","https://www.baseballbros.io/"],["Football Bros","https://fb.footballbros.io/index.php"],
-["Basket Bros","https://basketbros.io/"],["Retro Bowl","https://www.retrobowlgame.com/"],
-["Shell Shockers","https://shellshock.io/"],["Smash Karts","https://smashkarts.io/"],
-["1v1.LOL","https://1v1.lol/"],["Slope","https://slopegame.io/"],
-["Run 3","https://run3.io/"],["Moto X3M","https://moto-x3m.com/"],
-["Krunker","https://krunker.io/"],["Agar.io","https://agar.io/"]
+/* BUILT-IN BLOB MINI-GAMES */
+const miniGames=[
+ ["Click Challenge",`<h1>Click Challenge</h1><p>Click the button as many times as possible in 10 seconds!</p><h2 id="score">0</h2><button onclick="score++ ;document.getElementById('score').textContent=score">CLICK!</button><p id="timer">10 seconds</p><script>let score=0,time=10;let t=setInterval(()=>{time--;document.getElementById('timer').textContent=time+' seconds';if(time<=0){clearInterval(t);document.querySelector('button').disabled=true;document.getElementById('timer').textContent='Finished! Final score: '+score}},1000)<\/script>`],
+ ["Number Guess",`<h1>Number Guess</h1><p>Guess a number from 1 to 20.</p><input id="guess" type="number"><button onclick="check()">Guess</button><p id="result"></p><script>let answer=Math.floor(Math.random()*20)+1;function check(){let n=Number(document.getElementById('guess').value);document.getElementById('result').textContent=n===answer?'Correct!':n<answer?'Too low!':'Too high!' }<\/script>`],
+ ["Reaction Test",`<h1>Reaction Test</h1><p>Wait until the box turns green, then click it!</p><button id="box" style="width:100%;height:180px;background:#a33;color:white" onclick="hit()">Wait...</button><p id="result"></p><script>let start=0,ready=false;setTimeout(()=>{ready=true;start=Date.now();let b=document.getElementById('box');b.style.background='green';b.textContent='CLICK NOW!'},2000+Math.random()*4000);function hit(){if(!ready){document.getElementById('result').textContent='Too early! Reload to retry.';return}document.getElementById('result').textContent='Your reaction: '+(Date.now()-start)+' ms';document.getElementById('box').disabled=true}<\/script>`]
 ];
-function cards(items,id,filter=""){
- $(id).innerHTML="";
- items.filter(x=>x[0].toLowerCase().includes(filter.toLowerCase())).forEach(x=>{
+
+function openBlobGame(name,html){
+ const blob=new Blob([`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#15151f;color:white;font-family:Arial;text-align:center;padding:30px}button{padding:15px 22px;border:0;border-radius:10px;background:#a78bfa;font-weight:bold}input{padding:12px;border-radius:8px}h1{color:#c4b5fd}</style></head><body>${html}</body></html>`],{type:"text/html"});
+ const url=URL.createObjectURL(blob);
+ $("gameTitle").textContent=name+" — Blob Game";
+ $("gameFrame").src=url;
+ $("viewer").style.display="block";
+ $("viewer").dataset.blob=url;
+ $("viewer").scrollIntoView({behavior:"smooth"});
+}
+$("closeGame").onclick=()=>{
+ const url=$("viewer").dataset.blob;
+ if(url)URL.revokeObjectURL(url);
+ $("gameFrame").src="about:blank";
+ $("viewer").style.display="none";
+};
+miniGames.forEach(([name,html])=>{
+ const c=document.createElement("div");c.className="card";
+ const h=document.createElement("h3");h.textContent=name;
+ const b=document.createElement("button");b.className="btn";b.textContent="Play";
+ b.onclick=()=>openBlobGame(name,html);
+ c.append(h,b);$("builtGames").append(c);
+});
+
+/* EXTERNAL GAMES */
+const games=[
+ ["Baseball Bros","https://www.baseballbros.io/"],
+ ["Football Bros","https://fb.footballbros.io/index.php"],
+ ["Basket Bros","https://basketbros.io/"],
+ ["Retro Bowl","https://www.retrobowlgame.com/"],
+ ["Shell Shockers","https://shellshock.io/"],
+ ["Smash Karts","https://smashkarts.io/"],
+ ["1v1.LOL","https://1v1.lol/"],
+ ["Slope","https://slopegame.io/"],
+ ["Run 3","https://run3.io/"],
+ ["Moto X3M","https://moto-x3m.com/"],
+ ["Krunker","https://krunker.io/"],
+ ["Agar.io","https://agar.io/"]
+];
+function renderGames(filter=""){
+ $("gameGrid").innerHTML="";
+ games.filter(x=>x[0].toLowerCase().includes(filter.toLowerCase())).forEach(x=>{
   const c=document.createElement("div");c.className="card";
   const h=document.createElement("h3");h.textContent=x[0];
   const a=document.createElement("a");a.href=x[1];a.target="_blank";a.rel="noopener noreferrer";
-  const b=document.createElement("button");b.className="btn";b.textContent="Open";
-  a.append(b);c.append(h,a);$(id).append(c);
+  const b=document.createElement("button");b.className="btn";b.textContent="Open official site";
+  a.append(b);c.append(h,a);$("gameGrid").append(c);
  });
 }
-cards(games,"gameGrid");
-$("gameFilter").oninput=e=>cards(games,"gameGrid",e.target.value);
+renderGames();
+$("gameFilter").oninput=e=>renderGames(e.target.value);
 
 /* ANIME */
-const anime=["Attack on Titan","Vinland Saga","Death Note","Demon Slayer","Jujutsu Kaisen","Naruto","One Piece","Fullmetal Alchemist","Chainsaw Man","Mob Psycho 100","Hunter x Hunter","Bleach","Haikyuu","Tokyo Ghoul"];
-function animeCards(filter=""){
+const anime=["Attack on Titan","Vinland Saga","Death Note","Demon Slayer","Jujutsu Kaisen","Naruto","One Piece","Fullmetal Alchemist","Chainsaw Man","Mob Psycho 100","Hunter x Hunter","Bleach","Haikyuu","Tokyo Ghoul","Spy x Family"];
+function renderAnime(filter=""){
  $("animeGrid").innerHTML="";
  anime.filter(x=>x.toLowerCase().includes(filter.toLowerCase())).forEach(x=>{
   const c=document.createElement("div");c.className="card";
@@ -321,7 +360,7 @@ function animeCards(filter=""){
   a.textContent="Explore ↗";c.append(h,a);$("animeGrid").append(c);
  });
 }
-animeCards();$("animeFilter").oninput=e=>animeCards(e.target.value);
+renderAnime();$("animeFilter").oninput=e=>renderAnime(e.target.value);
 
 /* MOVIES */
 const services=[["Tubi","https://tubitv.com/"],["Pluto TV","https://pluto.tv/"],["Netflix","https://netflix.com/"],["Disney+","https://disneyplus.com/"],["Hulu","https://hulu.com/"],["Prime Video","https://primevideo.com/"],["YouTube Movies","https://youtube.com/movies"],["Peacock","https://peacocktv.com/"]];
@@ -340,12 +379,12 @@ function drawNotes(){
   const c=document.createElement("div");c.className="card";c.style.marginTop="12px";
   const p=document.createElement("p");p.textContent=n;
   const b=document.createElement("button");b.className="btn secondary";b.textContent="Delete";
-  b.onclick=()=>{notes.splice(i,1);saveNotes();};
+  b.onclick=()=>{notes.splice(i,1);saveNotes()};
   c.append(p,b);$("noteList").append(c);
  });
 }
 function saveNotes(){localStorage.setItem("copenNotes",JSON.stringify(notes));drawNotes();}
-$("saveNote").onclick=()=>{const n=$("noteText").value.trim();if(n){notes.unshift(n);$("noteText").value="";saveNotes();}};
+$("saveNote").onclick=()=>{let n=$("noteText").value.trim();if(n){notes.unshift(n);$("noteText").value="";saveNotes();}};
 drawNotes();
 
 /* SETTINGS */
@@ -355,7 +394,7 @@ function theme(){
  document.body.style.background=$("background").value;
  localStorage.setItem("copenTheme",JSON.stringify({a:$("accent").value,b:$("background").value}));
 }
-try{const t=JSON.parse(localStorage.getItem("copenTheme")||"null");if(t){$("accent").value=t.a;$("background").value=t.b;theme();}}catch{}
+try{let t=JSON.parse(localStorage.getItem("copenTheme")||"null");if(t){$("accent").value=t.a;$("background").value=t.b;theme();}}catch{}
 $("accent").oninput=theme;$("background").oninput=theme;
 $("reset").onclick=()=>{$("accent").value="#a78bfa";$("background").value="#101018";theme();};
 </script>
