@@ -645,7 +645,7 @@ if(savedBg){
 
 renderGames();
 renderAnime();
-</script>
+
  const COPENAI_ENDPOINT="YOUR_BACKEND_URL_HERE";
 
 async function sendChat(){
@@ -692,7 +692,9 @@ async function sendChat(){
  }
 
  messages.scrollTop=messages.scrollHeight;
-}<div class="game-viewer" id="gameViewer">
+}
+</script>
+ <div class="game-viewer" id="gameViewer">
  <div class="viewer-bar">
   <strong id="viewerTitle">Game</strong>
   <button onclick="closeGame()">Close ✕</button>
