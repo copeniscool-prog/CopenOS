@@ -6,6 +6,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101014">
 <title>CopenOS 7.0</title>
+ /* COPENOS GAME VIEWER */
+.game-viewer{
+ position:fixed;inset:0;background:#101014;
+ z-index:100;display:none;flex-direction:column;
+}
+.game-viewer.open{display:flex}
+.viewer-bar{
+ display:flex;align-items:center;gap:10px;
+ padding:12px;background:#18181e;
+ border-bottom:1px solid var(--line);
+}
+.viewer-bar strong{flex:1;font-size:13px}
+.viewer-bar button{
+ background:#292630;color:white;
+ border:1px solid var(--line);
+ padding:9px 13px;border-radius:7px;
+}
+.viewer-frame{flex:1;width:100%;border:0;background:white}
+.viewer-message{padding:12px;color:var(--muted);font-size:11px}
+#chatMessages{
+ height:340px;overflow-y:auto;display:flex;
+ flex-direction:column;gap:12px;padding:12px;
+ background:#111116;border-radius:9px;
+}
+.chat-message{
+ padding:12px 14px;border-radius:10px;
+ max-width:85%;font-size:13px;line-height:1.6;
+ white-space:pre-wrap;
+}
+.chat-user{background:#332b43;align-self:flex-end}
+.chat-ai{background:#222129;align-self:flex-start}
+.chat-controls{display:flex;gap:8px;margin-top:12px}
+.chat-controls input{
+ flex:1;min-width:0;background:#111116;
+ border:1px solid var(--line);border-radius:8px;
+ color:white;padding:12px;
+}
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
 
