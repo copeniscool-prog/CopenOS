@@ -1,441 +1,173 @@
-y
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101014">
-<title>CopenOS 7.0</title>
- /* COPENOS GAME VIEWER */
-.game-viewer{
- position:fixed;inset:0;background:#101014;
- z-index:100;display:none;flex-direction:column;
-}
-.game-viewer.open{display:flex}
-.viewer-bar{
- display:flex;align-items:center;gap:10px;
- padding:12px;background:#18181e;
- border-bottom:1px solid var(--line);
-}
-.viewer-bar strong{flex:1;font-size:13px}
-.viewer-bar button{
- background:#292630;color:white;
- border:1px solid var(--line);
- padding:9px 13px;border-radius:7px;
-}
-.viewer-frame{flex:1;width:100%;border:0;background:white}
-.viewer-message{padding:12px;color:var(--muted);font-size:11px}
-#chatMessages{
- height:340px;overflow-y:auto;display:flex;
- flex-direction:column;gap:12px;padding:12px;
- background:#111116;border-radius:9px;
-}
-.chat-message{
- padding:12px 14px;border-radius:10px;
- max-width:85%;font-size:13px;line-height:1.6;
- white-space:pre-wrap;
-}
-.chat-user{background:#332b43;align-self:flex-end}
-.chat-ai{background:#222129;align-self:flex-start}
-.chat-controls{display:flex;gap:8px;margin-top:12px}
-.chat-controls input{
- flex:1;min-width:0;background:#111116;
- border:1px solid var(--line);border-radius:8px;
- color:white;padding:12px;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CopenOS 8.0</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
-
-:root{
---bg:#101014;
---panel:#18181e;
---panel2:#222129;
---line:#303039;
---text:#f4f2f7;
---muted:#92909d;
---accent:#a78bfa;
-}
 *{box-sizing:border-box}
-body{
-margin:0;background:var(--bg);color:var(--text);
-font-family:'DM Sans',sans-serif;
-transition:background .2s;
-}
+:root{--bg:#101016;--panel:#1b1922;--line:#302d3a;--text:#f5f3fa;--muted:#aaa3b5;--accent:#a78bfa}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;background-image:radial-gradient(ellipse at 10% 10%,#50377a33,transparent 45%),radial-gradient(ellipse at 90% 90%,#3d286633,transparent 45%);background-attachment:fixed}
 button,input,textarea{font:inherit}
-button{cursor:pointer}
+button{cursor:pointer;color:inherit}
+header{height:65px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:#111018ed;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.logo{font-size:20px;font-weight:900}.logo span{color:var(--accent)}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+.sidebar{width:200px;padding:18px 12px;border-right:1px solid var(--line);flex-shrink:0}
+.nav-label{font-size:10px;letter-spacing:2px;color:var(--muted);padding:14px 10px 7px}
+.nav-btn{width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:12px;border-radius:8px;margin:2px 0}
+.nav-btn:hover,.nav-btn.active{background:#292431;color:white}
+.nav-btn.active{box-shadow:inset 3px 0 var(--accent)}
+main{width:100%;max-width:1300px;margin:auto;padding:28px}
+.page{display:none}.page.active{display:block}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
+h1{font-size:32px;margin:0 0 8px}h2{font-size:20px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+.hero{padding:35px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(120deg,#39294e,#191820 75%);margin-bottom:25px}
+.hero h1{font-size:38px}.hero p{color:#c5bdcf;line-height:1.6}
+.panel{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:12px;margin-bottom:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px;text-align:left;transition:.2s;min-width:0}
+.tile:hover{transform:translateY(-3px);border-color:var(--accent)}
+.tile-art{height:85px;background:#292532;border-radius:8px;display:grid;place-items:center;font-size:38px;margin-bottom:12px}
+.tile h3{font-size:13px;margin:0 0 6px}.tile p{font-size:11px;color:var(--muted);margin:0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+input,textarea{background:#111018;border:1px solid var(--line);color:white;padding:12px;border-radius:8px}
+.tools input{flex:1;min-width:160px}
+.chip{background:var(--panel);border:1px solid var(--line);padding:9px 13px;border-radius:20px;font-size:12px}
+.chip.active{background:var(--accent);color:#17121f}
+.primary{background:var(--accent);color:#17121f;border:0;padding:11px 16px;border-radius:8px;font-weight:bold}
+.secondary{background:#292532;border:1px solid var(--line);padding:10px 14px;border-radius:8px}
 a{color:inherit;text-decoration:none}
-
-.sidebar{
-position:fixed;inset:0 auto 0 0;width:225px;
-background:#141419;border-right:1px solid var(--line);
-padding:25px 15px;display:flex;flex-direction:column;z-index:10
-}
-.brand{
-display:flex;align-items:center;gap:11px;
-padding:2px 10px 35px;font:800 19px Manrope
-}
-.logo{
-width:35px;height:35px;border-radius:10px;
-background:var(--accent);color:#17121f;
-display:grid;place-items:center;font-size:20px
-}
-.nav-label{
-font-size:10px;letter-spacing:1.7px;
-color:#6d6b78;font-weight:700;padding:12px
-}
-.nav-btn{
-width:100%;display:flex;gap:12px;align-items:center;
-text-align:left;padding:12px;border:0;border-radius:9px;
-background:transparent;color:#aaa8b3;font-size:13px;margin:2px 0
-}
-.nav-btn:hover,.nav-btn.active{
-background:#282630;color:white
-}
-.nav-btn.active{box-shadow:inset 2px 0 var(--accent)}
-.nav-icon{width:18px;text-align:center}
-.sidebar-bottom{margin-top:auto}
-.profile{
-border-top:1px solid var(--line);padding:16px 9px 0;
-display:flex;align-items:center;gap:10px;font-size:13px
-}
-.avatar{
-width:34px;height:34px;border-radius:50%;
-background:#332b43;color:#d8c9ff;
-display:grid;place-items:center;font-weight:800
-}
-.profile small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-
-.main{margin-left:225px;min-width:0}
-.topbar{
-height:68px;border-bottom:1px solid var(--line);
-display:flex;align-items:center;justify-content:space-between;
-padding:0 34px;position:sticky;top:0;
-background:#101014ed;backdrop-filter:blur(14px);z-index:5
-}
-.topbar-title{font-weight:600;font-size:14px}
-.icon-btn{
-border:1px solid var(--line);background:var(--panel);
-color:#ddd;border-radius:8px;padding:9px 12px
-}
-.content{max-width:1250px;margin:auto;padding:32px 34px 60px}
-.page{display:none;animation:fade .2s ease}
-.page.active{display:block}
-@keyframes fade{
-from{opacity:0;transform:translateY(5px)}
-to{opacity:1;transform:none}
-}
-.eyebrow{
-font-size:10px;letter-spacing:1.8px;
-color:var(--accent);font-weight:700
-}
-h1,h2,h3,p{margin-top:0}
-h1{font:800 34px Manrope,sans-serif;letter-spacing:-1.3px;margin:10px 0}
-h2{font:700 20px Manrope,sans-serif}
-h3{font-size:14px;margin:0 0 5px}
-.sub{color:var(--muted);font-size:13px;line-height:1.7}
-.hero{
-min-height:285px;border:1px solid #383340;
-border-radius:15px;padding:35px;display:flex;
-align-items:flex-end;position:relative;overflow:hidden;
-background:
-radial-gradient(ellipse at 80% 15%,#59446f 0%,transparent 42%),
-linear-gradient(110deg,#292431,#191820 65%,#211d2a)
-}
-.hero:after{
-content:"C";position:absolute;right:9%;top:-85px;
-font:800 310px Manrope;color:#ffffff09;pointer-events:none
-}
-.hero-content{position:relative;z-index:1;max-width:470px}
-.hero h1{font-size:39px}
-.hero p{color:#b6b1c1;font-size:14px;line-height:1.7;max-width:420px}
-.primary{
-background:var(--accent);color:#17121f;border:0;
-border-radius:8px;padding:11px 17px;font-weight:700;font-size:12px
-}
-.secondary{
-background:#ffffff10;color:white;border:1px solid #ffffff25;
-border-radius:8px;padding:10px 15px;font-size:12px
-}
-.section-head{
-display:flex;justify-content:space-between;
-align-items:center;margin:30px 0 14px
-}
-.section-head h2{margin:0}
-.grid{
-display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px
-}
-.tile{
-background:var(--panel);border:1px solid var(--line);
-border-radius:11px;padding:14px;text-align:left;
-min-width:0;transition:.18s;color:var(--text)
-}
-.tile:hover{
-transform:translateY(-3px);border-color:#71618f;background:#201e27
-}
-.tile-art{
-height:105px;border-radius:7px;margin-bottom:14px;
-display:grid;place-items:center;font-size:34px;
-background:linear-gradient(135deg,#302b3b,#1d1b23)
-}
-.tile p{font-size:11px;color:var(--muted);margin:0}
-.tile h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.search{
-width:100%;background:var(--panel);border:1px solid var(--line);
-border-radius:9px;color:white;padding:13px 15px;
-outline:none;margin:15px 0 18px
-}
-.search:focus,textarea:focus{border-color:var(--accent)}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.chip{
-border:1px solid var(--line);background:var(--panel);
-color:#aaa;padding:8px 12px;border-radius:20px;font-size:11px
-}
-.chip.active{background:#332b43;color:#e0d4ff;border-color:#68558c}
-.list{
-display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px
-}
-.list-item{
-display:flex;align-items:center;gap:12px;
-background:var(--panel);border:1px solid var(--line);
-border-radius:9px;padding:13px;min-width:0
-}
-.list-item .symbol{font-size:22px;width:34px;text-align:center}
-.list-item div{min-width:0;flex:1}
-.list-item strong{display:block;font-size:12px}
-.list-item small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-.open-link{color:var(--accent);font-size:11px}
-.empty{padding:35px;text-align:center;color:var(--muted);font-size:13px}
-.panel{
-background:var(--panel);border:1px solid var(--line);
-border-radius:12px;padding:20px;margin-bottom:15px
-}
-textarea{
-width:100%;min-height:180px;resize:vertical;
-background:#111116;color:white;border:1px solid var(--line);
-border-radius:9px;padding:14px;outline:none
-}
-.setting-row{
-display:flex;align-items:center;justify-content:space-between;
-padding:15px 0;border-bottom:1px solid var(--line);gap:15px
-}
-.setting-row:last-child{border:0}
-.setting-row small{display:block;color:var(--muted);margin-top:4px;font-size:11px}
-input[type=color]{width:48px;height:34px;background:none;border:0}
+.chat-messages{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:12px;background:#111018;border-radius:9px;margin-bottom:12px}
+.chat-message{padding:12px 14px;border-radius:10px;max-width:85%;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.chat-user{background:#392d50;align-self:flex-end}.chat-ai{background:#292532;align-self:flex-start}
+.chat-controls{display:flex;gap:8px}.chat-controls input{flex:1;min-width:0}
 .status{font-size:11px;color:var(--muted)}
+.notes-area{width:100%;min-height:240px;line-height:1.6}
+.game-viewer{display:none;position:fixed;inset:0;background:#101016;z-index:100;flex-direction:column}
+.game-viewer.open{display:flex}
+.viewer-bar{display:flex;align-items:center;gap:10px;padding:12px;background:#191820;border-bottom:1px solid var(--line)}
+.viewer-bar strong{flex:1}
+.viewer-frame{width:100%;flex:1;border:0;background:white}
+.viewer-message{padding:9px;color:var(--muted);font-size:11px}
 .mobile-nav{display:none}
-footer{color:#666571;font-size:11px;padding:35px 0 0;text-align:center}
-
-@media(max-width:950px){
-.grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.list{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:650px){
-.sidebar{display:none}
-.main{margin:0}
-.topbar{height:58px;padding:0 17px}
-.content{padding:22px 16px 100px}
-.hero{min-height:255px;padding:23px}
-.hero h1{font-size:32px}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.tile{padding:12px}
-.tile-art{height:85px}
-.list{grid-template-columns:1fr}
-.mobile-nav{
-position:fixed;display:flex;bottom:0;left:0;right:0;
-background:#17171df5;border-top:1px solid var(--line);
-justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));
-z-index:10
-}
-.mobile-nav button{
-background:none;border:0;color:#aaa;font-size:10px;
-display:grid;gap:4px;justify-items:center
-}
+@media(max-width:700px){
+.sidebar{display:none}main{padding:20px 13px 90px}
+.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#17151fee;border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:8px 2px}
+.mobile-nav button{background:none;border:0;color:var(--muted);font-size:10px;padding:5px}
 .mobile-nav button.active{color:var(--accent)}
-.mobile-nav span{font-size:17px}
+.mobile-nav span{display:block;font-size:18px;margin-bottom:3px}
+h1{font-size:28px}
 }
 </style>
 </head>
-
 <body>
+<header><div class="logo">COPEN<span>OS</span> 8.0</div><small style="color:var(--muted)">PERSONAL DASHBOARD</small></header>
+<div class="layout">
 <aside class="sidebar">
- <div class="brand"><div class="logo">C</div>CopenOS</div>
- <div class="nav-label">WORKSPACE</div>
- <button class="nav-btn active" data-page="home">⌂ &nbsp; Home</button>
- <button class="nav-btn" data-page="games">▣ &nbsp; Games</button>
- <button class="nav-btn" data-page="anime">◈ &nbsp; Anime</button>
- <button class="nav-btn" data-page="movies">▰ &nbsp; Movies</button>
- <button class="nav-btn" data-page="music">♫ &nbsp; Music</button>
- <div class="nav-label">PERSONAL</div>
- <button class="nav-btn" data-page="ai">✳ &nbsp; CopenAI</button>
- <button class="nav-btn" data-page="notes">▤ &nbsp; Notes</button>
- <button class="nav-btn" data-page="settings">⚙ &nbsp; Settings</button>
- <div class="sidebar-bottom">
-  <div class="profile"><div class="avatar">C</div>
-  <div>Copen<small>Personal workspace</small></div></div>
- </div>
+<div class="nav-label">WORKSPACE</div>
+<button class="nav-btn active" data-page="home">⌂ Home</button>
+<button class="nav-btn" data-page="games">▣ Games</button>
+<button class="nav-btn" data-page="anime">◈ Anime</button>
+<button class="nav-btn" data-page="movies">▰ Movies</button>
+<button class="nav-btn" data-page="music">♫ Music</button>
+<button class="nav-btn" data-page="ai">✳ CopenAI</button>
+<div class="nav-label">PERSONAL</div>
+<button class="nav-btn" data-page="notes">▤ Notes</button>
+<button class="nav-btn" data-page="settings">⚙ Settings</button>
 </aside>
-
-<main class="main">
-<header class="topbar">
- <div class="topbar-title" id="topTitle">Home</div>
- <button class="icon-btn" onclick="showPage('settings')">⚙</button>
-</header>
-
-<div class="content">
+<main>
 
 <section class="page active" id="home">
- <div class="eyebrow">YOUR PERSONAL SPACE</div>
- <div class="hero">
-  <div class="hero-content">
-   <div class="eyebrow">WELCOME TO COPENOS</div>
-   <h1>Everything in<br>one place.</h1>
-   <p>Your own space for games, entertainment, music and everything else.</p>
-   <button class="primary" onclick="showPage('games')">Explore games ↗</button>
-  </div>
- </div>
- <div class="section-head"><h2>Explore</h2></div>
- <div class="grid">
-  <button class="tile" onclick="showPage('games')"><div class="tile-art">🎮</div><h3>Games</h3><p>Find something to play</p></button>
-  <button class="tile" onclick="showPage('anime')"><div class="tile-art">⛩</div><h3>Anime</h3><p>Discover anime series</p></button>
-  <button class="tile" onclick="showPage('music')"><div class="tile-art">♫</div><h3>Music</h3><p>Your music platforms</p></button>
-  <button class="tile" onclick="showPage('movies')"><div class="tile-art">🎬</div><h3>Movies</h3><p>Explore entertainment</p></button>
- </div>
- <div class="section-head"><h2>Quick access</h2></div>
- <div class="list">
-  <a class="list-item" href="https://www.youtube.com/" target="_blank"><span class="symbol">▶</span><div><strong>YouTube</strong><small>Videos and entertainment</small></div><span class="open-link">↗</span></a>
-  <a class="list-item" href="https://open.spotify.com/" target="_blank"><span class="symbol">♫</span><div><strong>Spotify</strong><small>Listen to music</small></div><span class="open-link">↗</span></a>
-  <a class="list-item" href="https://www.twitch.tv/" target="_blank"><span class="symbol">▣</span><div><strong>Twitch</strong><small>Live streams</small></div><span class="open-link">↗</span></a>
- </div>
+<div class="eyebrow">COPENOS / HOME</div>
+<div class="hero"><h1>Welcome to CopenOS.</h1><p>Your own place for games, anime, movies, music, and more.</p><button class="primary" onclick="showPage('games')">Explore games ↗</button></div>
+<h2>Quick access</h2>
+<div class="grid">
+<button class="tile" onclick="showPage('games')"><div class="tile-art">🎮</div><h3>Games</h3><p>Browse games</p></button>
+<button class="tile" onclick="showPage('anime')"><div class="tile-art">⛩️</div><h3>Anime</h3><p>Browse anime</p></button>
+<button class="tile" onclick="showPage('movies')"><div class="tile-art">🎬</div><h3>Movies</h3><p>Streaming providers</p></button>
+<button class="tile" onclick="showPage('music')"><div class="tile-art">🎧</div><h3>Music</h3><p>Music providers</p></button>
+<button class="tile" onclick="showPage('ai')"><div class="tile-art">✳️</div><h3>CopenAI</h3><p>AI chat</p></button>
+<button class="tile" onclick="showPage('notes')"><div class="tile-art">📝</div><h3>Notes</h3><p>Your notes</p></button>
+</div>
 </section>
 
 <section class="page" id="games">
- <div class="eyebrow">ARCADE / LIBRARY</div>
- <h1>Games</h1>
- <p class="sub">Find something to play.</p>
- <input class="search" id="gameSearch" placeholder="Search games..." oninput="renderGames()">
- <div class="chips" id="gameChips">
-  <button class="chip active" data-filter="all">All</button>
-  <button class="chip" data-filter="sports">Sports</button>
-  <button class="chip" data-filter="arcade">Arcade</button>
-  <button class="chip" data-filter="puzzle">Puzzle</button>
- </div>
- <div class="grid" id="gameGrid"></div>
- <div class="panel" style="margin-top:20px">
-  <h3>More game libraries</h3>
-  <p class="sub">Explore browser game collections.</p>
-  <a class="open-link" href="https://poki.com/" target="_blank">Poki ↗</a> ·
-  <a class="open-link" href="https://www.crazygames.com/" target="_blank">CrazyGames ↗</a> ·
-  <a class="open-link" href="https://itch.io/games/html5" target="_blank">itch.io ↗</a>
- </div>
+<div class="eyebrow">COPENOS / ARCADE</div><h1>Games</h1><p class="sub">Search and launch games.</p>
+<div class="tools"><input id="gameSearch" placeholder="Search games..." oninput="renderGames()"></div>
+<div class="tools" id="gameChips">
+<button class="chip active" data-filter="all">All</button><button class="chip" data-filter="sports">Sports</button><button class="chip" data-filter="arcade">Arcade</button><button class="chip" data-filter="puzzle">Puzzle</button>
+</div>
+<div class="grid" id="gameGrid"></div>
 </section>
 
 <section class="page" id="anime">
- <div class="eyebrow">ANIMATION / CATALOG</div>
- <h1>Anime</h1>
- <p class="sub">Find series and explore anime information.</p>
- <input class="search" id="animeSearch" placeholder="Search anime..." oninput="renderAnime()">
- <div class="list" id="animeList"></div>
+<div class="eyebrow">COPENOS / ANIMATION</div><h1>Anime</h1><p class="sub">Anime titles and official streaming providers.</p>
+<div class="tools"><input id="animeSearch" placeholder="Search anime..." oninput="renderAnime()"></div>
+<div class="grid" id="animeGrid"></div>
 </section>
 
 <section class="page" id="movies">
- <div class="eyebrow">CINEMA / DISCOVERY</div>
- <h1>Movies</h1>
- <p class="sub">Discover movies and find where they're available.</p>
- <div class="panel">
-  <h3>Find your next movie</h3>
-  <p class="sub">Browse movie information, ratings and streaming availability.</p>
-  <a class="primary" style="display:inline-block" href="https://www.themoviedb.org/" target="_blank">Explore movies ↗</a>
- </div>
- <div class="list">
-  <a class="list-item" href="https://www.justwatch.com/" target="_blank"><span class="symbol">🎞</span><div><strong>JustWatch</strong><small>Streaming availability</small></div><span class="open-link">↗</span></a>
-  <a class="list-item" href="https://www.imdb.com/" target="_blank"><span class="symbol">⭐</span><div><strong>IMDb</strong><small>Movie information</small></div><span class="open-link">↗</span></a>
-  <a class="list-item" href="https://www.rottentomatoes.com/" target="_blank"><span class="symbol">🍅</span><div><strong>Rotten Tomatoes</strong><small>Reviews and ratings</small></div><span class="open-link">↗</span></a>
- </div>
+<div class="eyebrow">COPENOS / CINEMA</div><h1>Movies</h1><p class="sub">Find movies through legitimate streaming providers.</p>
+<div class="grid">
+<a class="tile" href="https://www.netflix.com/" target="_blank" rel="noopener"><div class="tile-art">🍿</div><h3>Netflix</h3><p>Movies and series</p></a>
+<a class="tile" href="https://www.disneyplus.com/" target="_blank" rel="noopener"><div class="tile-art">🏰</div><h3>Disney+</h3><p>Movies and originals</p></a>
+<a class="tile" href="https://www.primevideo.com/" target="_blank" rel="noopener"><div class="tile-art">🎞️</div><h3>Prime Video</h3><p>Movies and series</p></a>
+<a class="tile" href="https://www.tubitv.com/" target="_blank" rel="noopener"><div class="tile-art">📺</div><h3>Tubi</h3><p>Free streaming</p></a>
+<a class="tile" href="https://www.youtube.com/movies" target="_blank" rel="noopener"><div class="tile-art">▶️</div><h3>YouTube Movies</h3><p>Movie rentals and purchases</p></a>
+</div>
 </section>
 
 <section class="page" id="music">
- <div class="eyebrow">AUDIO / COLLECTION</div>
- <h1>Music</h1>
- <p class="sub">Your music platforms and artist shortcuts.</p>
- <input class="search" id="musicSearch" placeholder="Search an artist or song">
- <button class="primary" onclick="searchMusic()">Search music ↗</button>
- <div class="section-head"><h2>Platforms</h2></div>
- <div class="grid">
-  <a class="tile" href="https://open.spotify.com/" target="_blank"><div class="tile-art">♫</div><h3>Spotify</h3><p>Open platform ↗</p></a>
-  <a class="tile" href="https://music.youtube.com/" target="_blank"><div class="tile-art">▶</div><h3>YouTube Music</h3><p>Open platform ↗</p></a>
-  <a class="tile" href="https://soundcloud.com/" target="_blank"><div class="tile-art">☁</div><h3>SoundCloud</h3><p>Open platform ↗</p></a>
-  <a class="tile" href="https://bandcamp.com/" target="_blank"><div class="tile-art">♪</div><h3>Bandcamp</h3><p>Independent music ↗</p></a>
- </div>
- <div class="section-head"><h2>Artists</h2></div>
- <div class="list" id="artistList"></div>
+<div class="eyebrow">COPENOS / AUDIO</div><h1>Music</h1><p class="sub">Your music providers.</p>
+<div class="grid">
+<a class="tile" href="https://open.spotify.com/" target="_blank" rel="noopener"><div class="tile-art">🟢</div><h3>Spotify</h3><p>Music streaming</p></a>
+<a class="tile" href="https://music.youtube.com/" target="_blank" rel="noopener"><div class="tile-art">▶️</div><h3>YouTube Music</h3><p>Music and videos</p></a>
+<a class="tile" href="https://soundcloud.com/" target="_blank" rel="noopener"><div class="tile-art">🟠</div><h3>SoundCloud</h3><p>Discover music</p></a>
+<a class="tile" href="https://bandcamp.com/" target="_blank" rel="noopener"><div class="tile-art">🎵</div><h3>Bandcamp</h3><p>Independent music</p></a>
+</div>
 </section>
+
 <section class="page" id="ai">
- <div class="eyebrow">COPENOS / AI ASSISTANT</div>
- <h1>CopenAI</h1>
- <p class="sub">Your own AI assistant, built into CopenOS.</p>
- <div class="panel">
-  <div id="chatMessages">
-   <div class="chat-message chat-ai">
-    Hey! I'm CopenAI. What can I help you with?
-   </div>
-  </div>
-  <div class="chat-controls">
-   <input id="chatInput" placeholder="Message CopenAI..."
-    onkeydown="if(event.key==='Enter')sendChat()">
-   <button class="primary" onclick="sendChat()">Send</button>
-  </div>
-  <p class="status" id="chatStatus">Ready.</p>
- </div>
+<div class="eyebrow">COPENOS / INTELLIGENCE</div><h1>CopenAI</h1><p class="sub">Your own AI chat interface.</p>
+<div class="panel">
+<div class="chat-messages" id="chatMessages"><div class="chat-message chat-ai">Hey! I'm CopenAI. Connect an AI backend to start chatting.</div></div>
+<div class="chat-controls"><input id="chatInput" placeholder="Message CopenAI..." onkeydown="if(event.key==='Enter')sendChat()"><button class="primary" onclick="sendChat()">Send</button></div>
+<p class="status" id="chatStatus">Backend not connected.</p>
+</div>
 </section>
 
 <section class="page" id="notes">
- <div class="eyebrow">PERSONAL / TOOLS</div>
- <h1>Notes</h1>
- <p class="sub">Your notes are saved in this browser.</p>
- <div class="panel">
-  <textarea id="notesArea" placeholder="Write something..."></textarea>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-   <small class="status" id="saveStatus">Saved locally</small>
-   <button class="primary" onclick="saveNotes()">Save notes</button>
-  </div>
- </div>
+<div class="eyebrow">COPENOS / PERSONAL</div><h1>Notes</h1><p class="sub">Your notes save automatically in this browser.</p>
+<div class="panel"><textarea class="notes-area" id="notesArea" placeholder="Write something..."></textarea><p class="status" id="notesStatus">Saved locally in this browser.</p></div>
 </section>
 
 <section class="page" id="settings">
- <div class="eyebrow">PREFERENCES / SYSTEM</div>
- <h1>Settings</h1>
- <p class="sub">Customize your workspace.</p>
- <div class="panel">
-  <div class="setting-row">
-   <div><strong>Accent color</strong><small>Change buttons and highlights</small></div>
-   <input type="color" id="accentPicker" value="#a78bfa">
-  </div>
-  <div class="setting-row">
-   <div><strong>Background color</strong><small>Change the main background</small></div>
-   <input type="color" id="bgPicker" value="#101014">
-  </div>
-  <div class="setting-row">
-   <div><strong>Reset appearance</strong><small>Restore original colors</small></div>
-   <button class="secondary" onclick="resetTheme()">Reset</button>
-  </div>
-  <div class="setting-row">
-   <div><strong>Version</strong><small>CopenOS personal workspace</small></div>
-   <span class="status">7.0</span>
-  </div>
- </div>
+<div class="eyebrow">COPENOS / CUSTOMIZATION</div><h1>Settings</h1><p class="sub">Customize your dashboard.</p>
+<div class="panel"><h3>Accent color</h3><input type="color" id="accentPicker" value="#a78bfa"><p class="status">Changes the accent color across CopenOS.</p></div>
+<div class="panel"><h3>Background color</h3><input type="color" id="bgPicker" value="#101016"><p class="status">Changes the main background.</p></div>
+<button class="secondary" onclick="resetTheme()">Reset theme</button>
 </section>
 
-<footer>CopenOS · Version 7.0</footer>
-</div>
 </main>
+</div>
 
 <nav class="mobile-nav">
- <button class="active" data-page="home"><span>⌂</span>Home</button>
- <button data-page="games"><span>▣</span>Games</button>
- <button data-page="anime"><span>◈</span>Anime</button>
- <button data-page="music"><span>♫</span>Music</button>
- <button data-page="settings"><span>⚙</span>Settings</button>
+<button class="active" data-page="home"><span>⌂</span>Home</button>
+<button data-page="games"><span>▣</span>Games</button>
+<button data-page="anime"><span>◈</span>Anime</button>
+<button data-page="music"><span>♫</span>Music</button>
+<button data-page="ai"><span>✳</span>AI</button>
+<button data-page="settings"><span>⚙</span>Settings</button>
 </nav>
+
+<div class="game-viewer" id="gameViewer">
+<div class="viewer-bar"><strong id="viewerTitle">Game</strong><button class="secondary" onclick="closeGame()">Close ✕</button><button class="secondary" onclick="fullscreenGame()">Fullscreen ⛶</button></div>
+<iframe class="viewer-frame" id="gameFrame" title="Game viewer" allowfullscreen></iframe>
+<div class="viewer-message">Some game websites don't allow embedding. If a game doesn't load, use its normal link.</div>
+</div>
 
 <script>
 const games=[
@@ -472,33 +204,36 @@ const games=[
 ];
 
 const anime=[
-"Attack on Titan","Vinland Saga","Death Note","Blue Lock",
-"Solo Leveling","Hunter x Hunter","Demon Slayer",
-"Jujutsu Kaisen","Naruto","One Piece","Dragon Ball Z",
-"Fullmetal Alchemist: Brotherhood","Tokyo Revengers",
-"Mob Psycho 100","My Hero Academia","Chainsaw Man",
-"Haikyu!!","Spy x Family","Pokémon",
-"JoJo's Bizarre Adventure","One Punch Man","Black Clover",
-"Dr. Stone","Bleach","Cyberpunk: Edgerunners"
-];
-
-const artists=[
-"Blink-182","Alex G","Slipknot","Korn","Green Day",
-"The Offspring","Sum 41","Weezer","The Cure"
+["Attack on Titan","⚔️"],
+["Vinland Saga","🛡️"],
+["Death Note","📓"],
+["Demon Slayer","🔥"],
+["Jujutsu Kaisen","👊"],
+["Naruto","🍥"],
+["One Piece","🏴‍☠️"],
+["Bleach","⚔️"],
+["Fullmetal Alchemist: Brotherhood","⚙️"],
+["Hunter x Hunter","🃏"],
+["Chainsaw Man","🪚"],
+["Tokyo Ghoul","👹"],
+["Mob Psycho 100","🌪️"],
+["Dragon Ball","🐉"],
+["My Hero Academia","🦸"],
+["Cowboy Bebop","🚀"],
+["Neon Genesis Evangelion","🤖"],
+["Spy x Family","🕵️"],
+["Haikyuu!!","🏐"],
+["One Punch Man","👊"]
 ];
 
 let currentFilter="all";
-let selectedAI="";
-let currentQuestion="";
 
 function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll("[data-page]").forEach(b=>{
-  b.classList.toggle("active",b.dataset.page===id);
- });
- document.getElementById("topTitle").textContent=
- id==="ai"?"CopenAI":id.charAt(0).toUpperCase()+id.slice(1);
+ const page=document.getElementById(id);
+ if(!page)return;
+ page.classList.add("active");
+ document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -506,202 +241,92 @@ document.querySelectorAll("[data-page]").forEach(b=>{
  b.addEventListener("click",()=>showPage(b.dataset.page));
 });
 
-function renderGames(){
- const q=document.getElementById("gameSearch").value.toLowerCase();
- const filtered=games.filter(g=>
-  (currentFilter==="all"||g[1]===currentFilter)&&
-  g[0].toLowerCase().includes(q)
- );
- document.getElementById("gameGrid").innerHTML=
- filtered.length?filtered.map(g=>`
- <a class="tile" href="${g[3]}" target="_blank" rel="noopener">
-  <div class="tile-art">${g[2]}</div>
-  <h3>${g[0]}</h3>
-  <p>${g[1]} · Open game ↗</p>
- </a>`).join(""):'<div class="empty">No games found.</div>';
-}
-
-document.querySelectorAll("#gameChips .chip").forEach(b=>{
+document.querySelectorAll("[data-filter]").forEach(b=>{
  b.addEventListener("click",()=>{
   currentFilter=b.dataset.filter;
-  document.querySelectorAll("#gameChips .chip").forEach(x=>{
-   x.classList.toggle("active",x===b);
-  });
+  document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));
   renderGames();
  });
 });
 
+function renderGames(){
+ const q=document.getElementById("gameSearch").value.toLowerCase();
+ const filtered=games.filter(g=>(currentFilter==="all"||g[1]===currentFilter)&&g[0].toLowerCase().includes(q));
+ document.getElementById("gameGrid").innerHTML=filtered.map(g=>`
+ <div class="tile" role="button" tabindex="0" onclick="openGame('${g[0]}','${g[3]}')" onkeydown="if(event.key==='Enter')openGame('${g[0]}','${g[3]}')">
+ <div class="tile-art">${g[2]}</div><h3>${g[0]}</h3><p>${g[1]} · Open game ↗</p></div>`).join("")||"<p>No games found.</p>";
+}
+
+function openGame(name,url){
+ document.getElementById("viewerTitle").textContent=name;
+ document.getElementById("gameFrame").src=url;
+ document.getElementById("gameViewer").classList.add("open");
+}
+function closeGame(){
+ document.getElementById("gameFrame").src="about:blank";
+ document.getElementById("gameViewer").classList.remove("open");
+}
+function fullscreenGame(){
+ const frame=document.getElementById("gameFrame");
+ if(frame.requestFullscreen)frame.requestFullscreen();
+}
+
 function renderAnime(){
  const q=document.getElementById("animeSearch").value.toLowerCase();
- const filtered=anime.filter(a=>a.toLowerCase().includes(q));
- document.getElementById("animeList").innerHTML=
- filtered.length?filtered.map(a=>`
- <a class="list-item" target="_blank" rel="noopener"
- href="https://myanimelist.net/anime.php?q=${encodeURIComponent(a)}">
- <span class="symbol">◈</span>
- <div><strong>${a}</strong><small>Anime information</small></div>
- <span class="open-link">↗</span></a>`).join(""):'<div class="empty">No anime found.</div>';
+ document.getElementById("animeGrid").innerHTML=anime.filter(a=>a[0].toLowerCase().includes(q)).map(a=>`
+ <div class="tile"><div class="tile-art">${a[1]}</div><h3>${a[0]}</h3><p>Find on official providers</p></div>`).join("")||"<p>No titles found.</p>";
 }
 
-document.getElementById("artistList").innerHTML=artists.map(a=>`
-<a class="list-item" target="_blank" rel="noopener"
-href="https://open.spotify.com/search/${encodeURIComponent(a)}">
-<span class="symbol">♫</span>
-<div><strong>${a}</strong><small>Search on Spotify</small></div>
-<span class="open-link">↗</span></a>`).join("");
-
-function searchMusic(){
- const q=document.getElementById("musicSearch").value.trim();
- if(q)window.open("https://music.youtube.com/search?q="+encodeURIComponent(q),"_blank");
+function sendChat(){
+ const input=document.getElementById("chatInput");
+ const messages=document.getElementById("chatMessages");
+ const question=input.value.trim();
+ if(!question)return;
+ const user=document.createElement("div");
+ user.className="chat-message chat-user";
+ user.textContent=question;
+ messages.appendChild(user);
+ const reply=document.createElement("div");
+ reply.className="chat-message chat-ai";
+ reply.textContent="CopenAI's interface is ready, but it needs a secure AI backend before it can answer questions.";
+ messages.appendChild(reply);
+ input.value="";
+ messages.scrollTop=messages.scrollHeight;
+ document.getElementById("chatStatus").textContent="Backend not connected.";
 }
 
-function saveNotes(){
- localStorage.setItem("copenos-notes",document.getElementById("notesArea").value);
- document.getElementById("saveStatus").textContent="Saved!";
-}
-document.getElementById("notesArea").value=
- localStorage.getItem("copenos-notes")||"";
+const notes=document.getElementById("notesArea");
+notes.value=localStorage.getItem("copenos-notes")||"";
+notes.addEventListener("input",()=>{
+ localStorage.setItem("copenos-notes",notes.value);
+ document.getElementById("notesStatus").textContent="Saved.";
+});
 
-function routeAI(){
- const prompt=document.getElementById("aiPrompt").value.trim();
- if(!prompt){
-  document.getElementById("aiStatus").textContent="Type a question first.";
-  return;
- }
- currentQuestion=prompt;
- const q=prompt.toLowerCase();
- let name,reason,url;
-
- if(/\b(code|coding|program|javascript|html|css|python|debug|website|app)\b/.test(q)){
-  name="ChatGPT";
-  reason="This looks like a programming or coding task.";
-  url="https://chatgpt.com/";
- }else if(/\b(essay|write|story|rewrite|draft|poem|document|summarize|analyze)\b/.test(q)){
-  name="Claude";
-  reason="This looks like a writing or detailed analysis task.";
-  url="https://claude.ai/";
- }else if(/\b(latest|today|current|news|research|sources|citations|recent|statistics)\b/.test(q)){
-  name="Perplexity";
-  reason="This looks like a research question.";
-  url="https://www.perplexity.ai/";
- }else{
-  name="Gemini";
-  reason="This looks like a general knowledge or learning question.";
-  url="https://gemini.google.com/";
- }
-
- selectedAI=url;
- document.getElementById("aiName").textContent=name;
- document.getElementById("aiReason").textContent=reason;
- document.getElementById("aiRecommendation").style.display="block";
- document.getElementById("aiStatus").textContent="Recommendation ready!";
-}
-
-async function copyQuestion(){
- const status=document.getElementById("copyStatus");
- try{
-  await navigator.clipboard.writeText(currentQuestion);
-  status.textContent="Question copied!";
- }catch(e){
-  status.textContent="Clipboard unavailable. Copy your question manually.";
- }
-}
-
-function openAI(){
- if(!selectedAI)return;
- window.open(selectedAI,"_blank","noopener");
-}
-
-function changeColor(variable,value,key){
- document.documentElement.style.setProperty(variable,value);
- localStorage.setItem(key,value);
-}
 document.getElementById("accentPicker").addEventListener("input",e=>{
- changeColor("--accent",e.target.value,"copenos-accent");
+ document.documentElement.style.setProperty("--accent",e.target.value);
+ localStorage.setItem("copenos-accent",e.target.value);
 });
 document.getElementById("bgPicker").addEventListener("input",e=>{
- changeColor("--bg",e.target.value,"copenos-bg");
+ document.documentElement.style.setProperty("--bg",e.target.value);
+ document.body.style.backgroundColor=e.target.value;
+ localStorage.setItem("copenos-bg",e.target.value);
 });
-
 function resetTheme(){
+ document.documentElement.style.setProperty("--accent","#a78bfa");
+ document.documentElement.style.setProperty("--bg","#101016");
+ document.body.style.backgroundColor="";
  localStorage.removeItem("copenos-accent");
  localStorage.removeItem("copenos-bg");
- document.documentElement.style.setProperty("--accent","#a78bfa");
- document.documentElement.style.setProperty("--bg","#101014");
  document.getElementById("accentPicker").value="#a78bfa";
- document.getElementById("bgPicker").value="#101014";
+ document.getElementById("bgPicker").value="#101016";
 }
-
 const savedAccent=localStorage.getItem("copenos-accent");
 const savedBg=localStorage.getItem("copenos-bg");
-if(savedAccent){
- document.documentElement.style.setProperty("--accent",savedAccent);
- document.getElementById("accentPicker").value=savedAccent;
-}
-if(savedBg){
- document.documentElement.style.setProperty("--bg",savedBg);
- document.getElementById("bgPicker").value=savedBg;
-}
+if(savedAccent){document.documentElement.style.setProperty("--accent",savedAccent);document.getElementById("accentPicker").value=savedAccent;}
+if(savedBg){document.documentElement.style.setProperty("--bg",savedBg);document.body.style.backgroundColor=savedBg;document.getElementById("bgPicker").value=savedBg;}
 
 renderGames();
 renderAnime();
-
- const COPENAI_ENDPOINT="YOUR_BACKEND_URL_HERE";
-
-async function sendChat(){
- const input=document.getElementById("chatInput");
- const messages=document.getElementById("chatMessages");
- const status=document.getElementById("chatStatus");
- const question=input.value.trim();
-
- if(!question)return;
-
- const userMessage=document.createElement("div");
- userMessage.className="chat-message chat-user";
- userMessage.textContent=question;
- messages.appendChild(userMessage);
-
- input.value="";
- status.textContent="CopenAI is thinking...";
-
- try{
-  if(COPENAI_ENDPOINT==="YOUR_BACKEND_URL_HERE"){
-   throw new Error("Backend not connected yet.");
-  }
-
-  const response=await fetch(COPENAI_ENDPOINT,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:question})
-  });
-
-  if(!response.ok)throw new Error("AI service unavailable.");
-
-  const data=await response.json();
-  const reply=document.createElement("div");
-  reply.className="chat-message chat-ai";
-  reply.textContent=data.reply||"I couldn't generate a response.";
-  messages.appendChild(reply);
-  status.textContent="Connected.";
- }catch(error){
-  const reply=document.createElement("div");
-  reply.className="chat-message chat-ai";
-  reply.textContent="The chat interface is ready, but the AI backend isn't connected yet.";
-  messages.appendChild(reply);
-  status.textContent="Not connected.";
- }
-
- messages.scrollTop=messages.scrollHeight;
-}
 </script>
- <div class="game-viewer" id="gameViewer">
- <div class="viewer-bar">
-  <strong id="viewerTitle">Game</strong>
-  <button onclick="closeGame()">Close ✕</button>
-  <button onclick="fullscreenGame()">Fullscreen ⛶</button>
- </div>
- <iframe class="viewer-frame" id="gameFrame"
- title="Game viewer" allowfullscreen></iframe>
-</div>
 </body>
 </html>
