@@ -5,398 +5,879 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101018">
-<title>CopenOS 12.0</title>
+<title>CopenOS 13.0</title>
+
 <style>
 :root{
- --bg:#101018;--panel:#1b1b27;--panel2:#28283a;
- --accent:#a78bfa;--text:#f5f3fa;--muted:#aaa6ba;
+--bg:#101018;
+--panel:#1b1b27;
+--panel2:#28283a;
+--accent:#a78bfa;
+--text:#f5f3fa;
+--muted:#aaa6ba;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-button,input,textarea{font:inherit}
+body{
+margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif
+}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .sidebar{
- position:fixed;inset:0 auto 0 0;width:215px;background:#15151f;
- padding:20px 12px;display:flex;flex-direction:column;gap:7px;
- border-right:1px solid #ffffff18;z-index:5
+position:fixed;inset:0 auto 0 0;width:215px;
+background:#15151f;padding:20px 12px;
+display:flex;flex-direction:column;gap:7px;
+border-right:1px solid #ffffff18;z-index:5
 }
 .logo{font-size:24px;font-weight:900;padding:8px 12px 25px}
 .logo span{color:var(--accent)}
-.nav{background:none;border:0;color:var(--muted);padding:13px;border-radius:10px;text-align:left}
+.nav{
+background:none;border:0;color:var(--muted);
+padding:13px;border-radius:10px;text-align:left
+}
 .nav.active,.nav:hover{background:var(--panel2);color:white}
 .sidebar small{margin-top:auto;color:var(--muted);padding:10px}
-main{margin-left:215px;padding:25px;width:calc(100% - 215px);max-width:1500px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+main{
+margin-left:215px;padding:25px;
+width:calc(100% - 215px);max-width:1500px
+}
+header{
+display:flex;justify-content:space-between;
+align-items:center;margin-bottom:22px
+}
 h1{font-size:26px;margin:0}
 h2{font-size:20px;margin-top:0}
 p,.muted{color:var(--muted);line-height:1.5}
-.section{display:none}.section.active{display:block}
-.panel{background:var(--panel);border:1px solid #ffffff16;border-radius:16px;padding:19px;margin-bottom:16px}
-.hero{padding:30px;background:linear-gradient(120deg,#392b59,#191923);border-radius:18px;margin-bottom:18px}
+.section{display:none}
+.section.active{display:block}
+.panel{
+background:var(--panel);border:1px solid #ffffff16;
+border-radius:16px;padding:19px;margin-bottom:16px
+}
+.hero{
+padding:30px;background:linear-gradient(120deg,#392b59,#191923);
+border-radius:18px;margin-bottom:18px
+}
 .hero h2{font-size:28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:13px}
-.card{background:var(--panel);padding:17px;border:1px solid #ffffff16;border-radius:14px}
+.grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+gap:13px
+}
+.card{
+background:var(--panel);padding:17px;
+border:1px solid #ffffff16;border-radius:14px
+}
 .card h3{margin:0 0 8px;font-size:16px}
 .card p{font-size:13px}
-.btn{background:var(--accent);color:#171321;border:0;padding:11px 14px;border-radius:9px;font-weight:bold}
+.btn{
+background:var(--accent);color:#171321;border:0;
+padding:11px 14px;border-radius:9px;font-weight:bold
+}
 .btn.secondary{background:var(--panel2);color:white}
-.btn:disabled{opacity:.5}
-input,textarea,select{background:var(--panel2);color:white;border:1px solid #ffffff20;border-radius:10px;padding:12px;width:100%;outline:none}
-textarea{min-height:100px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+input,textarea,select{
+background:var(--panel2);color:white;
+border:1px solid #ffffff20;border-radius:10px;
+padding:12px;width:100%;outline:none
+}
+textarea{min-height:100px;resize:vertical}
 .search,.chatrow{display:flex;gap:9px;margin:12px 0}
 .search input,.chatrow input{flex:1;min-width:0}
 .status{font-size:12px;color:var(--muted);margin:10px 0;white-space:pre-wrap}
-.chatbox{height:350px;overflow:auto;background:#111119;border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:10px}
-.msg{padding:12px;border-radius:12px;max-width:90%;white-space:pre-wrap;line-height:1.5}
+.chatbox{
+height:350px;overflow:auto;background:#111119;
+border-radius:12px;padding:13px;display:flex;
+flex-direction:column;gap:10px
+}
+.msg{
+padding:12px;border-radius:12px;max-width:90%;
+white-space:pre-wrap;line-height:1.5;overflow-wrap:anywhere
+}
 .msg.user{align-self:flex-end;background:#493875}
 .msg.ai{align-self:flex-start;background:var(--panel2)}
-.track{display:flex;align-items:center;gap:12px;background:var(--panel2);padding:10px;border-radius:12px;margin:9px 0}
-.cover{width:54px;height:54px;border-radius:8px;object-fit:cover;background:#333}
+.track{
+display:flex;align-items:center;gap:12px;
+background:var(--panel2);padding:10px;
+border-radius:12px;margin:9px 0
+}
+.cover{
+width:54px;height:54px;border-radius:8px;
+object-fit:cover;background:#333;flex-shrink:0
+}
 .trackinfo{flex:1;min-width:0}
-.trackinfo strong,.trackinfo span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trackinfo strong,.trackinfo span{
+display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
 .trackinfo span{font-size:12px;color:var(--muted);margin-top:5px}
 audio{width:100%;margin-top:12px}
 a{color:var(--accent);text-decoration:none}
-#gameFrame{width:100%;height:65vh;border:0;border-radius:12px;background:#08080c}
+#gameFrame{
+width:100%;height:65vh;border:0;
+border-radius:12px;background:#08080c
+}
 .mobile{display:none}
 @media(max-width:740px){
- .sidebar{display:none}
- main{margin:0;width:100%;padding:18px 13px 90px}
- .mobile{display:flex;position:fixed;bottom:0;left:0;right:0;background:#15151f;overflow-x:auto;padding:6px;z-index:5;border-top:1px solid #ffffff16}
- .mobile .nav{white-space:nowrap;text-align:center}
- .chatbox{height:48vh}
+.sidebar{display:none}
+main{margin:0;width:100%;padding:18px 13px 90px}
+.mobile{
+display:flex;position:fixed;bottom:0;left:0;right:0;
+background:#15151f;overflow-x:auto;padding:6px;
+z-index:5;border-top:1px solid #ffffff16
+}
+.mobile .nav{white-space:nowrap;text-align:center}
+.chatbox{height:48vh}
 }
 </style>
 </head>
+
 <body>
 
 <aside class="sidebar">
- <div class="logo">COPEN<span>OS</span></div>
- <button class="nav active" data-page="home">⌂ Home</button>
- <button class="nav" data-page="ai">✦ CopenAI</button>
- <button class="nav" data-page="music">♫ CopenMusic</button>
- <button class="nav" data-page="games">▣ Games</button>
- <button class="nav" data-page="anime">◈ Anime</button>
- <button class="nav" data-page="movies">▸ Movies</button>
- <button class="nav" data-page="notes">▤ Notes</button>
- <button class="nav" data-page="settings">⚙ Settings</button>
- <small>CopenOS 12.0</small>
+<div class="logo">COPEN<span>OS</span></div>
+<button class="nav active" data-page="home">⌂ Home</button>
+<button class="nav" data-page="ai">✦ CopenAI</button>
+<button class="nav" data-page="music">♫ CopenMusic</button>
+<button class="nav" data-page="games">▣ Games</button>
+<button class="nav" data-page="anime">◈ Anime</button>
+<button class="nav" data-page="movies">▸ Movies</button>
+<button class="nav" data-page="notes">▤ Notes</button>
+<button class="nav" data-page="settings">⚙ Settings</button>
+<small>CopenOS 13.0</small>
 </aside>
 
 <main>
 <header>
- <h1 id="pageTitle">Home</h1>
- <span id="clock" class="muted"></span>
+<h1 id="pageTitle">Home</h1>
+<span id="clock" class="muted"></span>
 </header>
 
 <section class="section active" id="home">
- <div class="hero">
-  <h2>Welcome to CopenOS.</h2>
-  <p>Your music, games, entertainment, and tools.</p>
-  <button class="btn" data-go="games">Explore games</button>
- </div>
- <div class="grid">
-  <div class="card"><h3>✦ CopenAI</h3><p>Your AI chat interface.</p><button class="btn secondary" data-go="ai">Open</button></div>
-  <div class="card"><h3>♫ CopenMusic</h3><p>Explore different music genres.</p><button class="btn secondary" data-go="music">Open</button></div>
-  <div class="card"><h3>▣ Games</h3><p>Play built-in mini-games or visit game sites.</p><button class="btn secondary" data-go="games">Open</button></div>
-  <div class="card"><h3>▤ Notes</h3><p>Save notes on this device.</p><button class="btn secondary" data-go="notes">Open</button></div>
- </div>
+<div class="hero">
+<h2>Welcome to CopenOS.</h2>
+<p>Your music, games, entertainment, and tools.</p>
+<button class="btn" data-go="games">Explore games</button>
+</div>
+<div class="grid">
+<div class="card"><h3>✦ CopenAI</h3><p>AI chat.</p><button class="btn secondary" data-go="ai">Open</button></div>
+<div class="card"><h3>♫ CopenMusic</h3><p>Find and listen to music.</p><button class="btn secondary" data-go="music">Open</button></div>
+<div class="card"><h3>▣ Games</h3><p>Play mini-games and visit game sites.</p><button class="btn secondary" data-go="games">Open</button></div>
+<div class="card"><h3>▤ Notes</h3><p>Save notes on your device.</p><button class="btn secondary" data-go="notes">Open</button></div>
+</div>
 </section>
 
+<!-- AI -->
 <section class="section" id="ai">
- <div class="panel">
-  <h2>CopenAI</h2>
-  <p>A real AI response requires a connected AI service. This interface will not pretend that a response was generated when no service is connected.</p>
-  <div class="status" id="aiStatus">No AI service connected.</div>
-  <div class="chatbox" id="messages">
-   <div class="msg ai">Welcome to CopenAI. The chat interface is ready, but it needs a secure AI backend before it can answer questions.</div>
-  </div>
-  <div class="chatrow">
-   <input id="question" placeholder="Ask something...">
-   <button class="btn" id="send">Send</button>
-  </div>
- </div>
+<div class="panel">
+<h2>CopenAI</h2>
+<p>Connect a secure AI backend to start chatting.</p>
+<div class="status" id="aiStatus">AI backend not configured.</div>
+<div class="chatbox" id="messages">
+<div class="msg ai">Welcome to CopenAI! Configure your backend in Settings to start chatting.</div>
+</div>
+<div class="chatrow">
+<input id="question" placeholder="Ask CopenAI something..." autocomplete="off">
+<button class="btn" id="send">Send</button>
+</div>
+<button class="btn secondary" id="clearChat">Clear chat</button>
+</div>
 </section>
 
+<!-- MUSIC -->
 <section class="section" id="music">
- <div class="panel">
-  <h2>CopenMusic</h2>
-  <p>Search tracks available through Audius. Playback stays inside this player.</p>
-  <div class="search">
-   <input id="musicQuery" placeholder="Search songs or artists...">
-   <button class="btn" id="musicSearch">Search</button>
-  </div>
-  <select id="genre">
-   <option value="">All genres</option>
-   <option>Pop</option><option>Rock</option><option>Hip-Hop</option>
-   <option>Electronic</option><option>House</option><option>Techno</option>
-   <option>Jazz</option><option>Classical</option><option>Country</option>
-   <option>Metal</option><option>Indie</option><option>R&B</option>
-   <option>Ambient</option><option>Dance</option><option>Dubstep</option>
-   <option>Drum and Bass</option><option>Phonk</option><option>Emo</option>
-   <option>Pop Punk</option><option>Lo-fi</option><option>Reggae</option>
-  </select>
-  <div class="status" id="musicStatus">Search for a song or genre.</div>
-  <div id="musicResults"></div>
-  <h3 id="playingTitle"></h3>
-  <audio id="player" controls></audio>
- </div>
- <div class="panel"><h2>Favorites</h2><div id="favorites"></div></div>
+<div class="panel">
+<h2>CopenMusic</h2>
+<p>Search the Audius music catalog. Available tracks can play directly here.</p>
+<div class="search">
+<input id="musicQuery" placeholder="Search songs or artists...">
+<button class="btn" id="musicSearch">Search</button>
+</div>
+<select id="genre">
+<option value="">All genres</option>
+<option>Pop</option><option>Rock</option>
+<option>Hip-Hop</option><option>Electronic</option>
+<option>House</option><option>Techno</option>
+<option>Jazz</option><option>Classical</option>
+<option>Country</option><option>Metal</option>
+<option>Indie</option><option>R&B</option>
+<option>Ambient</option><option>Dance</option>
+<option>Dubstep</option><option>Drum and Bass</option>
+<option>Phonk</option><option>Emo</option>
+<option>Pop Punk</option><option>Lo-fi</option>
+<option>Reggae</option>
+</select>
+<div class="status" id="musicStatus">Search for a song or artist.</div>
+<div id="musicResults"></div>
+<h3 id="playingTitle">Nothing playing</h3>
+<audio id="player" controls preload="none"></audio>
+<div class="status" id="previewStatus">Previews play up to half of an available track.</div>
+</div>
+<div class="panel">
+<h2>Favorites ♡</h2>
+<div id="favorites"></div>
+</div>
 </section>
 
+<!-- GAMES -->
 <section class="section" id="games">
- <div class="panel">
-  <h2>Built-in Blob Games</h2>
-  <p>These mini-games are created locally by CopenOS and opened using Blob URLs.</p>
-  <div class="grid" id="builtGames"></div>
- </div>
- <div class="panel">
-  <h2>External Games</h2>
-  <p>These open their official websites. Some sites block embedding.</p>
-  <input id="gameFilter" placeholder="Search games...">
-  <div class="grid" id="gameGrid" style="margin-top:14px"></div>
- </div>
- <div class="panel" id="viewer" style="display:none">
-  <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-   <h2 id="gameTitle">Game viewer</h2>
-   <button class="btn secondary" id="closeGame">Close</button>
-  </div>
-  <iframe id="gameFrame" title="Game viewer" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups"></iframe>
-  <p class="muted">If a game refuses to load here, use its official website link.</p>
- </div>
+<div class="panel">
+<h2>Built-in Blob Games</h2>
+<p>Locally generated games using JavaScript and Blob URLs.</p>
+<div class="grid" id="builtGames"></div>
+</div>
+
+<div class="panel">
+<h2>External Games</h2>
+<p>Official game websites. These open in a new tab.</p>
+<input id="gameFilter" placeholder="Search games...">
+<div class="grid" id="gameGrid" style="margin-top:14px"></div>
+</div>
+
+<div class="panel" id="viewer" style="display:none">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+<h2 id="gameTitle">Game viewer</h2>
+<button class="btn secondary" id="closeGame">Close</button>
+</div>
+<iframe id="gameFrame" title="Blob game viewer" sandbox="allow-scripts allow-forms allow-pointer-lock"></iframe>
+</div>
 </section>
 
+<!-- ANIME -->
 <section class="section" id="anime">
- <div class="panel">
-  <h2>Anime</h2>
-  <input id="animeFilter" placeholder="Search anime...">
-  <div class="grid" id="animeGrid" style="margin-top:14px"></div>
- </div>
+<div class="panel">
+<h2>Anime</h2>
+<input id="animeFilter" placeholder="Search anime...">
+<div class="grid" id="animeGrid" style="margin-top:14px"></div>
+</div>
 </section>
 
+<!-- MOVIES -->
 <section class="section" id="movies">
- <div class="panel"><h2>Movies & Streaming</h2><div class="grid" id="movieGrid"></div></div>
+<div class="panel">
+<h2>Movies & Streaming</h2>
+<div class="grid" id="movieGrid"></div>
+</div>
 </section>
 
+<!-- NOTES -->
 <section class="section" id="notes">
- <div class="panel">
-  <h2>Notes</h2>
-  <textarea id="noteText" placeholder="Write a note..."></textarea>
-  <button class="btn" id="saveNote" style="margin-top:10px">Save note</button>
-  <div id="noteList"></div>
- </div>
+<div class="panel">
+<h2>Notes</h2>
+<textarea id="noteText" placeholder="Write a note..."></textarea>
+<button class="btn" id="saveNote" style="margin-top:10px">Save note</button>
+<div id="noteList"></div>
+</div>
 </section>
 
+<!-- SETTINGS -->
 <section class="section" id="settings">
- <div class="panel">
-  <h2>Appearance</h2>
-  <p>Accent color</p><input type="color" id="accent" value="#a78bfa">
-  <p>Background color</p><input type="color" id="background" value="#101018">
-  <button class="btn secondary" id="reset" style="margin-top:12px">Reset colors</button>
- </div>
+<div class="panel">
+<h2>AI Connection</h2>
+<p>Enter the URL of your secure backend. Do not put an API secret in this page.</p>
+<input id="aiEndpoint" placeholder="https://your-server.example/api/chat">
+<button class="btn" id="saveAI" style="margin-top:10px">Save AI connection</button>
+<div class="status" id="connectionStatus"></div>
+</div>
+
+<div class="panel">
+<h2>Appearance</h2>
+<p>Accent color</p>
+<input type="color" id="accent" value="#a78bfa">
+<p>Background color</p>
+<input type="color" id="background" value="#101018">
+<button class="btn secondary" id="reset" style="margin-top:12px">Reset colors</button>
+</div>
 </section>
 </main>
 
 <nav class="mobile">
- <button class="nav active" data-page="home">Home</button>
- <button class="nav" data-page="ai">AI</button>
- <button class="nav" data-page="music">Music</button>
- <button class="nav" data-page="games">Games</button>
- <button class="nav" data-page="anime">Anime</button>
- <button class="nav" data-page="movies">Movies</button>
- <button class="nav" data-page="notes">Notes</button>
- <button class="nav" data-page="settings">Settings</button>
+<button class="nav active" data-page="home">Home</button>
+<button class="nav" data-page="ai">AI</button>
+<button class="nav" data-page="music">Music</button>
+<button class="nav" data-page="games">Games</button>
+<button class="nav" data-page="anime">Anime</button>
+<button class="nav" data-page="movies">Movies</button>
+<button class="nav" data-page="notes">Notes</button>
+<button class="nav" data-page="settings">Settings</button>
 </nav>
 
 <script>
+"use strict";
 const $=id=>document.getElementById(id);
 const pages=["home","ai","music","games","anime","movies","notes","settings"];
 
 function go(page){
- if(!pages.includes(page))return;
- document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
- $(page).classList.add("active");
- document.querySelectorAll("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
- $("pageTitle").textContent=page==="ai"?"CopenAI":page==="music"?"CopenMusic":page[0].toUpperCase()+page.slice(1);
- window.scrollTo(0,0);
+if(!pages.includes(page))return;
+document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+$(page).classList.add("active");
+document.querySelectorAll("[data-page]").forEach(x=>{
+x.classList.toggle("active",x.dataset.page===page);
+});
+$("pageTitle").textContent={
+ai:"CopenAI",music:"CopenMusic"
+}[page]||page[0].toUpperCase()+page.slice(1);
+window.scrollTo(0,0);
 }
 document.querySelectorAll("[data-page]").forEach(x=>x.onclick=()=>go(x.dataset.page));
 document.querySelectorAll("[data-go]").forEach(x=>x.onclick=()=>go(x.dataset.go));
-function clock(){$("clock").textContent=new Date().toLocaleString();}
-clock();setInterval(clock,1000);
 
-/* AI INTERFACE */
+function updateClock(){
+$("clock").textContent=new Date().toLocaleString();
+}
+updateClock();
+setInterval(updateClock,1000);
+
+/* ================= AI ================= */
+
+let chatHistory=[];
+let aiBusy=false;
+
 function addMessage(text,type){
- const d=document.createElement("div");d.className="msg "+type;d.textContent=text;
- $("messages").append(d);$("messages").scrollTop=$("messages").scrollHeight;
+const d=document.createElement("div");
+d.className="msg "+type;
+d.textContent=text;
+$("messages").append(d);
+$("messages").scrollTop=$("messages").scrollHeight;
 }
-$("send").onclick=()=>{
- const q=$("question").value.trim();if(!q)return;
- addMessage(q,"user");$("question").value="";
- addMessage("CopenAI is not connected to an AI service yet. A secure backend is required to generate real answers.","ai");
- $("aiStatus").textContent="No AI backend configured.";
-};
-$("question").onkeydown=e=>{if(e.key==="Enter")$("send").click();};
 
-/* MUSIC */
-function getFav(){try{return JSON.parse(localStorage.getItem("copenFav")||"[]")}catch{return []}}
-function saveFav(x){localStorage.setItem("copenFav",JSON.stringify(x))}
-function playTrack(t){
- $("playingTitle").textContent=t.title+" — "+t.artist;
- $("player").src=t.stream;$("player").load();
- $("player").play().catch(()=>$("musicStatus").textContent="Playback failed. Try another track.");
+function getEndpoint(){
+return localStorage.getItem("copenAIEndpoint")||"";
 }
+
+$("aiEndpoint").value=getEndpoint();
+
+$("saveAI").onclick=()=>{
+const endpoint=$("aiEndpoint").value.trim();
+if(!endpoint){
+$("connectionStatus").textContent="Enter a backend URL first.";
+return;
+}
+try{
+const url=new URL(endpoint);
+if(!["https:","http:"].includes(url.protocol))throw Error();
+localStorage.setItem("copenAIEndpoint",endpoint);
+$("connectionStatus").textContent="Backend URL saved.";
+$("aiStatus").textContent="Backend URL configured. Ready to test.";
+}catch{
+$("connectionStatus").textContent="That URL doesn't look valid.";
+}
+};
+
+async function sendAI(){
+const question=$("question").value.trim();
+if(!question||aiBusy)return;
+
+const endpoint=getEndpoint();
+if(!endpoint){
+$("aiStatus").textContent="No backend configured. Set one in Settings.";
+return;
+}
+
+aiBusy=true;
+$("send").disabled=true;
+$("send").textContent="Thinking...";
+$("question").value="";
+addMessage(question,"user");
+
+const waiting=document.createElement("div");
+waiting.className="msg ai";
+waiting.textContent="CopenAI is thinking...";
+$("messages").append(waiting);
+
+chatHistory.push({role:"user",content:question});
+
+const controller=new AbortController();
+const timeout=setTimeout(()=>controller.abort(),45000);
+
+try{
+const response=await fetch(endpoint,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({messages:chatHistory}),
+signal:controller.signal
+});
+
+if(!response.ok)throw Error("Server error "+response.status);
+
+const data=await response.json();
+const answer=
+data.reply||
+data.response||
+data.message||
+data.choices?.[0]?.message?.content||
+data.output_text;
+
+if(typeof answer!=="string"||!answer.trim()){
+throw Error("The server returned an empty response.");
+}
+
+waiting.textContent=answer;
+chatHistory.push({role:"assistant",content:answer});
+$("aiStatus").textContent="Connected successfully.";
+}catch(error){
+waiting.textContent=error.name==="AbortError"
+?"The request timed out. Try again."
+:"Couldn't get a response: "+error.message;
+$("aiStatus").textContent="Connection error. Your chat is still available.";
+chatHistory.pop();
+}catchEndPlaceholder();
+}finally{
+clearTimeout(timeout);
+aiBusy=false;
+$("send").disabled=false;
+$("send").textContent="Send";
+}
+}
+
+function catchEndPlaceholder(){}
+
+$("send").onclick=sendAI;
+$("question").onkeydown=e=>{
+if(e.key==="Enter"&&!e.shiftKey){
+e.preventDefault();
+sendAI();
+}
+};
+$("clearChat").onclick=()=>{
+chatHistory=[];
+$("messages").innerHTML="";
+addMessage("Chat cleared. What would you like to talk about?","ai");
+$("aiStatus").textContent="Chat ready.";
+};
+
+/* ================= MUSIC ================= */
+
+function getFav(){
+try{return JSON.parse(localStorage.getItem("copenFav")||"[]")}
+catch{return []}
+}
+function saveFav(items){
+localStorage.setItem("copenFav",JSON.stringify(items));
+}
+
+let currentTrack=null;
+let previewEnd=0;
+
+function playTrack(track){
+currentTrack=track;
+previewEnd=0;
+$("playingTitle").textContent=track.title+" — "+track.artist;
+$("musicStatus").textContent="Loading track...";
+$("player").src=track.stream;
+$("player").load();
+
+$("player").play().then(()=>{
+$("musicStatus").textContent="Playing: "+track.title;
+}).catch(()=>{
+$("musicStatus").textContent="Playback unavailable. Try another track.";
+});
+}
+
+$("player").addEventListener("loadedmetadata",()=>{
+if(!currentTrack)return;
+const duration=$("player").duration;
+if(Number.isFinite(duration)&&duration>0){
+previewEnd=duration/2;
+$("previewStatus").textContent=
+"Preview: "+Math.round(previewEnd)+" seconds of "+Math.round(duration)+" seconds.";
+}
+});
+
+$("player").addEventListener("timeupdate",()=>{
+if(previewEnd>0&&$("player").currentTime>=previewEnd){
+$("player").pause();
+$("player").currentTime=0;
+$("musicStatus").textContent="Preview finished. Search for another track.";
+}
+});
+
 function renderTracks(items,target){
- $(target).innerHTML="";
- if(!items.length){$(target).textContent="No tracks found.";return;}
- items.forEach(t=>{
-  const row=document.createElement("div");row.className="track";
-  const img=document.createElement("img");img.className="cover";img.src=t.art||"";img.alt="";
-  const info=document.createElement("div");info.className="trackinfo";
-  const title=document.createElement("strong");title.textContent=t.title;
-  const artist=document.createElement("span");artist.textContent=t.artist;
-  info.append(title,artist);
-  const play=document.createElement("button");play.className="btn";play.textContent="Play";play.onclick=()=>playTrack(t);
-  const fav=document.createElement("button");fav.className="btn secondary";fav.textContent="♡";
-  fav.onclick=()=>{
-   let f=getFav();
-   if(f.some(x=>x.id===t.id))f=f.filter(x=>x.id!==t.id);else f.unshift(t);
-   saveFav(f);renderFavorites();
-  };
-  row.append(img,info,play,fav);$(target).append(row);
- });
+const container=$(target);
+container.innerHTML="";
+if(!items.length){
+container.textContent="No tracks found.";
+return;
 }
+items.forEach(track=>{
+const row=document.createElement("div");
+row.className="track";
+
+const img=document.createElement("img");
+img.className="cover";
+img.src=track.art||"";
+img.alt="";
+img.onerror=()=>{img.style.visibility="hidden"};
+
+const info=document.createElement("div");
+info.className="trackinfo";
+const title=document.createElement("strong");
+title.textContent=track.title;
+const artist=document.createElement("span");
+artist.textContent=track.artist;
+info.append(title,artist);
+
+const play=document.createElement("button");
+play.className="btn";
+play.textContent="Play";
+play.onclick=()=>playTrack(track);
+
+const fav=document.createElement("button");
+fav.className="btn secondary";
+fav.textContent=getFav().some(x=>x.id===track.id)?"♥":"♡";
+fav.onclick=()=>{
+let list=getFav();
+if(list.some(x=>x.id===track.id)){
+list=list.filter(x=>x.id!==track.id);
+}else{
+list.unshift(track);
+}
+saveFav(list);
+renderFavorites();
+fav.textContent=list.some(x=>x.id===track.id)?"♥":"♡";
+};
+
+row.append(img,info,play,fav);
+container.append(row);
+});
+}
+
 async function searchMusic(){
- const q=$("musicQuery").value.trim()||$("genre").value;
- if(!q){$("musicStatus").textContent="Enter a search or choose a genre.";return;}
- $("musicStatus").textContent="Searching Audius...";
- try{
-  const url="https://discoveryprovider.audius.co/v1/tracks/search?query="+encodeURIComponent(q)+"&limit=30&app_name=CopenOS";
-  const response=await fetch(url);
-  if(!response.ok)throw Error("Provider returned "+response.status);
-  const data=await response.json();
-  const tracks=(data.data||[]).map(t=>({
-   id:t.id,title:t.title||"Untitled",artist:t.user?.name||"Unknown artist",
-   art:t.artwork?.["150x150"]||"",
-   stream:"https://discoveryprovider.audius.co/v1/tracks/"+encodeURIComponent(t.id)+"/stream?app_name=CopenOS"
-  }));
-  renderTracks(tracks,"musicResults");
-  $("musicStatus").textContent=tracks.length+" results. Catalog availability varies by genre and artist.";
- }catch(e){$("musicStatus").textContent="Music search failed: "+e.message;}
+const query=$("musicQuery").value.trim()||$("genre").value;
+if(!query){
+$("musicStatus").textContent="Enter a song or choose a genre.";
+return;
 }
+$("musicStatus").textContent="Searching music...";
+$("musicSearch").disabled=true;
+
+try{
+const url=
+"https://discoveryprovider.audius.co/v1/tracks/search?query="+
+encodeURIComponent(query)+"&limit=30&app_name=CopenOS";
+
+const response=await fetch(url);
+if(!response.ok)throw Error("Music provider unavailable.");
+
+const data=await response.json();
+const tracks=(data.data||[]).map(t=>({
+id:t.id,
+title:t.title||"Untitled",
+artist:t.user?.name||"Unknown artist",
+art:t.artwork?.["150x150"]||"",
+stream:"https://discoveryprovider.audius.co/v1/tracks/"+
+encodeURIComponent(t.id)+"/stream?app_name=CopenOS"
+}));
+
+renderTracks(tracks,"musicResults");
+$("musicStatus").textContent=tracks.length+
+" tracks found. Preview playback is limited to half the available track.";
+}catch(error){
+$("musicStatus").textContent="Music search failed: "+error.message;
+}finally{
+$("musicSearch").disabled=false;
+}
+}
+
 $("musicSearch").onclick=searchMusic;
-$("musicQuery").onkeydown=e=>{if(e.key==="Enter")searchMusic();};
-$("genre").onchange=()=>{$("musicQuery").value=$("genre").value;searchMusic();};
-function renderFavorites(){renderTracks(getFav(),"favorites");}
+$("musicQuery").onkeydown=e=>{
+if(e.key==="Enter")searchMusic();
+};
+$("genre").onchange=()=>{
+$("musicQuery").value=$("genre").value;
+searchMusic();
+};
+
+function renderFavorites(){
+renderTracks(getFav(),"favorites");
+}
 renderFavorites();
 
-/* BUILT-IN BLOB MINI-GAMES */
+/* ================= BLOB GAMES ================= */
+
 const miniGames=[
- ["Click Challenge",`<h1>Click Challenge</h1><p>Click the button as many times as possible in 10 seconds!</p><h2 id="score">0</h2><button onclick="score++ ;document.getElementById('score').textContent=score">CLICK!</button><p id="timer">10 seconds</p><script>let score=0,time=10;let t=setInterval(()=>{time--;document.getElementById('timer').textContent=time+' seconds';if(time<=0){clearInterval(t);document.querySelector('button').disabled=true;document.getElementById('timer').textContent='Finished! Final score: '+score}},1000)<\/script>`],
- ["Number Guess",`<h1>Number Guess</h1><p>Guess a number from 1 to 20.</p><input id="guess" type="number"><button onclick="check()">Guess</button><p id="result"></p><script>let answer=Math.floor(Math.random()*20)+1;function check(){let n=Number(document.getElementById('guess').value);document.getElementById('result').textContent=n===answer?'Correct!':n<answer?'Too low!':'Too high!' }<\/script>`],
- ["Reaction Test",`<h1>Reaction Test</h1><p>Wait until the box turns green, then click it!</p><button id="box" style="width:100%;height:180px;background:#a33;color:white" onclick="hit()">Wait...</button><p id="result"></p><script>let start=0,ready=false;setTimeout(()=>{ready=true;start=Date.now();let b=document.getElementById('box');b.style.background='green';b.textContent='CLICK NOW!'},2000+Math.random()*4000);function hit(){if(!ready){document.getElementById('result').textContent='Too early! Reload to retry.';return}document.getElementById('result').textContent='Your reaction: '+(Date.now()-start)+' ms';document.getElementById('box').disabled=true}<\/script>`]
+["Click Challenge",`
+<h1>Click Challenge</h1>
+<p>Click as many times as possible in 10 seconds!</p>
+<h2 id="score">0</h2>
+<button id="clicker">CLICK!</button>
+<p id="timer">10 seconds</p>
+<script>
+let score=0,time=10;
+document.getElementById("clicker").onclick=()=>{
+score++;
+document.getElementById("score").textContent=score;
+};
+let timer=setInterval(()=>{
+time--;
+document.getElementById("timer").textContent=time+" seconds";
+if(time<=0){
+clearInterval(timer);
+document.getElementById("clicker").disabled=true;
+document.getElementById("timer").textContent="Finished! Score: "+score;
+}
+},1000);
+<\/script>`],
+
+["Number Guess",`
+<h1>Number Guess</h1>
+<p>Guess a number between 1 and 20.</p>
+<input id="guess" type="number" min="1" max="20">
+<button id="check">Guess</button>
+<p id="result"></p>
+<script>
+let answer=Math.floor(Math.random()*20)+1;
+document.getElementById("check").onclick=()=>{
+let n=Number(document.getElementById("guess").value);
+document.getElementById("result").textContent=
+n===answer?"Correct!":n<answer?"Too low!":"Too high!";
+};
+<\/script>`],
+
+["Reaction Test",`
+<h1>Reaction Test</h1>
+<p>Wait for green, then click!</p>
+<button id="box" style="width:100%;height:180px;background:#a33;color:white">Wait...</button>
+<p id="result"></p>
+<script>
+let ready=false,start=0;
+let delay=2000+Math.random()*4000;
+setTimeout(()=>{
+ready=true;
+start=Date.now();
+document.getElementById("box").style.background="green";
+document.getElementById("box").textContent="CLICK NOW!";
+},delay);
+document.getElementById("box").onclick=()=>{
+if(!ready){
+document.getElementById("result").textContent="Too early! Reload to retry.";
+return;
+}
+document.getElementById("result").textContent=
+"Your reaction: "+(Date.now()-start)+" ms";
+document.getElementById("box").disabled=true;
+};
+<\/script>`]
 ];
 
 function openBlobGame(name,html){
- const blob=new Blob([`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#15151f;color:white;font-family:Arial;text-align:center;padding:30px}button{padding:15px 22px;border:0;border-radius:10px;background:#a78bfa;font-weight:bold}input{padding:12px;border-radius:8px}h1{color:#c4b5fd}</style></head><body>${html}</body></html>`],{type:"text/html"});
- const url=URL.createObjectURL(blob);
- $("gameTitle").textContent=name+" — Blob Game";
- $("gameFrame").src=url;
- $("viewer").style.display="block";
- $("viewer").dataset.blob=url;
- $("viewer").scrollIntoView({behavior:"smooth"});
+const documentText=`
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{
+background:#15151f;color:white;font-family:Arial;
+text-align:center;padding:25px;
 }
-$("closeGame").onclick=()=>{
- const url=$("viewer").dataset.blob;
- if(url)URL.revokeObjectURL(url);
- $("gameFrame").src="about:blank";
- $("viewer").style.display="none";
-};
+button{
+padding:15px 22px;border:0;border-radius:10px;
+background:#a78bfa;font-weight:bold;cursor:pointer;
+}
+input{padding:12px;border-radius:8px}
+h1{color:#c4b5fd}
+</style>
+</head>
+<body>${html}</body>
+</html>`;
+
+const blob=new Blob([documentText],{type:"text/html"});
+const url=URL.createObjectURL(blob);
+
+$("gameTitle").textContent=name+" — Blob Game";
+$("gameFrame").src=url;
+$("viewer").style.display="block";
+$("viewer").dataset.blob=url;
+$("viewer").scrollIntoView({behavior:"smooth"});
+}
+
+function closeGame(){
+const url=$("viewer").dataset.blob;
+$("gameFrame").src="about:blank";
+if(url)URL.revokeObjectURL(url);
+$("viewer").dataset.blob="";
+$("viewer").style.display="none";
+}
+$("closeGame").onclick=closeGame;
+
 miniGames.forEach(([name,html])=>{
- const c=document.createElement("div");c.className="card";
- const h=document.createElement("h3");h.textContent=name;
- const b=document.createElement("button");b.className="btn";b.textContent="Play";
- b.onclick=()=>openBlobGame(name,html);
- c.append(h,b);$("builtGames").append(c);
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h3");
+title.textContent=name;
+const button=document.createElement("button");
+button.className="btn";
+button.textContent="Play";
+button.onclick=()=>openBlobGame(name,html);
+card.append(title,button);
+$("builtGames").append(card);
 });
 
-/* EXTERNAL GAMES */
+/* ================= EXTERNAL GAMES ================= */
+
 const games=[
- ["Baseball Bros","https://www.baseballbros.io/"],
- ["Football Bros","https://fb.footballbros.io/index.php"],
- ["Basket Bros","https://basketbros.io/"],
- ["Retro Bowl","https://www.retrobowlgame.com/"],
- ["Shell Shockers","https://shellshock.io/"],
- ["Smash Karts","https://smashkarts.io/"],
- ["1v1.LOL","https://1v1.lol/"],
- ["Slope","https://slopegame.io/"],
- ["Run 3","https://run3.io/"],
- ["Moto X3M","https://moto-x3m.com/"],
- ["Krunker","https://krunker.io/"],
- ["Agar.io","https://agar.io/"]
+["Baseball Bros","https://www.baseballbros.io/"],
+["Football Bros","https://fb.footballbros.io/index.php"],
+["Basket Bros","https://basketbros.io/"],
+["Retro Bowl","https://www.retrobowlgame.com/"],
+["Shell Shockers","https://shellshock.io/"],
+["Smash Karts","https://smashkarts.io/"],
+["1v1.LOL","https://1v1.lol/"],
+["Slope","https://slopegame.io/"],
+["Run 3","https://run3.io/"],
+["Moto X3M","https://moto-x3m.com/"],
+["Krunker","https://krunker.io/"],
+["Agar.io","https://agar.io/"]
 ];
+
 function renderGames(filter=""){
- $("gameGrid").innerHTML="";
- games.filter(x=>x[0].toLowerCase().includes(filter.toLowerCase())).forEach(x=>{
-  const c=document.createElement("div");c.className="card";
-  const h=document.createElement("h3");h.textContent=x[0];
-  const a=document.createElement("a");a.href=x[1];a.target="_blank";a.rel="noopener noreferrer";
-  const b=document.createElement("button");b.className="btn";b.textContent="Open official site";
-  a.append(b);c.append(h,a);$("gameGrid").append(c);
- });
+$("gameGrid").innerHTML="";
+games.filter(x=>x[0].toLowerCase().includes(filter.toLowerCase()))
+.forEach(game=>{
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h3");
+title.textContent=game[0];
+const link=document.createElement("a");
+link.href=game[1];
+link.target="_blank";
+link.rel="noopener noreferrer";
+const button=document.createElement("button");
+button.className="btn";
+button.textContent="Open official site";
+link.append(button);
+card.append(title,link);
+$("gameGrid").append(card);
+});
 }
 renderGames();
 $("gameFilter").oninput=e=>renderGames(e.target.value);
 
-/* ANIME */
-const anime=["Attack on Titan","Vinland Saga","Death Note","Demon Slayer","Jujutsu Kaisen","Naruto","One Piece","Fullmetal Alchemist","Chainsaw Man","Mob Psycho 100","Hunter x Hunter","Bleach","Haikyuu","Tokyo Ghoul","Spy x Family"];
-function renderAnime(filter=""){
- $("animeGrid").innerHTML="";
- anime.filter(x=>x.toLowerCase().includes(filter.toLowerCase())).forEach(x=>{
-  const c=document.createElement("div");c.className="card";
-  const h=document.createElement("h3");h.textContent=x;
-  const a=document.createElement("a");a.target="_blank";a.rel="noopener noreferrer";
-  a.href="https://www.google.com/search?q="+encodeURIComponent(x+" anime");
-  a.textContent="Explore ↗";c.append(h,a);$("animeGrid").append(c);
- });
-}
-renderAnime();$("animeFilter").oninput=e=>renderAnime(e.target.value);
+/* ================= ANIME ================= */
 
-/* MOVIES */
-const services=[["Tubi","https://tubitv.com/"],["Pluto TV","https://pluto.tv/"],["Netflix","https://netflix.com/"],["Disney+","https://disneyplus.com/"],["Hulu","https://hulu.com/"],["Prime Video","https://primevideo.com/"],["YouTube Movies","https://youtube.com/movies"],["Peacock","https://peacocktv.com/"]];
-services.forEach(x=>{
- const c=document.createElement("div");c.className="card";
- const h=document.createElement("h3");h.textContent=x[0];
- const a=document.createElement("a");a.href=x[1];a.target="_blank";a.rel="noopener noreferrer";a.textContent="Visit ↗";
- c.append(h,a);$("movieGrid").append(c);
+const anime=[
+"Attack on Titan","Vinland Saga","Death Note",
+"Demon Slayer","Jujutsu Kaisen","Naruto","One Piece",
+"Fullmetal Alchemist","Chainsaw Man","Mob Psycho 100",
+"Hunter x Hunter","Bleach","Haikyuu","Tokyo Ghoul","Spy x Family"
+];
+
+function renderAnime(filter=""){
+$("animeGrid").innerHTML="";
+anime.filter(x=>x.toLowerCase().includes(filter.toLowerCase()))
+.forEach(name=>{
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h3");
+title.textContent=name;
+const link=document.createElement("a");
+link.href="https://www.google.com/search?q="+encodeURIComponent(name+" anime");
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="Explore ↗";
+card.append(title,link);
+$("animeGrid").append(card);
+});
+}
+renderAnime();
+$("animeFilter").oninput=e=>renderAnime(e.target.value);
+
+/* ================= MOVIES ================= */
+
+const services=[
+["Tubi","https://tubitv.com/"],
+["Pluto TV","https://pluto.tv/"],
+["Netflix","https://netflix.com/"],
+["Disney+","https://disneyplus.com/"],
+["Hulu","https://hulu.com/"],
+["Prime Video","https://primevideo.com/"],
+["YouTube Movies","https://youtube.com/movies"],
+["Peacock","https://peacocktv.com/"]
+];
+
+services.forEach(service=>{
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h3");
+title.textContent=service[0];
+const link=document.createElement("a");
+link.href=service[1];
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="Visit ↗";
+card.append(title,link);
+$("movieGrid").append(card);
 });
 
-/* NOTES */
-let notes=[];try{notes=JSON.parse(localStorage.getItem("copenNotes")||"[]")}catch{}
+/* ================= NOTES ================= */
+
+let notes=[];
+try{
+notes=JSON.parse(localStorage.getItem("copenNotes")||"[]");
+}catch{}
+
 function drawNotes(){
- $("noteList").innerHTML="";
- notes.forEach((n,i)=>{
-  const c=document.createElement("div");c.className="card";c.style.marginTop="12px";
-  const p=document.createElement("p");p.textContent=n;
-  const b=document.createElement("button");b.className="btn secondary";b.textContent="Delete";
-  b.onclick=()=>{notes.splice(i,1);saveNotes()};
-  c.append(p,b);$("noteList").append(c);
- });
+$("noteList").innerHTML="";
+notes.forEach((note,index)=>{
+const card=document.createElement("div");
+card.className="card";
+card.style.marginTop="12px";
+const text=document.createElement("p");
+text.textContent=note;
+const button=document.createElement("button");
+button.className="btn secondary";
+button.textContent="Delete";
+button.onclick=()=>{
+notes.splice(index,1);
+saveNotes();
+};
+card.append(text,button);
+$("noteList").append(card);
+});
 }
-function saveNotes(){localStorage.setItem("copenNotes",JSON.stringify(notes));drawNotes();}
-$("saveNote").onclick=()=>{let n=$("noteText").value.trim();if(n){notes.unshift(n);$("noteText").value="";saveNotes();}};
+
+function saveNotes(){
+localStorage.setItem("copenNotes",JSON.stringify(notes));
+drawNotes();
+}
+
+$("saveNote").onclick=()=>{
+const note=$("noteText").value.trim();
+if(!note)return;
+notes.unshift(note);
+$("noteText").value="";
+saveNotes();
+};
 drawNotes();
 
-/* SETTINGS */
+/* ================= SETTINGS ================= */
+
 function theme(){
- document.documentElement.style.setProperty("--accent",$("accent").value);
- document.documentElement.style.setProperty("--bg",$("background").value);
- document.body.style.background=$("background").value;
- localStorage.setItem("copenTheme",JSON.stringify({a:$("accent").value,b:$("background").value}));
+const accent=$("accent").value;
+const background=$("background").value;
+document.documentElement.style.setProperty("--accent",accent);
+document.documentElement.style.setProperty("--bg",background);
+document.body.style.background=background;
+localStorage.setItem("copenTheme",JSON.stringify({
+a:accent,b:background
+}));
 }
-try{let t=JSON.parse(localStorage.getItem("copenTheme")||"null");if(t){$("accent").value=t.a;$("background").value=t.b;theme();}}catch{}
-$("accent").oninput=theme;$("background").oninput=theme;
-$("reset").onclick=()=>{$("accent").value="#a78bfa";$("background").value="#101018";theme();};
+
+try{
+const saved=JSON.parse(localStorage.getItem("copenTheme")||"null");
+if(saved){
+$("accent").value=saved.a;
+$("background").value=saved.b;
+theme();
+}
+}catch{}
+
+$("accent").oninput=theme;
+$("background").oninput=theme;
+$("reset").onclick=()=>{
+$("accent").value="#a78bfa";
+$("background").value="#101018";
+theme();
+};
 </script>
 </body>
 </html>
