@@ -3,750 +3,420 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b12">
 <title>CopenOS</title>
 <style>
-:root {
-  --bg:#090a10;
-  --panel:#12141e;
-  --panel2:#191c29;
-  --text:#f4f4fa;
-  --muted:#9296aa;
-  --accent:#9b72ff;
-  --border:#292c3c;
-}
+:root{--bg:#090b12;--panel:#141824;--panel2:#1c2231;--text:#f4f5fa;--muted:#929bb0;--accent:#9c75ff;--border:#293044}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-button,input,textarea{font:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .app{display:flex;min-height:100vh}
-.sidebar{
-  width:220px;
-  background:#0e1018;
-  border-right:1px solid var(--border);
-  padding:24px 14px;
-  flex-shrink:0;
-}
-.logo{
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:-1px;
-  padding:0 12px 30px;
-}
+.sidebar{width:225px;background:#10131d;border-right:1px solid var(--border);padding:23px 14px;flex-shrink:0}
+.logo{font-size:25px;font-weight:900;padding:0 12px 28px;letter-spacing:-1px}
 .logo span{color:var(--accent)}
-.nav{
-  width:100%;
-  padding:13px 14px;
-  border:0;
-  border-radius:10px;
-  background:transparent;
-  color:var(--muted);
-  text-align:left;
-  margin-bottom:5px;
-  font-size:14px;
-}
-.nav:hover,.nav.active{
-  background:var(--panel2);
-  color:white;
-}
+.nav{display:block;width:100%;padding:13px 14px;border:0;border-radius:10px;background:transparent;color:var(--muted);text-align:left;margin-bottom:5px}
+.nav:hover,.nav.active{background:var(--panel2);color:white}
 .nav.active{box-shadow:inset 3px 0 var(--accent)}
 .main{flex:1;min-width:0;padding:28px}
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:28px;
-  gap:12px;
-}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:12px}
 .topbar h1{font-size:25px;margin:0}
-.status{font-size:12px;color:#8de0b1}
-.page{display:none}
-.page.active{display:block}
-.hero{
-  padding:35px;
-  border-radius:18px;
-  background:linear-gradient(130deg,#282044,#151725 65%,#10131d);
-  border:1px solid #39304f;
-  margin-bottom:22px;
-}
-.hero h2{font-size:32px;margin:0 0 10px}
+.status{font-size:11px;color:#8de0b1}
+.page{display:none}.page.active{display:block}
+.hero{padding:30px;border-radius:18px;background:linear-gradient(130deg,#292044,#171b2a 65%,#10131d);border:1px solid #39304f;margin-bottom:22px}
+.hero h2{font-size:29px;margin:0 0 9px}
 .hero p{color:#c1bdd2;line-height:1.6;margin:0}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:14px;
-}
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
-  min-width:0;
-}
-.card h3{margin:0 0 9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0}
+.card h3{margin:0 0 8px}
 .card p{color:var(--muted);font-size:13px;line-height:1.5}
-.big-icon{font-size:27px;margin-bottom:14px}
-.primary{
-  border:0;
-  border-radius:9px;
-  padding:11px 16px;
-  background:var(--accent);
-  color:white;
-  font-weight:700;
-}
-.secondary{
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:10px 14px;
-  background:var(--panel2);
-  color:white;
-}
-input,textarea{
-  width:100%;
-  border:1px solid var(--border);
-  background:#0d0f17;
-  color:white;
-  padding:13px;
-  border-radius:9px;
-  outline:none;
-}
-input:focus,textarea:focus{border-color:var(--accent)}
+.big-icon{font-size:29px;margin-bottom:13px}
+.primary,.secondary{border-radius:9px;padding:11px 15px;font-weight:700}
+.primary{border:0;background:var(--accent);color:white}
+.secondary{border:1px solid var(--border);background:var(--panel2);color:white}
+.primary:hover{filter:brightness(1.12)}
+input,textarea,select{width:100%;border:1px solid var(--border);background:#0d1019;color:white;padding:13px;border-radius:9px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+select option{background:#141824;color:white}
 .search-row{display:flex;gap:9px;margin:16px 0}
 .search-row input{flex:1;min-width:0}
-.track{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:9px;
-}
-.track img{
-  width:52px;height:52px;
-  border-radius:8px;
-  object-fit:cover;
-  background:var(--panel2);
-}
+.genre-list{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.genre{border:1px solid var(--border);border-radius:30px;padding:8px 12px;background:var(--panel2);color:var(--muted);font-size:12px}
+.genre.active{background:var(--accent);color:white;border-color:var(--accent)}
+.track{display:flex;align-items:center;gap:12px;padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:12px;margin-bottom:9px}
+.track img{width:55px;height:55px;object-fit:cover;border-radius:8px;background:var(--panel2)}
 .track-info{flex:1;min-width:0}
-.track-info strong,.track-info small{
-  display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
-}
+.track-info strong,.track-info small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .track-info small{color:var(--muted);margin-top:5px}
-.track button{flex-shrink:0}
-.player{
-  margin-top:18px;
-  padding:18px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  border-radius:14px;
-}
-.player-title{font-weight:bold;margin-bottom:10px}
+.player{margin-top:18px;padding:18px;border:1px solid var(--border);background:var(--panel);border-radius:14px}
 .player audio{width:100%;margin:12px 0}
-.progress-info{font-size:12px;color:var(--muted)}
-.notice{
-  border:1px solid #55462c;
-  background:#241e13;
-  color:#e9c98d;
-  border-radius:12px;
-  padding:14px;
-  line-height:1.5;
-  font-size:13px;
-  margin:15px 0;
-}
-.ai-status{
-  border:1px solid #51406f;
-  background:#1b1728;
-  border-radius:15px;
-  padding:30px;
-  text-align:center;
-  margin-top:18px;
-}
-.ai-status .icon{font-size:38px}
-.ai-status h2{margin:12px 0 8px}
-.ai-status p{color:#b6aec9;line-height:1.6}
-.pill{
-  display:inline-block;
-  background:#382b50;
-  color:#d9c7ff;
-  padding:6px 10px;
-  border-radius:30px;
-  font-size:11px;
-  font-weight:bold;
-}
-.game-area{
-  background:#0c0e16;
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:22px;
-  text-align:center;
-}
-.game-area button{margin:5px}
-.game-number{font-size:40px;font-weight:bold;margin:15px}
-.note-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  background:var(--panel2);
-  border-radius:9px;
-  margin-top:8px;
-  gap:10px;
-}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+.notice{border:1px solid #55462c;background:#241e13;color:#e9c98d;border-radius:12px;padding:13px;font-size:13px;line-height:1.5;margin:15px 0}
+.game-card,.media-card{display:flex;flex-direction:column;gap:9px}
+.game-card p,.media-card p{flex:1}
+.game-icon,.media-icon{font-size:32px}
+.game-card button,.media-card button{width:100%}
+.game-category,.media-category{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.toast{position:fixed;right:22px;bottom:22px;background:#211b30;border:1px solid #59427c;color:white;padding:14px 18px;border-radius:12px;box-shadow:0 8px 35px #0009;opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:9999;max-width:290px;font-size:14px}
+.toast.show{opacity:1;transform:translateY(0)}
+.note-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;background:var(--panel2);border-radius:9px;margin-top:8px}
 .note-item span{overflow-wrap:anywhere}
-.small{font-size:12px;color:var(--muted)}
-footer{color:#666b7e;font-size:12px;margin-top:35px}
+.section-title{margin-top:28px}
+.viewer{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:15px}
+.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.viewer iframe{width:100%;height:72vh;min-height:420px;border:1px solid var(--border);border-radius:10px;background:#080a10}
+.viewer-actions{display:flex;gap:9px;flex-wrap:wrap}
+.hidden{display:none!important}
 @media(max-width:650px){
-  .app{display:block}
-  .sidebar{
-    width:100%;
-    padding:12px;
-    border-right:0;
-    border-bottom:1px solid var(--border);
-  }
-  .logo{padding:4px 8px 12px}
-  .nav-wrap{
-    display:flex;
-    overflow-x:auto;
-    gap:5px;
-  }
-  .nav{
-    width:auto;
-    white-space:nowrap;
-    margin:0;
-    padding:10px 12px;
-  }
-  .nav.active{box-shadow:inset 0 -3px var(--accent)}
-  .main{padding:18px 14px}
-  .hero{padding:24px}
-  .hero h2{font-size:26px}
-  .track{gap:8px}
-  .track button{padding:9px}
+ .app{display:block}
+ .sidebar{width:100%;padding:12px;border-right:0;border-bottom:1px solid var(--border)}
+ .logo{padding:4px 8px 12px}
+ .nav-wrap{display:flex;overflow-x:auto;gap:5px}
+ .nav{width:auto;white-space:nowrap;margin:0;padding:10px 12px}
+ .nav.active{box-shadow:inset 0 -3px var(--accent)}
+ .main{padding:18px 14px}
+ .hero{padding:23px}
+ .hero h2{font-size:26px}
+ .toast{right:12px;bottom:12px;left:12px;max-width:none}
+ .viewer iframe{height:65vh;min-height:360px}
+ .track{align-items:flex-start;flex-wrap:wrap}
+ .track button{margin-left:auto}
 }
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="logo">COPEN<span>OS</span></div>
-    <div class="nav-wrap">
-      <button class="nav active" data-page="home">⌂ Home</button>
-      <button class="nav" data-page="ai">✦ AI</button>
-      <button class="nav" data-page="music">♫ Music</button>
-      <button class="nav" data-page="games">🎮 Games</button>
-      <button class="nav" data-page="anime">▣ Anime</button>
-      <button class="nav" data-page="movies">▶ Movies</button>
-      <button class="nav" data-page="notes">▤ Notes</button>
-      <button class="nav" data-page="settings">⚙ Settings</button>
-    </div>
-  </aside>
+<aside class="sidebar">
+ <div class="logo">COPEN<span>OS</span></div>
+ <div class="nav-wrap">
+  <button class="nav active" data-page="home">⌂ Home</button>
+  <button class="nav" data-page="ai">✦ AI</button>
+  <button class="nav" data-page="music">♫ Music</button>
+  <button class="nav" data-page="games">🎮 Games</button>
+  <button class="nav" data-page="anime">▣ Anime</button>
+  <button class="nav" data-page="movies">▶ Movies</button>
+  <button class="nav" data-page="notes">▤ Notes</button>
+  <button class="nav" data-page="settings">⚙ Settings</button>
+ </div>
+</aside>
 
-  <main class="main">
-    <div class="topbar">
-      <h1 id="pageTitle">Home</h1>
-      <span class="status">● SYSTEM ONLINE</span>
-    </div>
+<main class="main">
+ <div class="topbar">
+  <h1 id="pageTitle">Home</h1>
+  <span class="status">● SYSTEM ONLINE</span>
+ </div>
 
-    <section class="page active" id="home">
-      <div class="hero">
-        <h2>Welcome to CopenOS.</h2>
-        <p>Your own little corner of the internet. Music, games, notes, and more — all in one place.</p>
-      </div>
-      <div class="grid">
-        <div class="card">
-          <div class="big-icon">✦</div>
-          <h3>AI Assistant</h3>
-          <p>Currently being worked on.</p>
-          <button class="secondary" onclick="showPage('ai')">View status</button>
-        </div>
-        <div class="card">
-          <div class="big-icon">♫</div>
-          <h3>Music</h3>
-          <p>Search music available through Audius.</p>
-          <button class="secondary" onclick="showPage('music')">Open music</button>
-        </div>
-        <div class="card">
-          <div class="big-icon">🎮</div>
-          <h3>Games</h3>
-          <p>Play a couple of built-in mini-games.</p>
-          <button class="secondary" onclick="showPage('games')">Open games</button>
-        </div>
-        <div class="card">
-          <div class="big-icon">▤</div>
-          <h3>Notes</h3>
-          <p>Save notes in this browser.</p>
-          <button class="secondary" onclick="showPage('notes')">Open notes</button>
-        </div>
-      </div>
-    </section>
+ <section class="page active" id="home">
+  <div class="hero">
+   <h2>Welcome to CopenOS.</h2>
+   <p>Your own arcade, music player, movie finder, and personal dashboard.</p>
+  </div>
+  <div class="grid">
+   <div class="card"><div class="big-icon">🎮</div><h3>Game Arcade</h3><p>Browse games and open them inside CopenOS when supported.</p><button class="primary" onclick="showPage('games')">Open arcade</button></div>
+   <div class="card"><div class="big-icon">♫</div><h3>Music</h3><p>Search artists, songs, and genres.</p><button class="secondary" onclick="showPage('music')">Open music</button></div>
+   <div class="card"><div class="big-icon">🎬</div><h3>Movies & Shows</h3><p>Find watch options for popular movies and TV shows.</p><button class="secondary" onclick="showPage('movies')">Browse movies</button></div>
+   <div class="card"><div class="big-icon">▤</div><h3>Notes</h3><p>Keep notes saved in your browser.</p><button class="secondary" onclick="showPage('notes')">Open notes</button></div>
+  </div>
+ </section>
 
-    <section class="page" id="ai">
-      <div class="hero">
-        <h2>AI Assistant</h2>
-        <p>The CopenOS AI is getting rebuilt. This feature isn't available yet.</p>
-      </div>
-      <div class="ai-status">
-        <div class="icon">🛠️</div>
-        <span class="pill">IN DEVELOPMENT</span>
-        <h2>AI is currently out of service.</h2>
-        <p>The assistant is temporarily disabled while it is being developed. You won't be able to send messages or get AI responses right now.</p>
-      </div>
-    </section>
+ <section class="page" id="ai">
+  <div class="hero"><h2>AI Assistant</h2><p>AI features are currently in development.</p></div>
+ </section>
 
-    <section class="page" id="music">
-      <div class="hero">
-        <h2>Music Player ♫</h2>
-        <p>Search tracks from the Audius music catalog and play them here.</p>
-      </div>
-      <div class="notice">
-        Music availability depends on what artists have uploaded and made streamable on Audius. This is not a catalog of every song ever released. Playback is limited to 75% of each track.
-      </div>
-      <div class="search-row">
-        <input id="musicSearch" placeholder="Search songs, artists, genres...">
-        <button class="primary" id="searchButton">Search</button>
-      </div>
-      <div id="musicStatus" class="small">Search for an artist, song, or genre to get started.</div>
-      <div id="trackResults"></div>
-      <div class="player" id="player" hidden>
-        <div class="player-title" id="nowPlaying">Nothing playing</div>
-        <div class="small" id="playLimit">Playback limit: 75%</div>
-        <audio id="audio" controls preload="none"></audio>
-        <div class="progress-info" id="progressInfo">Track progress</div>
-      </div>
-    </section>
+ <section class="page" id="games">
+  <div class="hero"><h2>Game Arcade 🎮</h2><p>Choose a game to load it in the CopenOS viewer.</p></div>
+  <div class="notice">Some game websites block being embedded in another page. If one doesn't load, use the button to open its website in this tab.</div>
+  <div id="gameCatalog" class="grid">
+   <div class="card game-card"><div class="game-icon">⚾</div><div class="game-category">Baseball</div><h3>Baseball Bros</h3><p>Play the browser baseball game.</p><button class="primary" onclick="openViewer('Baseball Bros','https://www.baseballbros.io/')">Play game</button></div>
+   <div class="card game-card"><div class="game-icon">🏆</div><div class="game-category">Sports games</div><h3>Bros Games Hub</h3><p>Explore the Bros collection of sports games.</p><button class="primary" onclick="openViewer('Bros Games Hub','https://batbros.io/')">Open games</button></div>
+  </div>
+  <div class="viewer hidden" id="gameViewer">
+   <div class="viewer-head"><h3 id="gameViewerTitle">Game</h3><div class="viewer-actions"><button class="secondary" onclick="closeViewer('game')">Back to games</button><a class="primary" id="gameExternal" href="#" target="_self" style="text-decoration:none">Open game website</a></div></div>
+   <iframe id="gameFrame" title="Game viewer" allow="fullscreen; autoplay; gamepad"></iframe>
+   <p class="small">If the game area stays blank, its website may block embedding. Use “Open game website” to continue in this tab.</p>
+  </div>
+ </section>
 
-    <section class="page" id="games">
-      <div class="hero">
-        <h2>Games Arcade 🎮</h2>
-        <p>Small games built into CopenOS. No external game websites needed.</p>
-      </div>
-      <div class="grid">
-        <div class="card">
-          <div class="big-icon">⚾</div>
-          <h3>Baseball Clicker</h3>
-          <p>Click to rack up hits.</p>
-          <div class="game-area">
-            <div class="game-number" id="hits">0</div>
-            <button class="primary" onclick="addHit()">HIT!</button>
-            <button class="secondary" onclick="resetHits()">Reset</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="big-icon">🎯</div>
-          <h3>Number Guess</h3>
-          <p>Guess the number from 1 to 10.</p>
-          <div class="game-area">
-            <input id="guessInput" type="number" min="1" max="10" placeholder="Your guess">
-            <button class="primary" onclick="checkGuess()">Guess</button>
-            <p id="guessMessage">Ready?</p>
-            <button class="secondary" onclick="newGuess()">New number</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="big-icon">⚡</div>
-          <h3>Reaction Test</h3>
-          <p>Wait for green, then click as fast as you can.</p>
-          <div class="game-area">
-            <button class="primary" id="reactionButton" onclick="reactionClick()">Start</button>
-            <p id="reactionMessage">Test your reaction time.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+ <section class="page" id="music">
+  <div class="hero"><h2>Music Player ♫</h2><p>Search songs and artists from a public music catalog.</p></div>
+  <div class="notice">This uses Apple's public music search. Playback is limited to previews provided by the catalog. Not every song has a preview.</div>
+  <h3>Choose a genre</h3>
+  <select id="genreSelect">
+   <option value="">All genres</option>
+   <option>Pop Punk</option><option>Punk Rock</option><option>Alternative Rock</option>
+   <option>Indie Rock</option><option>Rock</option><option>Metal</option><option>Emo</option>
+   <option>Pop</option><option>Hip-Hop</option><option>Rap</option><option>Electronic</option>
+   <option>Country</option><option>Jazz</option><option>R&B</option><option>Classical</option>
+   <option>Pop Rock</option><option>Indie Pop</option><option>Soundtracks</option>
+  </select>
+  <div class="search-row"><input id="musicSearch" placeholder="Search Blink-182, Green Day, a song..."><button class="primary" id="searchButton">Search</button></div>
+  <div class="small" id="musicStatus">Choose a genre or search for an artist.</div>
+  <div id="trackResults"></div>
+  <div class="player" id="player" hidden><strong id="nowPlaying">Nothing playing</strong><audio id="audio" controls preload="none"></audio><div class="small" id="progressInfo">Preview playback</div></div>
+ </section>
 
-    <section class="page" id="anime">
-      <div class="hero">
-        <h2>Anime</h2>
-        <p>Your anime section.</p>
-      </div>
-      <div class="card">
-        <h3>Coming soon</h3>
-        <p>This section is ready for anime lists and recommendations.</p>
-      </div>
-    </section>
+ <section class="page" id="anime">
+  <div class="hero"><h2>Anime</h2><p>Your anime corner.</p></div>
+  <div class="card"><h3>Coming soon</h3><p>This section is ready for future features.</p></div>
+ </section>
 
-    <section class="page" id="movies">
-      <div class="hero">
-        <h2>Movies</h2>
-        <p>Your movie section.</p>
-      </div>
-      <div class="card">
-        <h3>Coming soon</h3>
-        <p>This section is ready for movie lists and recommendations.</p>
-      </div>
-    </section>
+ <section class="page" id="movies">
+  <div class="hero"><h2>Movies & Shows 🍿</h2><p>Find popular movies and TV shows and check where they're available to watch.</p></div>
+  <div class="notice">CopenOS links to legal watch options and streaming availability. A streaming service may require its own account or subscription. Some providers block embedded viewing, so use the open button if the viewer doesn't load.</div>
+  <div class="search-row">
+   <input id="movieSearch" placeholder="Search Family Guy, Billy Madison, Shrek...">
+   <button class="primary" id="movieSearchButton">Search</button>
+  </div>
+  <select id="movieType">
+   <option value="all">Movies & TV Shows</option>
+   <option value="movie">Movies</option>
+   <option value="show">TV Shows</option>
+  </select>
+  <div class="genre-list" id="movieCategories"></div>
+  <p class="small" id="movieStatus">Browse the collection or search for a title.</p>
+  <div class="grid" id="movieResults"></div>
+  <div class="viewer hidden" id="movieViewer">
+   <div class="viewer-head"><h3 id="movieViewerTitle">Watch options</h3><div class="viewer-actions"><button class="secondary" onclick="closeViewer('movie')">Back to movies</button><a class="primary" id="movieExternal" href="#" target="_self" style="text-decoration:none">Open watch options</a></div></div>
+   <iframe id="movieFrame" title="Movie watch options"></iframe>
+   <p class="small">This page helps find legal streaming or rental options. If it doesn't appear here, open it in this tab.</p>
+  </div>
+ </section>
 
-    <section class="page" id="notes">
-      <div class="hero">
-        <h2>Notes</h2>
-        <p>Write something and save it in this browser.</p>
-      </div>
-      <textarea id="noteInput" rows="4" placeholder="Write a note..."></textarea>
-      <br><br>
-      <button class="primary" onclick="saveNote()">Save note</button>
-      <div id="notesList"></div>
-    </section>
+ <section class="page" id="notes">
+  <div class="hero"><h2>Notes</h2><p>Save your thoughts in this browser.</p></div>
+  <textarea id="noteInput" rows="4" placeholder="Write a note..."></textarea><br><br>
+  <button class="primary" onclick="saveNote()">Save note</button>
+  <div id="notesList"></div>
+ </section>
 
-    <section class="page" id="settings">
-      <div class="hero">
-        <h2>Settings</h2>
-        <p>Customize your CopenOS experience.</p>
-      </div>
-      <div class="card">
-        <h3>Accent color</h3>
-        <p>Choose a color for buttons and highlights.</p>
-        <div class="grid">
-          <button class="secondary" onclick="setAccent('#9b72ff')">Purple</button>
-          <button class="secondary" onclick="setAccent('#398bff')">Blue</button>
-          <button class="secondary" onclick="setAccent('#e45c91')">Pink</button>
-          <button class="secondary" onclick="setAccent('#35b98a')">Green</button>
-        </div>
-      </div>
-    </section>
-
-    <footer>CopenOS • Personal dashboard</footer>
-  </main>
+ <section class="page" id="settings">
+  <div class="hero"><h2>Settings</h2><p>Customize the look of CopenOS.</p></div>
+  <div class="card"><h3>Accent color</h3><div class="grid">
+   <button class="secondary" onclick="setAccent('#9c75ff')">Purple</button>
+   <button class="secondary" onclick="setAccent('#398bff')">Blue</button>
+   <button class="secondary" onclick="setAccent('#e45c91')">Pink</button>
+   <button class="secondary" onclick="setAccent('#35b98a')">Green</button>
+  </div></div>
+ </section>
+</main>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 
-/* PAGE NAVIGATION */
-const pageTitles = {
-  home:"Home",
-  ai:"AI Assistant",
-  music:"Music",
-  games:"Games",
-  anime:"Anime",
-  movies:"Movies",
-  notes:"Notes",
-  settings:"Settings"
-};
-
+/* NAVIGATION */
+const pageTitles={home:"Home",ai:"AI Assistant",music:"Music",games:"Games",anime:"Anime",movies:"Movies & Shows",notes:"Notes",settings:"Settings"};
+let toastTimer;
+function showToast(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;toast.classList.add("show");
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>toast.classList.remove("show"),3000);
+}
 function showPage(name){
-  const page = document.getElementById(name);
-  if(!page) return;
+ if(name==="ai"){showToast("AI is currently in development.");return;}
+ const target=document.getElementById(name);if(!target)return;
+ closeViewer("game",true);closeViewer("movie",true);
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ target.classList.add("active");
+ document.getElementById("pageTitle").textContent=pageTitles[name]||name;
+}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
-  document.querySelectorAll(".nav").forEach(b=>{
-    b.classList.toggle("active",b.dataset.page===name);
-  });
-
-  page.classList.add("active");
-  document.getElementById("pageTitle").textContent=pageTitles[name]||name;
+/* IN-PAGE GAME VIEWER */
+function openViewer(title,url){
+ document.getElementById("gameCatalog").classList.add("hidden");
+ document.getElementById("gameViewer").classList.remove("hidden");
+ document.getElementById("gameViewerTitle").textContent=title;
+ document.getElementById("gameExternal").href=url;
+ document.getElementById("gameFrame").src=url;
+}
+function closeViewer(type,silent){
+ if(type==="game"){
+  const frame=document.getElementById("gameFrame");
+  if(frame)frame.src="about:blank";
+  document.getElementById("gameViewer")?.classList.add("hidden");
+  document.getElementById("gameCatalog")?.classList.remove("hidden");
+ }
+ if(type==="movie"){
+  const frame=document.getElementById("movieFrame");
+  if(frame)frame.src="about:blank";
+  document.getElementById("movieViewer")?.classList.add("hidden");
+  document.getElementById("movieResults")?.classList.remove("hidden");
+  document.getElementById("movieCategories")?.classList.remove("hidden");
+  document.getElementById("movieStatus")?.classList.remove("hidden");
+ }
 }
 
-document.querySelectorAll(".nav").forEach(button=>{
-  button.addEventListener("click",()=>{
-    showPage(button.dataset.page);
-  });
-});
-
-/* MUSIC SEARCH AND PLAYBACK */
-const API = "https://api.audius.co/v1";
-const APP_NAME = "CopenOS";
-const audio = document.getElementById("audio");
-const player = document.getElementById("player");
-const musicStatus = document.getElementById("musicStatus");
-const trackResults = document.getElementById("trackResults");
-
-let currentTrack = null;
-let stopAt = 0;
-let searchBusy = false;
-
-function safeText(value){
-  return String(value ?? "");
+/* MUSIC SEARCH */
+const resultsBox=document.getElementById("trackResults");
+const statusBox=document.getElementById("musicStatus");
+const audio=document.getElementById("audio");
+let searching=false;
+function searchJSONP(url){
+ return new Promise((resolve,reject)=>{
+  const callback="copenMusic_"+Math.random().toString(36).slice(2);
+  const script=document.createElement("script");
+  const timer=setTimeout(()=>{cleanup();reject(new Error("Timeout"));},12000);
+  function cleanup(){clearTimeout(timer);delete window[callback];script.remove();}
+  window[callback]=data=>{cleanup();resolve(data);};
+  script.src=url+"&callback="+callback;
+  script.onerror=()=>{cleanup();reject(new Error("Network error"));};
+  document.body.appendChild(script);
+ });
 }
-
-function formatTime(seconds){
-  if(!Number.isFinite(seconds)) return "0:00";
-  const mins=Math.floor(seconds/60);
-  const secs=Math.floor(seconds%60).toString().padStart(2,"0");
-  return mins+":"+secs;
-}
-
 async function searchMusic(){
-  const query=document.getElementById("musicSearch").value.trim();
-  if(!query){
-    musicStatus.textContent="Type a song, artist, or genre first.";
-    return;
-  }
-  if(searchBusy) return;
-
-  searchBusy=true;
-  trackResults.innerHTML="";
-  musicStatus.textContent="Searching music...";
-  document.getElementById("searchButton").disabled=true;
-
-  try{
-    const url=API+"/tracks/search?query="+encodeURIComponent(query)+
-      "&limit=25&app_name="+encodeURIComponent(APP_NAME);
-
-    const response=await fetch(url);
-    if(!response.ok) throw new Error("Music provider returned an error.");
-
-    const result=await response.json();
-    const tracks=Array.isArray(result.data)?result.data:[];
-
-    if(!tracks.length){
-      musicStatus.textContent="No tracks found. Try another search.";
-      return;
-    }
-
-    musicStatus.textContent="Found "+tracks.length+" tracks.";
-    tracks.forEach(track=>{
-      if(!track.id || track.is_streamable===false) return;
-
-      const row=document.createElement("div");
-      row.className="track";
-
-      const img=document.createElement("img");
-      const artwork=track.artwork?.["150x150"] ||
-                    track.artwork?.["480x480"] || "";
-      if(artwork) img.src=artwork;
-      img.alt="";
-
-      const info=document.createElement("div");
-      info.className="track-info";
-
-      const title=document.createElement("strong");
-      title.textContent=safeText(track.title || "Untitled");
-
-      const artist=document.createElement("small");
-      artist.textContent=safeText(track.user?.name || "Unknown artist")+
-        " • "+formatTime(track.duration || 0);
-
-      info.append(title,artist);
-
-      const play=document.createElement("button");
-      play.className="primary";
-      play.textContent="Play";
-      play.addEventListener("click",()=>playTrack(track));
-
-      row.append(img,info,play);
-      trackResults.appendChild(row);
-    });
-
-    if(!trackResults.children.length){
-      musicStatus.textContent="No playable tracks appeared for that search.";
-    }
-  }catch(error){
-    musicStatus.textContent="Music search failed. Check your connection and try again.";
-  }finally{
-    searchBusy=false;
-    document.getElementById("searchButton").disabled=false;
-  }
+ const typed=document.getElementById("musicSearch").value.trim();
+ const genre=document.getElementById("genreSelect").value;
+ const query=[typed,genre].filter(Boolean).join(" ");
+ if(!query){statusBox.textContent="Enter an artist, song, or choose a genre.";return;}
+ if(searching)return;
+ searching=true;resultsBox.innerHTML="";statusBox.textContent="Searching...";
+ document.getElementById("searchButton").disabled=true;
+ try{
+  const url="https://itunes.apple.com/search?term="+encodeURIComponent(query)+"&media=music&entity=song&limit=35";
+  const data=await searchJSONP(url);
+  const tracks=Array.isArray(data.results)?data.results:[];
+  if(!tracks.length){statusBox.textContent="No results found. Try another search.";return;}
+  statusBox.textContent="Found "+tracks.length+" results. Preview availability depends on the catalog.";
+  tracks.forEach(track=>{
+   const row=document.createElement("div");row.className="track";
+   const img=document.createElement("img");img.src=track.artworkUrl100||"";img.alt="Album art";
+   const info=document.createElement("div");info.className="track-info";
+   const name=document.createElement("strong");name.textContent=track.trackName||"Unknown track";
+   const artist=document.createElement("small");artist.textContent=(track.artistName||"Unknown artist")+" • "+(track.collectionName||"");
+   info.append(name,artist);
+   const play=document.createElement("button");play.className=track.previewUrl?"primary":"secondary";
+   play.textContent=track.previewUrl?"Play preview":"No preview";play.disabled=!track.previewUrl;
+   if(track.previewUrl)play.addEventListener("click",()=>playTrack(track));
+   row.append(img,info,play);resultsBox.appendChild(row);
+  });
+ }catch(e){statusBox.textContent="Music search couldn't connect. Check your internet and try again.";}
+ finally{searching=false;document.getElementById("searchButton").disabled=false;}
 }
-
+function playTrack(track){
+ document.getElementById("player").hidden=false;
+ document.getElementById("nowPlaying").textContent=track.trackName+" — "+track.artistName;
+ audio.pause();audio.src=track.previewUrl;audio.currentTime=0;audio.load();
+ audio.play().catch(()=>document.getElementById("progressInfo").textContent="Couldn't play this preview.");
+}
+audio.addEventListener("timeupdate",()=>document.getElementById("progressInfo").textContent="Preview: "+Math.floor(audio.currentTime)+" seconds");
 document.getElementById("searchButton").addEventListener("click",searchMusic);
-document.getElementById("musicSearch").addEventListener("keydown",event=>{
-  if(event.key==="Enter") searchMusic();
+document.getElementById("musicSearch").addEventListener("keydown",e=>{if(e.key==="Enter")searchMusic();});
+document.getElementById("genreSelect").addEventListener("change",()=>{if(document.getElementById("genreSelect").value)searchMusic();});
+
+/* MOVIES AND SHOWS */
+const mediaItems=[
+ {title:"Family Guy",type:"show",category:"Animation",icon:"🍺",desc:"Animated comedy following the Griffin family."},
+ {title:"Ridiculousness",type:"show",category:"Comedy",icon:"🤣",desc:"A comedy clip show featuring viral videos."},
+ {title:"The Simpsons",type:"show",category:"Animation",icon:"🍩",desc:"The long-running animated comedy about Springfield."},
+ {title:"SpongeBob SquarePants",type:"show",category:"Animation",icon:"🧽",desc:"Adventures under the sea in Bikini Bottom."},
+ {title:"South Park",type:"show",category:"Animation",icon:"⛰️",desc:"An animated satire set in a Colorado town."},
+ {title:"Adventure Time",type:"show",category:"Animation",icon:"🗡️",desc:"Fantasy adventures with Finn and Jake."},
+ {title:"Regular Show",type:"show",category:"Animation",icon:"🦝",desc:"Two friends get into unusual situations at work."},
+ {title:"The Office",type:"show",category:"Comedy",icon:"📎",desc:"A mockumentary-style workplace comedy."},
+ {title:"Brooklyn Nine-Nine",type:"show",category:"Comedy",icon:"🚔",desc:"A comedy about detectives in New York."},
+ {title:"Stranger Things",type:"show",category:"Sci-Fi",icon:"🚲",desc:"A supernatural mystery in a small town."},
+ {title:"Wednesday",type:"show",category:"Fantasy",icon:"🖤",desc:"A mystery at Nevermore Academy."},
+ {title:"Billy Madison",type:"movie",category:"Comedy",icon:"🎓",desc:"A comedy starring Adam Sandler."},
+ {title:"Happy Gilmore",type:"movie",category:"Comedy",icon:"⛳",desc:"A hockey player tries his hand at golf."},
+ {title:"Shrek",type:"movie",category:"Animation",icon:"🧅",desc:"An ogre sets off on a fairy-tale adventure."},
+ {title:"The Super Mario Bros. Movie",type:"movie",category:"Animation",icon:"🍄",desc:"Mario and Luigi enter the Mushroom Kingdom."},
+ {title:"Spider-Man: Into the Spider-Verse",type:"movie",category:"Action",icon:"🕸️",desc:"Miles Morales discovers a wider Spider-Verse."},
+ {title:"Spider-Man: Across the Spider-Verse",type:"movie",category:"Action",icon:"🕷️",desc:"Miles travels across different Spider worlds."},
+ {title:"The LEGO Movie",type:"movie",category:"Animation",icon:"🧱",desc:"An ordinary LEGO minifigure gets an extraordinary mission."},
+ {title:"Home Alone",type:"movie",category:"Comedy",icon:"🏠",desc:"A kid is accidentally left home for the holidays."},
+ {title:"Rush Hour",type:"movie",category:"Action",icon:"🚕",desc:"Two mismatched detectives team up."},
+ {title:"The Dark Knight",type:"movie",category:"Action",icon:"🦇",desc:"Batman faces a new threat in Gotham."},
+ {title:"Jurassic Park",type:"movie",category:"Adventure",icon:"🦖",desc:"A theme park filled with dinosaurs goes wrong."},
+ {title:"Back to the Future",type:"movie",category:"Sci-Fi",icon:"⏰",desc:"A teenager travels through time."},
+ {title:"The Truman Show",type:"movie",category:"Drama",icon:"📺",desc:"A man begins questioning his seemingly perfect world."},
+ {title:"The Minecraft Movie",type:"movie",category:"Adventure",icon:"⛏️",desc:"A live-action adventure in the Minecraft world."}
+];
+let activeCategory="All";
+const movieResults=document.getElementById("movieResults");
+const movieStatus=document.getElementById("movieStatus");
+const categoryBox=document.getElementById("movieCategories");
+const categories=["All","Comedy","Animation","Action","Adventure","Sci-Fi","Fantasy","Drama"];
+categories.forEach(category=>{
+ const b=document.createElement("button");
+ b.className="genre"+(category==="All"?" active":"");
+ b.textContent=category;
+ b.addEventListener("click",()=>{
+  activeCategory=category;
+  categoryBox.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));
+  renderMovies();
+ });
+ categoryBox.appendChild(b);
 });
-
-async function playTrack(track){
-  currentTrack=track;
-  stopAt=0;
-
-  const title=safeText(track.title || "Untitled");
-  const artist=safeText(track.user?.name || "Unknown artist");
-
-  document.getElementById("nowPlaying").textContent=title+" — "+artist;
-  player.hidden=false;
-  document.getElementById("progressInfo").textContent="Loading track...";
-
-  audio.pause();
-  audio.removeAttribute("src");
-  audio.load();
-
-  try{
-    const streamUrl=API+"/tracks/"+encodeURIComponent(track.id)+
-      "/stream?app_name="+encodeURIComponent(APP_NAME);
-
-    audio.src=streamUrl;
-    audio.load();
-
-    const playPromise=audio.play();
-    if(playPromise) await playPromise;
-  }catch(error){
-    document.getElementById("progressInfo").textContent=
-      "Couldn't play this track. Try another one.";
-  }
+function renderMovies(){
+ const query=document.getElementById("movieSearch").value.trim().toLowerCase();
+ const type=document.getElementById("movieType").value;
+ movieResults.innerHTML="";
+ const filtered=mediaItems.filter(item=>{
+  const matchesQuery=!query||(item.title+" "+item.category+" "+item.desc).toLowerCase().includes(query);
+  const matchesType=type==="all"||item.type===type;
+  const matchesCategory=activeCategory==="All"||item.category===activeCategory;
+  return matchesQuery&&matchesType&&matchesCategory;
+ });
+ movieStatus.textContent=filtered.length+" titles found.";
+ if(!filtered.length){movieResults.innerHTML='<div class="card"><h3>No titles found</h3><p>Try a different search or category.</p></div>';return;}
+ filtered.forEach(item=>{
+  const card=document.createElement("div");card.className="card media-card";
+  const icon=document.createElement("div");icon.className="media-icon";icon.textContent=item.icon;
+  const category=document.createElement("div");category.className="media-category";category.textContent=item.type==="show"?"TV SHOW • "+item.category:"MOVIE • "+item.category;
+  const title=document.createElement("h3");title.textContent=item.title;
+  const desc=document.createElement("p");desc.textContent=item.desc;
+  const button=document.createElement("button");button.className="primary";button.textContent="Find watch options";
+  button.addEventListener("click",()=>openMovie(item));
+  card.append(icon,category,title,desc,button);movieResults.appendChild(card);
+ });
 }
-
-/* Stop at 75% of the track */
-audio.addEventListener("loadedmetadata",()=>{
-  if(!Number.isFinite(audio.duration) || audio.duration<=0){
-    stopAt=0;
-    return;
-  }
-  stopAt=audio.duration*0.75;
-  document.getElementById("progressInfo").textContent=
-    "Plays up to "+formatTime(stopAt)+" of "+formatTime(audio.duration);
-});
-
-audio.addEventListener("timeupdate",()=>{
-  if(!audio.duration) return;
-
-  if(stopAt>0 && audio.currentTime>=stopAt){
-    audio.pause();
-    audio.currentTime=stopAt;
-    document.getElementById("progressInfo").textContent=
-      "75% preview finished. Choose another track to keep listening.";
-    return;
-  }
-
-  document.getElementById("progressInfo").textContent=
-    formatTime(audio.currentTime)+" / "+formatTime(stopAt || audio.duration)+
-    " • 75% limit";
-});
-
-audio.addEventListener("error",()=>{
-  if(currentTrack){
-    document.getElementById("progressInfo").textContent=
-      "This track couldn't be loaded. Try another track.";
-  }
-});
-
-/* MINI GAMES */
-let hits=0;
-function addHit(){
-  hits++;
-  document.getElementById("hits").textContent=hits;
+function openMovie(item){
+ const url="https://www.justwatch.com/us/search?q="+encodeURIComponent(item.title);
+ document.getElementById("movieResults").classList.add("hidden");
+ document.getElementById("movieCategories").classList.add("hidden");
+ document.getElementById("movieStatus").classList.add("hidden");
+ document.getElementById("movieViewer").classList.remove("hidden");
+ document.getElementById("movieViewerTitle").textContent=item.title+" — Watch options";
+ document.getElementById("movieExternal").href=url;
+ document.getElementById("movieFrame").src=url;
 }
-function resetHits(){
-  hits=0;
-  document.getElementById("hits").textContent="0";
-}
-
-let secretNumber=Math.floor(Math.random()*10)+1;
-function newGuess(){
-  secretNumber=Math.floor(Math.random()*10)+1;
-  document.getElementById("guessMessage").textContent="New number picked!";
-  document.getElementById("guessInput").value="";
-}
-function checkGuess(){
-  const value=Number(document.getElementById("guessInput").value);
-  const message=document.getElementById("guessMessage");
-
-  if(!Number.isInteger(value)||value<1||value>10){
-    message.textContent="Enter a number from 1 to 10.";
-  }else if(value===secretNumber){
-    message.textContent="You got it! 🎉";
-  }else if(value<secretNumber){
-    message.textContent="Too low. Try again!";
-  }else{
-    message.textContent="Too high. Try again!";
-  }
-}
-
-let reactionReady=false;
-let reactionStart=0;
-let reactionTimer=null;
-
-function reactionClick(){
-  const button=document.getElementById("reactionButton");
-  const message=document.getElementById("reactionMessage");
-
-  if(!reactionReady && !reactionTimer){
-    button.textContent="Wait...";
-    message.textContent="Wait for the button to turn green.";
-    button.style.background="#8b3946";
-
-    const delay=1000+Math.random()*3000;
-    reactionTimer=setTimeout(()=>{
-      reactionTimer=null;
-      reactionReady=true;
-      reactionStart=performance.now();
-      button.textContent="CLICK!";
-      button.style.background="#238b5a";
-    },delay);
-    return;
-  }
-
-  if(reactionTimer){
-    clearTimeout(reactionTimer);
-    reactionTimer=null;
-    button.textContent="Start";
-    button.style.background="";
-    message.textContent="Too early! Try again.";
-    return;
-  }
-
-  if(reactionReady){
-    const elapsed=Math.round(performance.now()-reactionStart);
-    reactionReady=false;
-    button.textContent="Start";
-    button.style.background="";
-    message.textContent="Your time: "+elapsed+" ms";
-  }
-}
+document.getElementById("movieSearchButton").addEventListener("click",renderMovies);
+document.getElementById("movieSearch").addEventListener("keydown",e=>{if(e.key==="Enter")renderMovies();});
+document.getElementById("movieType").addEventListener("change",renderMovies);
+renderMovies();
 
 /* NOTES */
-function getNotes(){
-  try{
-    return JSON.parse(localStorage.getItem("copenos_notes")||"[]");
-  }catch{
-    return [];
-  }
-}
-
+function getNotes(){try{return JSON.parse(localStorage.getItem("copenos_notes")||"[]");}catch{return [];}}
 function saveNote(){
-  const input=document.getElementById("noteInput");
-  const value=input.value.trim();
-  if(!value) return;
-
-  const notes=getNotes();
-  notes.unshift(value);
-
-  try{
-    localStorage.setItem("copenos_notes",JSON.stringify(notes));
-    input.value="";
-    renderNotes();
-  }catch{
-    alert("Couldn't save this note in your browser.");
-  }
+ const input=document.getElementById("noteInput"),value=input.value.trim();if(!value)return;
+ const notes=getNotes();notes.unshift(value);
+ try{localStorage.setItem("copenos_notes",JSON.stringify(notes));input.value="";renderNotes();}
+ catch(e){showToast("Couldn't save that note.");}
 }
-
 function deleteNote(index){
-  const notes=getNotes();
-  notes.splice(index,1);
-  localStorage.setItem("copenos_notes",JSON.stringify(notes));
-  renderNotes();
+ const notes=getNotes();notes.splice(index,1);
+ try{localStorage.setItem("copenos_notes",JSON.stringify(notes));renderNotes();}
+ catch(e){showToast("Couldn't update notes.");}
 }
-
 function renderNotes(){
-  const list=document.getElementById("notesList");
-  list.innerHTML="";
-  getNotes().forEach((note,index)=>{
-    const row=document.createElement("div");
-    row.className="note-item";
-
-    const content=document.createElement("span");
-    content.textContent=note;
-
-    const remove=document.createElement("button");
-    remove.className="secondary";
-    remove.textContent="Delete";
-    remove.addEventListener("click",()=>deleteNote(index));
-
-    row.append(content,remove);
-    list.appendChild(row);
-  });
+ const list=document.getElementById("notesList");list.innerHTML="";
+ getNotes().forEach((note,index)=>{
+  const row=document.createElement("div");row.className="note-item";
+  const text=document.createElement("span");text.textContent=note;
+  const remove=document.createElement("button");remove.className="secondary";remove.textContent="Delete";
+  remove.addEventListener("click",()=>deleteNote(index));
+  row.append(text,remove);list.appendChild(row);
+ });
 }
 renderNotes();
 
 /* SETTINGS */
-function setAccent(color){
-  document.documentElement.style.setProperty("--accent",color);
-}
+function setAccent(color){document.documentElement.style.setProperty("--accent",color);}
 </script>
 </body>
 </html>
