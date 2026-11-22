@@ -94,7 +94,6 @@ audio{width:100%;margin-top:12px}
   <button class="active" data-page="home">⌂　Home</button>
   <button data-page="games">🎮　Games</button>
   <button data-page="music">♫　Music</button>
-  <button data-page="movies">🎬　Movies</button>
   <button data-page="shows">📺　Shows</button>
   <button data-page="anime">🌸　Anime</button>
   <button data-page="notes">📝　Notes</button>
@@ -108,20 +107,20 @@ audio{width:100%;margin-top:12px}
   <h1 id="pageTitle">Home</h1>
   <div class="sub">Your personal entertainment hub</div>
  </div>
- <span class="small">CopenOS 4.0</span>
+ <span class="small">CopenOS</span>
 </header>
 
 <section class="page active" id="home">
  <div class="hero">
   <h2>Welcome back.</h2>
-  <p class="muted">Everything you want to enjoy, in one place.</p>
+  <p class="muted">Your games, music and entertainment in one place.</p>
   <button class="action" onclick="showPage('games')">Explore games →</button>
  </div>
  <div class="grid">
   <div class="card" onclick="showPage('games')"><div class="emoji">🎮</div><h3>Games</h3><p>Play your favorites</p></div>
   <div class="card" onclick="showPage('music')"><div class="emoji">🎧</div><h3>Music</h3><p>Find your next song</p></div>
-  <div class="card" onclick="showPage('movies')"><div class="emoji">🎬</div><h3>Movies</h3><p>Watch classic films</p></div>
-  <div class="card" onclick="showPage('shows')"><div class="emoji">📺</div><h3>Shows</h3><p>Browse classic TV</p></div>
+  <div class="card" onclick="showPage('shows')"><div class="emoji">📺</div><h3>Shows</h3><p>Browse shows</p></div>
+  <div class="card" onclick="showPage('anime')"><div class="emoji">🌸</div><h3>Anime</h3><p>Browse anime</p></div>
  </div>
  <div class="panel" style="margin-top:20px">
   <h3>Recently played</h3>
@@ -132,7 +131,7 @@ audio{width:100%;margin-top:12px}
 <section class="page" id="games">
  <div class="panel">
   <h2>Games</h2>
-  <p class="muted">Open a game in its own CopenOS player tab.</p>
+  <p class="muted">Open games in their own blank tab with fullscreen controls.</p>
   <div class="toolbar">
    <input id="gameSearch" placeholder="Search games..." oninput="renderGames()">
    <select id="gameCategory" onchange="renderGames()">
@@ -168,23 +167,12 @@ audio{width:100%;margin-top:12px}
  </div>
 </section>
 
-<section class="page" id="movies">
- <div class="panel">
-  <h2>Movies</h2>
-  <p class="muted">Free films available to watch from public-domain collections.</p>
-  <div class="toolbar">
-   <input id="movieSearch" placeholder="Search movies..." oninput="renderCatalog('movies')">
-  </div>
-  <div class="grid" id="movieGrid"></div>
- </div>
-</section>
-
 <section class="page" id="shows">
  <div class="panel">
   <h2>Shows</h2>
-  <p class="muted">Browse classic television and available episodes.</p>
+  <p class="muted">Browse show titles and open their player.</p>
   <div class="toolbar">
-   <input id="showSearch" placeholder="Search shows..." oninput="renderCatalog('shows')">
+   <input id="showSearch" placeholder="Search shows..." oninput="renderShows()">
   </div>
   <div class="grid" id="showGrid"></div>
  </div>
@@ -226,7 +214,7 @@ audio{width:100%;margin-top:12px}
  <button class="active" data-page="home">⌂<br>Home</button>
  <button data-page="games">🎮<br>Games</button>
  <button data-page="music">♫<br>Music</button>
- <button data-page="movies">🎬<br>Movies</button>
+ <button data-page="shows">📺<br>Shows</button>
  <button data-page="settings">⚙<br>More</button>
 </nav>
 <div class="toast" id="toast"></div>
@@ -258,28 +246,14 @@ const games=[
 ["Fireboy and Watergirl","🔥","puzzle","https://fireboy-and-watergirl.co/"],
 ["Google Snake","🐍","arcade","https://www.google.com/fbx?fbx=snake_arcade"],
 ["Tunnel Rush","🌀","arcade","https://tunnelrush.com/"],
-["Flappy Bird","🐦","arcade","https://flappybird.io/"]
+["Flappy Bird","🐦","arcade","https://flappybird.io/"],
+["Crossy Road","🐔","arcade","https://crossyroad.io/"]
 ];
 
-/* Internet Archive public-domain film identifiers */
-const movies=[
- {name:"His Girl Friday",year:"1940",emoji:"🎬",url:"https://archive.org/embed/his_girl_friday"},
- {name:"Night of the Living Dead",year:"1968",emoji:"🎬",url:"https://archive.org/embed/NightOfTheLivingDead1968-Restored"},
- {name:"The General",year:"1926",emoji:"🎬",url:"https://archive.org/embed/TheGeneral1926"},
- {name:"Charade",year:"1963",emoji:"🎬",url:"https://archive.org/embed/Charade_1963"},
- {name:"The Little Shop of Horrors",year:"1960",emoji:"🎬",url:"https://archive.org/embed/little_shop_of_horrors"},
- {name:"The Phantom of the Opera",year:"1925",emoji:"🎬",url:"https://archive.org/embed/PhantomOfTheOpera1925"}
-];
-
-/* Classic TV library. This opens the free classic-TV collection
-   in the same CopenOS player frame. */
 const shows=[
- {name:"The Beverly Hillbillies",year:"1962",emoji:"📺",url:"https://pasttimetv.com/pages/watch-free"},
- {name:"Bonanza",year:"1960",emoji:"🤠",url:"https://pasttimetv.com/pages/watch-free"},
- {name:"The Lone Ranger",year:"1949",emoji:"🐎",url:"https://pasttimetv.com/pages/watch-free"},
- {name:"The Adventures of Sherlock Holmes",year:"1954",emoji:"🔎",url:"https://pasttimetv.com/pages/watch-free"},
- {name:"Dragnet",year:"1950s",emoji:"📺",url:"https://starlitetv.com/free/public-domain-tv-shows"},
- {name:"Petticoat Junction",year:"1963",emoji:"🚂",url:"https://starlitetv.com/free/public-domain-tv-shows"}
+"Family Guy","Ridiculousness","The Simpsons","SpongeBob SquarePants",
+"South Park","Adventure Time","Regular Show","The Office",
+"Brooklyn Nine-Nine","Stranger Things","Wednesday"
 ];
 
 const anime=[
@@ -298,15 +272,15 @@ function toast(message){
  const el=document.getElementById("toast");
  el.textContent=message;el.style.display="block";
  clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>el.style.display="none",2500);
+ window.toastTimer=setTimeout(()=>el.style.display="none",2400);
 }
-function favorites(){
+function getFavorites(){
  try{return JSON.parse(localStorage.getItem("copenFavorites")||"[]")}
  catch{return []}
 }
 function toggleFavorite(name,event){
  event.stopPropagation();
- let list=favorites();
+ let list=getFavorites();
  list=list.includes(name)?list.filter(x=>x!==name):[...list,name];
  localStorage.setItem("copenFavorites",JSON.stringify(list));
  renderGames();
@@ -314,12 +288,12 @@ function toggleFavorite(name,event){
 function renderGames(){
  const q=document.getElementById("gameSearch").value.toLowerCase();
  const cat=document.getElementById("gameCategory").value;
- const fav=document.getElementById("gameFavorites").value;
- const saved=favorites();
+ const mode=document.getElementById("gameFavorites").value;
+ const saved=getFavorites();
  const filtered=games.filter(g=>
   g[0].toLowerCase().includes(q)&&
   (cat==="all"||g[2]===cat)&&
-  (fav!=="favorites"||saved.includes(g[0]))
+  (mode!=="favorites"||saved.includes(g[0]))
  );
  const grid=document.getElementById("gameGrid");
  grid.innerHTML="";
@@ -332,18 +306,16 @@ function renderGames(){
   const title=document.createElement("h3");title.textContent=g[0];
   const info=document.createElement("p");info.textContent=g[2];
   card.append(star,emoji,title,info);
-  card.onclick=()=>openPlayerTab(g[0],g[3],"game");
+  card.onclick=()=>openBlankPlayer(g[0],g[3],"game");
   grid.appendChild(card);
  });
  if(!filtered.length)grid.innerHTML='<p class="muted">No games found.</p>';
 }
 
-/* All players use a separate about:blank tab.
-   The iframe stays inside the tab, and the fullscreen button
-   requests fullscreen for the embedded content. */
-function openPlayerTab(title,url,type){
+/* New blank tab with embedded game and fullscreen button */
+function openBlankPlayer(title,url,type){
  const tab=window.open("about:blank","_blank");
- if(!tab){toast("Allow pop-ups to open this player.");return}
+ if(!tab){toast("Allow pop-ups to open this tab.");return}
  if(type==="game"){
   let recent=[];
   try{recent=JSON.parse(localStorage.getItem("copenRecent")||"[]")}catch{}
@@ -357,12 +329,11 @@ function openPlayerTab(title,url,type){
  <html><head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width,initial-scale=1">
- <title>${escapeText(title)} - CopenOS</title>
+ <title>${safeText(title)} - CopenOS</title>
  <style>
  *{box-sizing:border-box}
  body{margin:0;background:#090b12;color:#f4f5fa;font-family:Arial,sans-serif}
- header{height:60px;background:#141824;border-bottom:1px solid #293044;
- display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px}
+ header{height:60px;background:#141824;border-bottom:1px solid #293044;display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px}
  .brand{font-size:20px;font-weight:900}
  .brand span{color:#9c75ff}
  .tools{display:flex;gap:7px}
@@ -374,19 +345,18 @@ function openPlayerTab(title,url,type){
  </style></head>
  <body>
  <header>
-  <div class="brand">Copen<span>OS</span> <span style="color:white;font-size:13px;font-weight:400"> / ${escapeText(title)}</span></div>
+  <div class="brand">Copen<span>OS</span> <span style="color:white;font-size:13px;font-weight:400"> / ${safeText(title)}</span></div>
   <div class="tools">
-   <button id="reload">↻</button>
+   <button id="reload">↻ Reload</button>
    <button id="fullscreen">⛶ Fullscreen</button>
   </div>
  </header>
  <main>
-  <iframe id="content" allow="autoplay; fullscreen; gamepad; picture-in-picture" allowfullscreen></iframe>
+  <iframe id="player" allow="autoplay; fullscreen; gamepad; picture-in-picture" allowfullscreen></iframe>
   <div class="note" id="note"></div>
- </main>
- </body></html>`);
+ </main></body></html>`);
  doc.close();
- const frame=doc.getElementById("content");
+ const frame=doc.getElementById("player");
  frame.src=url;
  doc.getElementById("reload").onclick=()=>frame.src=url;
  doc.getElementById("fullscreen").onclick=()=>{
@@ -394,39 +364,35 @@ function openPlayerTab(title,url,type){
   else if(frame.webkitRequestFullscreen)frame.webkitRequestFullscreen();
  };
  doc.getElementById("note").textContent=
-  type==="game"?"If the game refuses to load, its provider may block embedding.":
-  "If playback is unavailable, the provider may restrict embedding or the item may be offline.";
+  "If this site blocks embedded players, it may not load inside the tab.";
 }
-function escapeText(s){
+function safeText(s){
  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function renderCatalog(type){
- const items=type==="movies"?movies:shows;
- const q=document.getElementById(type==="movies"?"movieSearch":"showSearch").value.toLowerCase();
- const grid=document.getElementById(type==="movies"?"movieGrid":"showGrid");
+
+/* Shows are a title catalog, not a built-in source of copyrighted episodes. */
+function renderShows(){
+ const q=document.getElementById("showSearch").value.toLowerCase();
+ const grid=document.getElementById("showGrid");
  grid.innerHTML="";
- items.filter(x=>x.name.toLowerCase().includes(q)).forEach(item=>{
+ shows.filter(name=>name.toLowerCase().includes(q)).forEach(name=>{
   const card=document.createElement("div");card.className="card";
-  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent=item.emoji;
-  const title=document.createElement("h3");title.textContent=item.name;
-  const year=document.createElement("p");year.textContent=item.year;
-  const play=document.createElement("button");play.className="action";
-  play.style.marginTop="12px";play.textContent="▶ Watch";
-  play.onclick=e=>{e.stopPropagation();openPlayerTab(item.name,item.url,type)};
-  card.append(emoji,title,year,play);
-  card.onclick=()=>openPlayerTab(item.name,item.url,type);
+  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent="📺";
+  const title=document.createElement("h3");title.textContent=name;
+  const desc=document.createElement("p");desc.textContent="Show title";
+  card.append(emoji,title,desc);
   grid.appendChild(card);
  });
- if(!grid.children.length)grid.innerHTML='<p class="muted">No titles found.</p>';
+ if(!grid.children.length)grid.innerHTML='<p class="muted">No shows found.</p>';
 }
 function renderAnime(){
  const grid=document.getElementById("animeGrid");
  anime.forEach(name=>{
   const card=document.createElement("div");card.className="card";
-  card.innerHTML="<div class='emoji'>🌸</div>";
+  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent="🌸";
   const title=document.createElement("h3");title.textContent=name;
-  const desc=document.createElement("p");desc.textContent="Browse title";
-  card.append(title,desc);grid.appendChild(card);
+  const desc=document.createElement("p");desc.textContent="Anime title";
+  card.append(emoji,title,desc);grid.appendChild(card);
  });
 }
 function renderRecent(){
@@ -435,17 +401,16 @@ function renderRecent(){
  document.getElementById("recent").textContent=recent.length?recent.join(" • "):"Nothing played yet.";
 }
 
-/* Music search */
+/* Music */
 function searchMusic(){
  const q=document.getElementById("musicSearch").value.trim();
  const box=document.getElementById("musicResults");
- if(!q){toast("Type a song or artist first.");return}
+ if(!q){toast("Enter a song or artist.");return}
  box.innerHTML='<p class="muted">Searching...</p>';
  const callback="copenMusic"+Date.now();
  const script=document.createElement("script");
  window[callback]=data=>{
-  delete window[callback];script.remove();
-  box.innerHTML="";
+  delete window[callback];script.remove();box.innerHTML="";
   (data.results||[]).forEach(track=>{
    const card=document.createElement("div");card.className="card";
    const icon=document.createElement("div");icon.className="emoji";icon.textContent="🎵";
@@ -469,7 +434,7 @@ function playMusic(name,url){
  document.getElementById("nowPlaying").textContent="Now playing: "+name;
 }
 
-/* Notes and settings */
+/* Notes and appearance */
 const notesArea=document.getElementById("notesArea");
 notesArea.value=localStorage.getItem("copenNotes")||"";
 notesArea.addEventListener("input",()=>{
@@ -481,12 +446,11 @@ function setAccent(color){
  localStorage.setItem("copenAccent",color);
  toast("Color updated.");
 }
-const savedAccent=localStorage.getItem("copenAccent");
-if(savedAccent)document.documentElement.style.setProperty("--accent",savedAccent);
+const accent=localStorage.getItem("copenAccent");
+if(accent)document.documentElement.style.setProperty("--accent",accent);
 
 renderGames();
-renderCatalog("movies");
-renderCatalog("shows");
+renderShows();
 renderAnime();
 renderRecent();
 </script>
