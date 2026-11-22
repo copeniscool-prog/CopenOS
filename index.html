@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CopenOS</title>
 <style>
 :root{
@@ -15,102 +15,82 @@
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{min-height:100vh}
 .sidebar{
- position:fixed;inset:0 auto 0 0;width:225px;
- background:#10141e;border-right:1px solid var(--border);
- padding:23px 14px;z-index:5
+ position:fixed;inset:0 auto 0 0;width:220px;padding:22px 14px;
+ background:#10141e;border-right:1px solid var(--border);z-index:5
 }
 .logo{font-size:25px;font-weight:900;padding:8px 12px 30px}
 .logo span{color:var(--accent)}
 .nav{display:grid;gap:7px}
 .nav button{
- border:0;background:transparent;color:var(--muted);
- text-align:left;padding:13px;border-radius:11px;
- transition:.15s
+ background:none;border:0;color:var(--muted);text-align:left;
+ padding:13px;border-radius:10px
 }
-.nav button:hover,.nav button.active{
- background:var(--panel2);color:white
-}
-main{margin-left:225px;padding:30px;max-width:1550px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;gap:12px}
+.nav button:hover,.nav button.active{background:var(--panel2);color:white}
+main{margin-left:220px;padding:28px;max-width:1550px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
 h1{font-size:28px;margin:0}
 h2{margin-top:0}
-.sub{color:var(--muted);margin-top:7px;font-size:14px}
+.sub,.muted{color:var(--muted)}
+.sub{font-size:13px;margin-top:7px}
 .page{display:none}
 .page.active{display:block}
 .panel{
  background:var(--panel);border:1px solid var(--border);
- border-radius:17px;padding:21px;margin-bottom:20px
+ border-radius:16px;padding:20px;margin-bottom:20px
 }
 .hero{
- padding:34px;border-radius:18px;margin-bottom:22px;
- background:linear-gradient(115deg,#282044,#171c2e)
+ padding:32px;border-radius:17px;margin-bottom:20px;
+ background:linear-gradient(115deg,#292044,#171c2e)
 }
-.hero h2{font-size:31px;margin:0 0 9px}
-.muted{color:var(--muted)}
+.hero h2{font-size:30px;margin:0 0 9px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px}
 .card{
  background:var(--panel);border:1px solid var(--border);
- border-radius:15px;padding:17px;min-height:130px;
- transition:transform .18s,border-color .18s;position:relative
+ border-radius:14px;padding:16px;min-height:130px;
+ transition:.18s;position:relative
 }
 .card:hover{transform:translateY(-3px);border-color:var(--accent)}
 .card h3{font-size:16px;margin:9px 0 6px}
 .card p{font-size:13px;color:var(--muted);margin:0}
-.emoji{font-size:29px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:17px 0}
+.emoji{font-size:28px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
 input,select,textarea{
  background:var(--panel2);border:1px solid var(--border);
- color:white;border-radius:10px;padding:12px;outline:none
+ color:white;border-radius:10px;padding:12px
 }
-input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 input{flex:1;min-width:170px}
-.action{
- background:var(--accent);border:0;color:white;
- border-radius:10px;padding:12px 16px;font-weight:700
-}
-.secondary{
- background:var(--panel2);border:1px solid var(--border);
- color:white;border-radius:10px;padding:10px 13px
-}
-.favorite{
- position:absolute;right:12px;top:10px;border:0;
- background:transparent;color:#f3c969;font-size:20px
-}
-textarea{width:100%;min-height:260px;resize:vertical}
+.action{background:var(--accent);border:0;color:white;border-radius:10px;padding:12px 16px;font-weight:bold}
+.secondary{background:var(--panel2);border:1px solid var(--border);color:white;border-radius:9px;padding:10px 13px}
+.favorite{position:absolute;right:10px;top:8px;background:none;border:0;color:#f3c969;font-size:20px}
+textarea{width:100%;min-height:250px;resize:vertical}
 audio{width:100%;margin-top:12px}
+.small{font-size:12px;color:var(--muted)}
 .toast{
- position:fixed;bottom:24px;right:24px;background:#252b3b;
- border:1px solid var(--border);padding:13px 17px;
- border-radius:11px;display:none;z-index:20
+ position:fixed;bottom:22px;right:22px;background:#252b3b;
+ border:1px solid var(--border);padding:12px 16px;border-radius:10px;
+ display:none;z-index:20
 }
 .mobile-nav{display:none}
-.small{font-size:12px;color:var(--muted)}
 @media(max-width:720px){
  .sidebar{display:none}
- main{margin:0;padding:20px 14px 90px}
+ main{margin:0;padding:20px 14px 85px}
  .mobile-nav{
   display:flex;position:fixed;bottom:0;left:0;right:0;
-  background:#10141e;border-top:1px solid var(--border);
-  justify-content:space-around;padding:8px 2px;z-index:10
+  justify-content:space-around;background:#10141e;
+  border-top:1px solid var(--border);padding:8px 2px;z-index:10
  }
- .mobile-nav button{
-  border:0;background:transparent;color:var(--muted);
-  font-size:11px;padding:6px
- }
+ .mobile-nav button{border:0;background:none;color:var(--muted);font-size:11px;padding:6px}
  .mobile-nav button.active{color:var(--accent)}
  header h1{font-size:24px}
- .hero{padding:25px}
 }
 </style>
 </head>
 <body>
-<div class="app">
 
 <aside class="sidebar">
  <div class="logo">Copen<span>OS</span></div>
- <nav class="nav" id="sideNav">
+ <nav class="nav">
   <button class="active" data-page="home">⌂　Home</button>
   <button data-page="games">🎮　Games</button>
   <button data-page="music">♫　Music</button>
@@ -128,35 +108,31 @@ audio{width:100%;margin-top:12px}
   <h1 id="pageTitle">Home</h1>
   <div class="sub">Your personal entertainment hub</div>
  </div>
- <span class="small">CopenOS</span>
+ <span class="small">CopenOS 4.0</span>
 </header>
 
 <section class="page active" id="home">
  <div class="hero">
   <h2>Welcome back.</h2>
-  <p class="muted">Your games, music and entertainment in one place.</p>
+  <p class="muted">Everything you want to enjoy, in one place.</p>
   <button class="action" onclick="showPage('games')">Explore games →</button>
  </div>
  <div class="grid">
-  <div class="card" onclick="showPage('games')"><div class="emoji">🎮</div><h3>Games</h3><p>Explore the game library</p></div>
-  <div class="card" onclick="showPage('music')"><div class="emoji">🎧</div><h3>Music</h3><p>Search for songs</p></div>
-  <div class="card" onclick="showPage('movies')"><div class="emoji">🎬</div><h3>Movies</h3><p>Browse movie titles</p></div>
-  <div class="card" onclick="showPage('notes')"><div class="emoji">📝</div><h3>Notes</h3><p>Save your ideas</p></div>
+  <div class="card" onclick="showPage('games')"><div class="emoji">🎮</div><h3>Games</h3><p>Play your favorites</p></div>
+  <div class="card" onclick="showPage('music')"><div class="emoji">🎧</div><h3>Music</h3><p>Find your next song</p></div>
+  <div class="card" onclick="showPage('movies')"><div class="emoji">🎬</div><h3>Movies</h3><p>Watch classic films</p></div>
+  <div class="card" onclick="showPage('shows')"><div class="emoji">📺</div><h3>Shows</h3><p>Browse classic TV</p></div>
  </div>
  <div class="panel" style="margin-top:20px">
   <h3>Recently played</h3>
-  <div id="recent" class="muted">No games played yet.</div>
- </div>
- <div class="panel">
-  <h3>Your favorites</h3>
-  <div id="homeFavorites" class="muted">No favorites yet.</div>
+  <div id="recent" class="muted">Nothing played yet.</div>
  </div>
 </section>
 
 <section class="page" id="games">
  <div class="panel">
-  <h2>Game library</h2>
-  <p class="muted">Games open in their own blank tab with an embedded player.</p>
+  <h2>Games</h2>
+  <p class="muted">Open a game in its own CopenOS player tab.</p>
   <div class="toolbar">
    <input id="gameSearch" placeholder="Search games..." oninput="renderGames()">
    <select id="gameCategory" onchange="renderGames()">
@@ -167,9 +143,9 @@ audio{width:100%;margin-top:12px}
     <option value="action">Action</option>
     <option value="puzzle">Puzzle</option>
    </select>
-   <select id="gameSort" onchange="renderGames()">
+   <select id="gameFavorites" onchange="renderGames()">
     <option value="all">All games</option>
-    <option value="favorites">Favorites only</option>
+    <option value="favorites">Favorites</option>
    </select>
   </div>
   <div class="grid" id="gameGrid"></div>
@@ -179,16 +155,15 @@ audio{width:100%;margin-top:12px}
 <section class="page" id="music">
  <div class="panel">
   <h2>Music</h2>
-  <p class="muted">Search songs, artists and albums.</p>
+  <p class="muted">Search songs and play available previews.</p>
   <div class="toolbar">
-   <input id="musicSearch" placeholder="Search music..." onkeydown="if(event.key==='Enter')searchMusic()">
+   <input id="musicSearch" placeholder="Song or artist..." onkeydown="if(event.key==='Enter')searchMusic()">
    <button class="action" onclick="searchMusic()">Search</button>
   </div>
-  <div id="musicResults" class="grid"></div>
+  <div class="grid" id="musicResults"></div>
   <div class="panel" style="margin-top:20px">
    <h3 id="nowPlaying">Nothing playing</h3>
    <audio id="audioPlayer" controls></audio>
-   <p class="small">Preview availability depends on the music provider.</p>
   </div>
  </div>
 </section>
@@ -196,7 +171,10 @@ audio{width:100%;margin-top:12px}
 <section class="page" id="movies">
  <div class="panel">
   <h2>Movies</h2>
-  <p class="muted">Choose a title to open the CopenOS player.</p>
+  <p class="muted">Free films available to watch from public-domain collections.</p>
+  <div class="toolbar">
+   <input id="movieSearch" placeholder="Search movies..." oninput="renderCatalog('movies')">
+  </div>
   <div class="grid" id="movieGrid"></div>
  </div>
 </section>
@@ -204,7 +182,10 @@ audio{width:100%;margin-top:12px}
 <section class="page" id="shows">
  <div class="panel">
   <h2>Shows</h2>
-  <p class="muted">Choose a title to open the CopenOS player.</p>
+  <p class="muted">Browse classic television and available episodes.</p>
+  <div class="toolbar">
+   <input id="showSearch" placeholder="Search shows..." oninput="renderCatalog('shows')">
+  </div>
   <div class="grid" id="showGrid"></div>
  </div>
 </section>
@@ -212,15 +193,15 @@ audio{width:100%;margin-top:12px}
 <section class="page" id="anime">
  <div class="panel">
   <h2>Anime</h2>
-  <p class="muted">Choose a title to open the CopenOS player.</p>
+  <p class="muted">Browse anime titles.</p>
   <div class="grid" id="animeGrid"></div>
  </div>
 </section>
 
 <section class="page" id="notes">
  <div class="panel">
-  <h2>Your notes</h2>
-  <p class="muted">Your notes save automatically on this device.</p>
+  <h2>Notes</h2>
+  <p class="muted">Saved automatically on this device.</p>
   <textarea id="notesArea" placeholder="Write something..."></textarea>
   <p class="small" id="noteStatus">Saved locally</p>
  </div>
@@ -238,14 +219,8 @@ audio{width:100%;margin-top:12px}
    <button class="secondary" onclick="setAccent('#ff9d45')">Orange</button>
   </div>
  </div>
- <div class="panel">
-  <h2>About</h2>
-  <p class="muted">CopenOS is your personal entertainment dashboard.</p>
-  <p class="small">Version 3.0</p>
- </div>
 </section>
 </main>
-</div>
 
 <nav class="mobile-nav">
  <button class="active" data-page="home">⌂<br>Home</button>
@@ -254,289 +229,247 @@ audio{width:100%;margin-top:12px}
  <button data-page="movies">🎬<br>Movies</button>
  <button data-page="settings">⚙<br>More</button>
 </nav>
-
 <div class="toast" id="toast"></div>
 
 <script>
 const games=[
-{name:"Slope Rider",emoji:"🏂",category:"racing",url:"https://slope-rider.com/"},
-{name:"Snow Rider 3D",emoji:"❄️",category:"racing",url:"https://snowrider3d.com/"},
-{name:"Slope",emoji:"🛹",category:"racing",url:"https://slopegame.io/"},
-{name:"Baseball Bros",emoji:"⚾",category:"sports",url:"https://baseballbros.io/"},
-{name:"Football Bros",emoji:"🏈",category:"sports",url:"https://footballbros.io/"},
-{name:"Basketball Bros",emoji:"🏀",category:"sports",url:"https://basketballbros.io/"},
-{name:"Smash Karts",emoji:"🏎️",category:"racing",url:"https://smashkarts.io/"},
-{name:"Drift Hunters",emoji:"🚗",category:"racing",url:"https://drift-hunters.com/"},
-{name:"Moto X3M",emoji:"🏍️",category:"racing",url:"https://motox3m.com/"},
-{name:"Run 3",emoji:"🏃",category:"arcade",url:"https://run3.io/"},
-{name:"2048",emoji:"🔢",category:"puzzle",url:"https://play2048.co/"},
-{name:"Tetris",emoji:"🧱",category:"puzzle",url:"https://tetris.com/play-tetris"},
-{name:"Chess",emoji:"♟️",category:"puzzle",url:"https://www.chess.com/play/computer"},
-{name:"Cookie Clicker",emoji:"🍪",category:"arcade",url:"https://orteil.dashnet.org/cookieclicker/"},
-{name:"Slither.io",emoji:"🐍",category:"arcade",url:"https://slither.io/"},
-{name:"Agar.io",emoji:"🔵",category:"arcade",url:"https://agar.io/"},
-{name:"Krunker",emoji:"🎯",category:"action",url:"https://krunker.io/"},
-{name:"Shell Shockers",emoji:"🥚",category:"action",url:"https://shellshock.io/"},
-{name:"Paper.io 2",emoji:"📄",category:"arcade",url:"https://paper-io.com/"},
-{name:"Little Alchemy 2",emoji:"🧪",category:"puzzle",url:"https://littlealchemy2.com/"},
-{name:"Pac-Man",emoji:"👻",category:"arcade",url:"https://www.google.com/logos/2010/pacman10-i.html"},
-{name:"Geometry Dash",emoji:"🟨",category:"arcade",url:"https://geometrydash.io/"},
-{name:"Fireboy and Watergirl",emoji:"🔥",category:"puzzle",url:"https://fireboy-and-watergirl.co/"},
-{name:"Google Snake",emoji:"🐍",category:"arcade",url:"https://www.google.com/fbx?fbx=snake_arcade"},
-{name:"Tunnel Rush",emoji:"🌀",category:"arcade",url:"https://tunnelrush.com/"},
-{name:"Stack",emoji:"📦",category:"arcade",url:"https://stackgame.io/"},
-{name:"Moto X3M Pool Party",emoji:"🌊",category:"racing",url:"https://motox3m.com/"},
-{name:"Elastic Man",emoji:"🤪",category:"arcade",url:"https://elastic-man.com/"},
-{name:"Flappy Bird",emoji:"🐦",category:"arcade",url:"https://flappybird.io/"},
-{name:"Crossy Road",emoji:"🐔",category:"arcade",url:"https://crossyroad.io/"}
+["Slope Rider","🏂","racing","https://slope-rider.com/"],
+["Snow Rider 3D","❄️","racing","https://snowrider3d.com/"],
+["Slope","🛹","racing","https://slopegame.io/"],
+["Baseball Bros","⚾","sports","https://baseballbros.io/"],
+["Football Bros","🏈","sports","https://footballbros.io/"],
+["Basketball Bros","🏀","sports","https://basketballbros.io/"],
+["Smash Karts","🏎️","racing","https://smashkarts.io/"],
+["Drift Hunters","🚗","racing","https://drift-hunters.com/"],
+["Moto X3M","🏍️","racing","https://motox3m.com/"],
+["Run 3","🏃","arcade","https://run3.io/"],
+["2048","🔢","puzzle","https://play2048.co/"],
+["Tetris","🧱","puzzle","https://tetris.com/play-tetris"],
+["Chess","♟️","puzzle","https://www.chess.com/play/computer"],
+["Cookie Clicker","🍪","arcade","https://orteil.dashnet.org/cookieclicker/"],
+["Slither.io","🐍","arcade","https://slither.io/"],
+["Agar.io","🔵","arcade","https://agar.io/"],
+["Krunker","🎯","action","https://krunker.io/"],
+["Shell Shockers","🥚","action","https://shellshock.io/"],
+["Paper.io 2","📄","arcade","https://paper-io.com/"],
+["Little Alchemy 2","🧪","puzzle","https://littlealchemy2.com/"],
+["Pac-Man","👻","arcade","https://www.google.com/logos/2010/pacman10-i.html"],
+["Geometry Dash","🟨","arcade","https://geometrydash.io/"],
+["Fireboy and Watergirl","🔥","puzzle","https://fireboy-and-watergirl.co/"],
+["Google Snake","🐍","arcade","https://www.google.com/fbx?fbx=snake_arcade"],
+["Tunnel Rush","🌀","arcade","https://tunnelrush.com/"],
+["Flappy Bird","🐦","arcade","https://flappybird.io/"]
 ];
 
+/* Internet Archive public-domain film identifiers */
 const movies=[
-"Billy Madison","Happy Gilmore","Shrek","The Super Mario Bros. Movie",
-"Spider-Man: Into the Spider-Verse","Spider-Man: Across the Spider-Verse",
-"The LEGO Movie","Home Alone","Rush Hour","The Dark Knight",
-"Jurassic Park","Back to the Future","The Truman Show","The Minecraft Movie"
+ {name:"His Girl Friday",year:"1940",emoji:"🎬",url:"https://archive.org/embed/his_girl_friday"},
+ {name:"Night of the Living Dead",year:"1968",emoji:"🎬",url:"https://archive.org/embed/NightOfTheLivingDead1968-Restored"},
+ {name:"The General",year:"1926",emoji:"🎬",url:"https://archive.org/embed/TheGeneral1926"},
+ {name:"Charade",year:"1963",emoji:"🎬",url:"https://archive.org/embed/Charade_1963"},
+ {name:"The Little Shop of Horrors",year:"1960",emoji:"🎬",url:"https://archive.org/embed/little_shop_of_horrors"},
+ {name:"The Phantom of the Opera",year:"1925",emoji:"🎬",url:"https://archive.org/embed/PhantomOfTheOpera1925"}
 ];
+
+/* Classic TV library. This opens the free classic-TV collection
+   in the same CopenOS player frame. */
 const shows=[
-"Family Guy","Ridiculousness","The Simpsons","SpongeBob SquarePants",
-"South Park","Adventure Time","Regular Show","The Office",
-"Brooklyn Nine-Nine","Stranger Things","Wednesday"
+ {name:"The Beverly Hillbillies",year:"1962",emoji:"📺",url:"https://pasttimetv.com/pages/watch-free"},
+ {name:"Bonanza",year:"1960",emoji:"🤠",url:"https://pasttimetv.com/pages/watch-free"},
+ {name:"The Lone Ranger",year:"1949",emoji:"🐎",url:"https://pasttimetv.com/pages/watch-free"},
+ {name:"The Adventures of Sherlock Holmes",year:"1954",emoji:"🔎",url:"https://pasttimetv.com/pages/watch-free"},
+ {name:"Dragnet",year:"1950s",emoji:"📺",url:"https://starlitetv.com/free/public-domain-tv-shows"},
+ {name:"Petticoat Junction",year:"1963",emoji:"🚂",url:"https://starlitetv.com/free/public-domain-tv-shows"}
 ];
+
 const anime=[
 "Naruto","One Piece","Dragon Ball Z","My Hero Academia",
-"Demon Slayer","Jujutsu Kaisen","Attack on Titan","Pokémon"
+"Demon Slayer","Jujutsu Kaisen","Pokémon","Sailor Moon"
 ];
 
 function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
  document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- document.getElementById("pageTitle").textContent=id.charAt(0).toUpperCase()+id.slice(1);
+ document.getElementById("pageTitle").textContent=id[0].toUpperCase()+id.slice(1);
 }
-document.querySelectorAll("[data-page]").forEach(b=>{
- b.addEventListener("click",()=>showPage(b.dataset.page));
-});
+document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 
 function toast(message){
  const el=document.getElementById("toast");
- el.textContent=message;
- el.style.display="block";
+ el.textContent=message;el.style.display="block";
  clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>el.style.display="none",2400);
+ window.toastTimer=setTimeout(()=>el.style.display="none",2500);
 }
-
-function getFavorites(){
+function favorites(){
  try{return JSON.parse(localStorage.getItem("copenFavorites")||"[]")}
  catch{return []}
 }
 function toggleFavorite(name,event){
  event.stopPropagation();
- let favorites=getFavorites();
- favorites=favorites.includes(name)?favorites.filter(x=>x!==name):[...favorites,name];
- localStorage.setItem("copenFavorites",JSON.stringify(favorites));
+ let list=favorites();
+ list=list.includes(name)?list.filter(x=>x!==name):[...list,name];
+ localStorage.setItem("copenFavorites",JSON.stringify(list));
  renderGames();
- renderHomeFavorites();
 }
 function renderGames(){
  const q=document.getElementById("gameSearch").value.toLowerCase();
- const category=document.getElementById("gameCategory").value;
- const mode=document.getElementById("gameSort").value;
- const favorites=getFavorites();
- const list=games.filter(g=>
-  g.name.toLowerCase().includes(q)&&
-  (category==="all"||g.category===category)&&
-  (mode!=="favorites"||favorites.includes(g.name))
+ const cat=document.getElementById("gameCategory").value;
+ const fav=document.getElementById("gameFavorites").value;
+ const saved=favorites();
+ const filtered=games.filter(g=>
+  g[0].toLowerCase().includes(q)&&
+  (cat==="all"||g[2]===cat)&&
+  (fav!=="favorites"||saved.includes(g[0]))
  );
- document.getElementById("gameGrid").innerHTML=list.map(g=>`
-  <div class="card" onclick="openGame('${g.name}','${g.url}')">
-   <button class="favorite" aria-label="Favorite" onclick="toggleFavorite('${g.name}',event)">
-    ${favorites.includes(g.name)?"★":"☆"}
-   </button>
-   <div class="emoji">${g.emoji}</div>
-   <h3>${g.name}</h3>
-   <p>${g.category}</p>
+ const grid=document.getElementById("gameGrid");
+ grid.innerHTML="";
+ filtered.forEach(g=>{
+  const card=document.createElement("div");card.className="card";
+  const star=document.createElement("button");star.className="favorite";
+  star.textContent=saved.includes(g[0])?"★":"☆";
+  star.onclick=e=>toggleFavorite(g[0],e);
+  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent=g[1];
+  const title=document.createElement("h3");title.textContent=g[0];
+  const info=document.createElement("p");info.textContent=g[2];
+  card.append(star,emoji,title,info);
+  card.onclick=()=>openPlayerTab(g[0],g[3],"game");
+  grid.appendChild(card);
+ });
+ if(!filtered.length)grid.innerHTML='<p class="muted">No games found.</p>';
+}
+
+/* All players use a separate about:blank tab.
+   The iframe stays inside the tab, and the fullscreen button
+   requests fullscreen for the embedded content. */
+function openPlayerTab(title,url,type){
+ const tab=window.open("about:blank","_blank");
+ if(!tab){toast("Allow pop-ups to open this player.");return}
+ if(type==="game"){
+  let recent=[];
+  try{recent=JSON.parse(localStorage.getItem("copenRecent")||"[]")}catch{}
+  recent=[title,...recent.filter(x=>x!==title)].slice(0,8);
+  localStorage.setItem("copenRecent",JSON.stringify(recent));
+  renderRecent();
+ }
+ const doc=tab.document;
+ doc.open();
+ doc.write(`<!DOCTYPE html>
+ <html><head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>${escapeText(title)} - CopenOS</title>
+ <style>
+ *{box-sizing:border-box}
+ body{margin:0;background:#090b12;color:#f4f5fa;font-family:Arial,sans-serif}
+ header{height:60px;background:#141824;border-bottom:1px solid #293044;
+ display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:8px}
+ .brand{font-size:20px;font-weight:900}
+ .brand span{color:#9c75ff}
+ .tools{display:flex;gap:7px}
+ button{border:0;background:#292f40;color:white;border-radius:8px;padding:10px 12px}
+ main{height:calc(100vh - 60px);padding:12px}
+ iframe{width:100%;height:100%;border:1px solid #293044;border-radius:10px;background:#10141e}
+ .note{font-size:12px;color:#929bb0;padding:7px 2px}
+ @media(max-width:550px){.brand{font-size:16px}.tools button{padding:8px;font-size:11px}}
+ </style></head>
+ <body>
+ <header>
+  <div class="brand">Copen<span>OS</span> <span style="color:white;font-size:13px;font-weight:400"> / ${escapeText(title)}</span></div>
+  <div class="tools">
+   <button id="reload">↻</button>
+   <button id="fullscreen">⛶ Fullscreen</button>
   </div>
- `).join("")||'<p class="muted">No games found.</p>';
+ </header>
+ <main>
+  <iframe id="content" allow="autoplay; fullscreen; gamepad; picture-in-picture" allowfullscreen></iframe>
+  <div class="note" id="note"></div>
+ </main>
+ </body></html>`);
+ doc.close();
+ const frame=doc.getElementById("content");
+ frame.src=url;
+ doc.getElementById("reload").onclick=()=>frame.src=url;
+ doc.getElementById("fullscreen").onclick=()=>{
+  if(frame.requestFullscreen)frame.requestFullscreen();
+  else if(frame.webkitRequestFullscreen)frame.webkitRequestFullscreen();
+ };
+ doc.getElementById("note").textContent=
+  type==="game"?"If the game refuses to load, its provider may block embedding.":
+  "If playback is unavailable, the provider may restrict embedding or the item may be offline.";
+}
+function escapeText(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function renderCatalog(type){
+ const items=type==="movies"?movies:shows;
+ const q=document.getElementById(type==="movies"?"movieSearch":"showSearch").value.toLowerCase();
+ const grid=document.getElementById(type==="movies"?"movieGrid":"showGrid");
+ grid.innerHTML="";
+ items.filter(x=>x.name.toLowerCase().includes(q)).forEach(item=>{
+  const card=document.createElement("div");card.className="card";
+  const emoji=document.createElement("div");emoji.className="emoji";emoji.textContent=item.emoji;
+  const title=document.createElement("h3");title.textContent=item.name;
+  const year=document.createElement("p");year.textContent=item.year;
+  const play=document.createElement("button");play.className="action";
+  play.style.marginTop="12px";play.textContent="▶ Watch";
+  play.onclick=e=>{e.stopPropagation();openPlayerTab(item.name,item.url,type)};
+  card.append(emoji,title,year,play);
+  card.onclick=()=>openPlayerTab(item.name,item.url,type);
+  grid.appendChild(card);
+ });
+ if(!grid.children.length)grid.innerHTML='<p class="muted">No titles found.</p>';
+}
+function renderAnime(){
+ const grid=document.getElementById("animeGrid");
+ anime.forEach(name=>{
+  const card=document.createElement("div");card.className="card";
+  card.innerHTML="<div class='emoji'>🌸</div>";
+  const title=document.createElement("h3");title.textContent=name;
+  const desc=document.createElement("p");desc.textContent="Browse title";
+  card.append(title,desc);grid.appendChild(card);
+ });
 }
 function renderRecent(){
  let recent=[];
  try{recent=JSON.parse(localStorage.getItem("copenRecent")||"[]")}catch{}
- document.getElementById("recent").textContent=recent.length?recent.join(" • "):"No games played yet.";
-}
-function renderHomeFavorites(){
- const favorites=getFavorites();
- document.getElementById("homeFavorites").textContent=favorites.length?favorites.join(" • "):"No favorites yet.";
+ document.getElementById("recent").textContent=recent.length?recent.join(" • "):"Nothing played yet.";
 }
 
-/* Opens a real about:blank tab and puts the game inside its iframe.
-   The new tab itself remains about:blank; it does not redirect. */
-function openGame(name,url){
- const tab=window.open("about:blank","_blank");
- if(!tab){toast("Your browser blocked the new tab. Allow pop-ups and try again.");return}
- let recent=[];
- try{recent=JSON.parse(localStorage.getItem("copenRecent")||"[]")}catch{}
- recent=[name,...recent.filter(x=>x!==name)].slice(0,7);
- localStorage.setItem("copenRecent",JSON.stringify(recent));
- renderRecent();
-
- try{
-  const doc=tab.document;
-  doc.open();
-  doc.write(`<!DOCTYPE html>
-  <html lang="en">
-  <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width,initial-scale=1">
-   <title>${name} - CopenOS</title>
-   <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#090b12;color:#f4f5fa;font-family:Arial,sans-serif}
-    header{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;background:#141824;border-bottom:1px solid #293044}
-    .brand{font-weight:900;font-size:20px}.brand span{color:#9c75ff}
-    .tools{display:flex;gap:8px}
-    button{border:0;border-radius:8px;background:#252b3b;color:white;padding:9px 12px;cursor:pointer}
-    main{height:calc(100vh - 58px);padding:12px}
-    iframe{width:100%;height:100%;border:1px solid #293044;border-radius:12px;background:#111522}
-    .hint{color:#929bb0;font-size:12px;padding:7px 2px}
-   </style>
-  </head>
-  <body>
-   <header>
-    <div class="brand">Copen<span>OS</span> <span style="color:#f4f5fa;font-size:14px;font-weight:400"> / ${name}</span></div>
-    <div class="tools">
-     <button id="reload">↻ Reload</button>
-     <button id="newtab">Open source ↗</button>
-    </div>
-   </header>
-   <main>
-    <iframe id="gameFrame" allow="fullscreen; autoplay; gamepad; clipboard-read; clipboard-write" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    <div class="hint">If the game does not load, its website may block being displayed inside another page.</div>
-   </main>
-  </body>
-  </html>`);
-  doc.close();
-  const frame=doc.getElementById("gameFrame");
-  frame.src=url;
-  doc.getElementById("reload").onclick=()=>{frame.src=url};
-  doc.getElementById("newtab").onclick=()=>tab.open(url,"_blank");
- }catch(error){
-  toast("The game tab could not be created.");
- }
-}
-
-/* Music search using the public iTunes search endpoint */
+/* Music search */
 function searchMusic(){
- const query=document.getElementById("musicSearch").value.trim();
+ const q=document.getElementById("musicSearch").value.trim();
  const box=document.getElementById("musicResults");
- if(!query){toast("Enter a song or artist first.");return}
- box.innerHTML='<p class="muted">Searching music...</p>';
+ if(!q){toast("Type a song or artist first.");return}
+ box.innerHTML='<p class="muted">Searching...</p>';
  const callback="copenMusic"+Date.now();
  const script=document.createElement("script");
  window[callback]=data=>{
-  delete window[callback];
-  script.remove();
-  const results=data.results||[];
-  box.innerHTML="";
-  if(!results.length){box.innerHTML='<p class="muted">No results found.</p>';return}
-  results.forEach(track=>{
-   const card=document.createElement("div");
-   card.className="card";
-   const icon=document.createElement("div");
-   icon.className="emoji";icon.textContent="🎵";
-   const title=document.createElement("h3");
-   title.textContent=track.trackName||"Unknown track";
-   const artist=document.createElement("p");
-   artist.textContent=track.artistName||"Unknown artist";
-   const play=document.createElement("button");
-   play.className="action";play.style.marginTop="12px";
-   play.textContent="Play preview";
-   play.onclick=()=>playMusic(track.trackName,track.previewUrl);
-   card.append(icon,title,artist,play);
-   box.appendChild(card);
-  });
- };
- script.src="https://itunes.apple.com/search?term="+encodeURIComponent(query)+"&entity=song&limit=30&callback="+callback;
- script.onerror=()=>{
   delete window[callback];script.remove();
-  box.innerHTML='<p class="muted">Music search failed. Try again.</p>';
+  box.innerHTML="";
+  (data.results||[]).forEach(track=>{
+   const card=document.createElement("div");card.className="card";
+   const icon=document.createElement("div");icon.className="emoji";icon.textContent="🎵";
+   const title=document.createElement("h3");title.textContent=track.trackName||"Unknown";
+   const artist=document.createElement("p");artist.textContent=track.artistName||"";
+   const play=document.createElement("button");play.className="action";
+   play.style.marginTop="12px";play.textContent="Play preview";
+   play.onclick=()=>playMusic(track.trackName,track.previewUrl);
+   card.append(icon,title,artist,play);box.appendChild(card);
+  });
+  if(!box.children.length)box.innerHTML='<p class="muted">No results found.</p>';
  };
+ script.src="https://itunes.apple.com/search?term="+encodeURIComponent(q)+"&entity=song&limit=30&callback="+callback;
+ script.onerror=()=>{delete window[callback];script.remove();box.innerHTML='<p class="muted">Search failed. Try again.</p>'};
  document.body.appendChild(script);
 }
 function playMusic(name,url){
- if(!url){toast("No preview is available for this song.");return}
- const player=document.getElementById("audioPlayer");
- player.src=url;
- player.play().catch(()=>toast("Could not play this preview."));
+ if(!url){toast("No preview available for this song.");return}
+ const audio=document.getElementById("audioPlayer");
+ audio.src=url;audio.play().catch(()=>toast("Could not play preview."));
  document.getElementById("nowPlaying").textContent="Now playing: "+name;
 }
 
-/* Media player opens in a separate about:blank tab.
-   It needs a direct video URL that the user is allowed to play. */
-function openMediaPlayer(type,title){
- const tab=window.open("about:blank","_blank");
- if(!tab){toast("Allow pop-ups to open the player.");return}
- const doc=tab.document;
- doc.open();
- doc.write(`<!DOCTYPE html>
- <html lang="en">
- <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width,initial-scale=1">
- <title>${title} - CopenOS</title>
- <style>
- body{margin:0;background:#090b12;color:#f4f5fa;font-family:Arial;padding:22px}
- main{max-width:950px;margin:auto}
- h1{font-size:25px}
- .muted{color:#929bb0}
- input{width:100%;padding:13px;background:#1c2231;color:white;border:1px solid #293044;border-radius:9px}
- button{margin-top:10px;padding:12px 16px;background:#9c75ff;color:white;border:0;border-radius:9px}
- video{width:100%;margin-top:20px;background:#000;border-radius:12px;max-height:75vh}
- </style>
- </head>
- <body><main>
- <h1>${title}</h1>
- <p class="muted">Enter a direct video URL you have permission to use.</p>
- <input id="source" placeholder="Direct video URL">
- <button id="load">Load video</button>
- <video id="player" controls playsinline></video>
- <p class="muted" id="status"></p>
- </main></body></html>`);
- doc.close();
- doc.getElementById("load").onclick=()=>{
-  const source=doc.getElementById("source").value.trim();
-  if(!source){doc.getElementById("status").textContent="Enter a video URL first.";return}
-  try{
-   const parsed=new URL(source);
-   if(!["http:","https:"].includes(parsed.protocol))throw new Error();
-   const player=doc.getElementById("player");
-   player.src=source;
-   player.play().catch(()=>{});
-   doc.getElementById("status").textContent="Trying to load video...";
-  }catch{
-   doc.getElementById("status").textContent="Please enter a valid HTTP or HTTPS video URL.";
-  }
- };
-}
-
-function renderMedia(type,items){
- const grid=document.getElementById(type+"Grid");
- grid.innerHTML="";
- items.forEach(name=>{
-  const card=document.createElement("div");
-  card.className="card";
-  const emoji=document.createElement("div");
-  emoji.className="emoji";
-  emoji.textContent=type==="movies"?"🎬":type==="shows"?"📺":"🌸";
-  const title=document.createElement("h3");
-  title.textContent=name;
-  const description=document.createElement("p");
-  description.textContent="Open CopenOS player";
-  card.append(emoji,title,description);
-  card.onclick=()=>openMediaPlayer(type,name);
-  grid.appendChild(card);
- });
-}
-
-/* Notes and appearance */
+/* Notes and settings */
 const notesArea=document.getElementById("notesArea");
 notesArea.value=localStorage.getItem("copenNotes")||"";
 notesArea.addEventListener("input",()=>{
@@ -546,17 +479,16 @@ notesArea.addEventListener("input",()=>{
 function setAccent(color){
  document.documentElement.style.setProperty("--accent",color);
  localStorage.setItem("copenAccent",color);
- toast("Accent color updated.");
+ toast("Color updated.");
 }
 const savedAccent=localStorage.getItem("copenAccent");
 if(savedAccent)document.documentElement.style.setProperty("--accent",savedAccent);
 
 renderGames();
+renderCatalog("movies");
+renderCatalog("shows");
+renderAnime();
 renderRecent();
-renderHomeFavorites();
-renderMedia("movies",movies);
-renderMedia("shows",shows);
-renderMedia("anime",anime);
 </script>
 </body>
 </html>
